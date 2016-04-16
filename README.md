@@ -1,4 +1,7 @@
 # Anchorage
+
+[![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](http://cocoadocs.org/docsets/Anchorage)
+
 A collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`. 
 Each equation or inequality acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s.
 
