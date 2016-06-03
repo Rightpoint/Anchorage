@@ -290,15 +290,15 @@ extension UILayoutGuide: EdgeAnchorsProvider {
 
 // MARK: - LayoutEdge
 
-public enum LayoutEdge {
+private enum LayoutEdge {
 
     case Top, Leading, Bottom, Trailing
 
-    public static let Horizontal = [Leading, Trailing]
-    public static let Vertical = [Top, Bottom]
-    public static let All = [Top, Leading, Bottom, Trailing]
+    static let Horizontal = [Leading, Trailing]
+    static let Vertical = [Top, Bottom]
+    static let All = [Top, Leading, Bottom, Trailing]
 
-    public var axis: UILayoutConstraintAxis {
+    var axis: UILayoutConstraintAxis {
         switch self {
         case .Top, .Bottom:
             return .Vertical
@@ -307,7 +307,7 @@ public enum LayoutEdge {
         }
     }
 
-    private func transformConstant(c: CGFloat) -> CGFloat {
+    func transformConstant(c: CGFloat) -> CGFloat {
         switch self {
         case .Top, .Leading:
             return c
@@ -336,11 +336,7 @@ public struct EdgeAnchors: AnchorType {
         self.trailing = trailing
     }
 
-    public func filter(filter: LayoutEdge...) -> EdgeAnchors {
-        return self.filter(filter)
-    }
-
-    public func filter(filter: [LayoutEdge]) -> EdgeAnchors {
+    private func filter(filter: [LayoutEdge]) -> EdgeAnchors {
         var filteredAnchors = self
         filteredAnchors.includedEdges = includedEdges.filter { filter.contains($0) }
 
@@ -439,7 +435,7 @@ public struct EdgeConstraints {
         return [top, leading, bottom, trailing].flatMap { $0 }
     }
 
-    public subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
+    private subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
         get {
             switch edge {
             case .Top:      return top
