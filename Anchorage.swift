@@ -302,8 +302,17 @@ public enum LayoutEdge {
         switch self {
         case .Top, .Bottom:
             return .Vertical
-        case.Leading, .Trailing:
+        case .Leading, .Trailing:
             return .Horizontal
+        }
+    }
+
+    private func transformConstant(c: CGFloat) -> CGFloat {
+        switch self {
+        case .Top, .Leading:
+            return c
+        case .Bottom, .Trailing:
+            return -c
         }
     }
 
@@ -391,11 +400,11 @@ public struct EdgeAnchors: AnchorType {
                 switch (self[edge], anchors[otherEdge]) {
 
                 case let (x as NSLayoutXAxisAnchor, otherX as NSLayoutXAxisAnchor):
-                    let expression = (otherX + c) ~ priority
+                    let expression = (otherX + edge.transformConstant(c)) ~ priority
                     return builder.horizontalBuilderForEdge(edge)(x, expression)
 
                 case let (y as NSLayoutYAxisAnchor, otherY as NSLayoutYAxisAnchor):
-                    let expression = (otherY + c) ~ priority
+                    let expression = (otherY + edge.transformConstant(c)) ~ priority
                     return builder.verticalBuilderForEdge(edge)(y, expression)
 
                 default:
