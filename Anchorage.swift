@@ -29,7 +29,9 @@
 import UIKit
 
 public protocol LayoutAnchorType {}
-extension NSLayoutAnchor : LayoutAnchorType {}
+extension NSLayoutDimension : LayoutAnchorType {}
+extension NSLayoutXAxisAnchor : LayoutAnchorType {}
+extension NSLayoutYAxisAnchor : LayoutAnchorType {}
 
 // MARK: - Equality Constraints
 
@@ -326,20 +328,28 @@ extension UILayoutGuide: EdgeAnchorsProvider {
 
 // MARK: - LayoutEdge
 
-public enum LayoutEdge {
+private enum LayoutEdge {
 
     case top, leading, bottom, trailing
+    static let Horizontal = [leading, trailing]
+    static let Vertical = [top, bottom]
+    static let All = [top, leading, bottom, trailing]
 
-    public static let Horizontal = [leading, trailing]
-    public static let Vertical = [top, bottom]
-    public static let All = [top, leading, bottom, trailing]
-
-    public var axis: UILayoutConstraintAxis {
+    var axis: UILayoutConstraintAxis {
         switch self {
         case .top, .bottom:
             return .vertical
         case.leading, .trailing:
             return .horizontal
+        }
+    }
+
+    func transform(constant: CGFloat) -> CGFloat {
+        switch self {
+        case .top, .leading:
+            return constant
+        case .bottom, .trailing:
+            return -constant
         }
     }
 
@@ -363,11 +373,7 @@ public struct EdgeAnchors: LayoutAnchorType {
         self.trailing = trailing
     }
 
-    public func filter(_ filter: LayoutEdge...) -> EdgeAnchors {
-        return self.filter(filter)
-    }
-
-    public func filter(_ filter: [LayoutEdge]) -> EdgeAnchors {
+    private func filter(_ filter: [LayoutEdge]) -> EdgeAnchors {
         var filteredAnchors = self
         filteredAnchors.includedEdges = includedEdges.filter { filter.contains($0) }
 
@@ -427,11 +433,11 @@ public struct EdgeAnchors: LayoutAnchorType {
                 switch (self[edge], anchors[otherEdge]) {
 
                 case let (x as NSLayoutXAxisAnchor, otherX as NSLayoutXAxisAnchor):
-                    let expression = (otherX + c) ~ priority
+                    let expression = (otherX + edge.transform(constant: c)) ~ priority
                     return builder.horizontalBuilderForEdge(edge)(x, expression)
 
                 case let (y as NSLayoutYAxisAnchor, otherY as NSLayoutYAxisAnchor):
-                    let expression = (otherY + c) ~ priority
+                    let expression = (otherY + edge.transform(constant: c)) ~ priority
                     return builder.verticalBuilderForEdge(edge)(y, expression)
 
                 default:
@@ -466,7 +472,7 @@ public struct EdgeConstraints {
         return [top, leading, bottom, trailing].flatMap { $0 }
     }
 
-    public subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
+    private subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
         get {
             switch edge {
             case .top:      return top

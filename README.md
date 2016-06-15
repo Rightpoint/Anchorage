@@ -2,8 +2,10 @@
 
 [![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](http://cocoadocs.org/docsets/Anchorage)
 
-A collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`. 
+A lightweight collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`. 
 Each equation or inequality acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s.
+
+**Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the (in)equality, so you should never need to set this property manually.**
 
 ## Spacing
 
@@ -22,13 +24,15 @@ imageView.edgeAnchors == container.edgeAnchors
 ```swift
 // Pin only leading and trailing edges of a view to be within its container
 // Note that in this case the >= is interpreted to mean "leading >=, trailing <="
-imageView.horizontalAnchors >= container.horizontalAnchors
+// Additionally, the constant is interpreted to mean "+10 from leading and -10 from trailing"
+imageView.horizontalAnchors >= container.horizontalAnchors + 10
 ```
 
 ```swift
-// Pin only top and bottom edges of a view to be within its container
+// Pin only top and bottom edges of a view to be within 10pt of its container
 // Note that in this case the >= is interpreted to mean "top >=, bottom <="
-imageView.verticalAnchors >= container.verticalAnchors
+// Additionally, the constant is interpreted to mean "+10 from the top and -10 from the bottom"
+imageView.verticalAnchors >= container.verticalAnchors + 10
 ```
 
 ## Sizing
@@ -57,3 +61,17 @@ view.centerXAnchor == (view.superview.centerXAnchor + 20) ~ UILayoutPriorityDefa
 
 UIKit provides `UILayoutPriorityDefaultLow`, `UILayoutPriorityDefaultHigh`, and `UILayoutPriorityRequired` constants,
 but you may specify any `Float` for a priority value.
+
+## Storing Constraints
+
+To store constraints created by Anchorage, simply assign the expression to a variable:
+
+```swift
+// A single (active) NSLayoutConstraint
+let topConstraint = (imageView.topAnchor == container.topAnchor)
+
+// EdgeConstraints represents a collection of constraints
+// You can retrieve the NSLayoutConstraints individually,
+// or get an [NSLayoutConstraint] via .all, .horizontal, or .vertical
+let edgeConstraints = (button.edgeAnchors == container.edgeAnchors).all
+```
