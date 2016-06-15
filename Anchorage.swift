@@ -28,8 +28,8 @@
 
 import UIKit
 
-public protocol AnchorType {}
-extension NSLayoutAnchor : AnchorType {}
+public protocol LayoutAnchorType {}
+extension NSLayoutAnchor : LayoutAnchorType {}
 
 // MARK: - Equality Constraints
 
@@ -146,11 +146,11 @@ public func ~ (lhs: CGFloat, rhs: UILayoutPriority) -> LayoutExpression<NSLayout
     return LayoutExpression(constant: lhs, priority: rhs)
 }
 
-public func ~ <T: AnchorType>(lhs: T, rhs: UILayoutPriority) -> LayoutExpression<T> {
+public func ~ <T: LayoutAnchorType>(lhs: T, rhs: UILayoutPriority) -> LayoutExpression<T> {
     return LayoutExpression(anchor: lhs, priority: rhs)
 }
 
-public func ~ <T: AnchorType>(lhs: LayoutExpression<T>, rhs: UILayoutPriority) -> LayoutExpression<T> {
+public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: UILayoutPriority) -> LayoutExpression<T> {
     var expr = lhs
     expr.priority = rhs
     return expr
@@ -188,47 +188,47 @@ public func / (lhs: LayoutExpression<NSLayoutDimension>, rhs: CGFloat) -> Layout
     return expr
 }
 
-public func + <T: AnchorType>(lhs: T, rhs: CGFloat) -> LayoutExpression<T> {
+public func + <T: LayoutAnchorType>(lhs: T, rhs: CGFloat) -> LayoutExpression<T> {
     return LayoutExpression(anchor: lhs, constant: rhs)
 }
 
-public func + <T: AnchorType>(lhs: CGFloat, rhs: T) -> LayoutExpression<T> {
+public func + <T: LayoutAnchorType>(lhs: CGFloat, rhs: T) -> LayoutExpression<T> {
     return LayoutExpression(anchor: rhs, constant: lhs)
 }
 
-public func + <T: AnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
+public func + <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
     var expr = lhs
     expr.constant += rhs
     return expr
 }
 
-public func + <T: AnchorType>(lhs: CGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
+public func + <T: LayoutAnchorType>(lhs: CGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
     var expr = rhs
     expr.constant += lhs
     return expr
 }
 
-public func - <T: AnchorType>(lhs: T, rhs: CGFloat) -> LayoutExpression<T> {
+public func - <T: LayoutAnchorType>(lhs: T, rhs: CGFloat) -> LayoutExpression<T> {
     return LayoutExpression(anchor: lhs, constant: -rhs)
 }
 
-public func - <T: AnchorType>(lhs: CGFloat, rhs: T) -> LayoutExpression<T> {
+public func - <T: LayoutAnchorType>(lhs: CGFloat, rhs: T) -> LayoutExpression<T> {
     return LayoutExpression(anchor: rhs, constant: -lhs)
 }
 
-public func - <T: AnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
+public func - <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
     var expr = lhs
     expr.constant -= rhs
     return expr
 }
 
-public func - <T: AnchorType>(lhs: CGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
+public func - <T: LayoutAnchorType>(lhs: CGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
     var expr = rhs
     expr.constant -= lhs
     return expr
 }
 
-public struct LayoutExpression<T : AnchorType> {
+public struct LayoutExpression<T : LayoutAnchorType> {
 
     private var anchor: T?
     private var constant: CGFloat
@@ -311,7 +311,7 @@ public enum LayoutEdge {
 
 // MARK: - EdgeAnchors
 
-public struct EdgeAnchors: AnchorType {
+public struct EdgeAnchors: LayoutAnchorType {
 
     private var top: NSLayoutYAxisAnchor
     private var leading: NSLayoutXAxisAnchor
@@ -370,7 +370,7 @@ public struct EdgeAnchors: AnchorType {
         return constraintsForAnchors(anchor, constant: c, priority: priority, builder: constraintBuilder)
     }
 
-    private subscript (edge: LayoutEdge) -> NSLayoutAnchor<AnyObject> {
+    private subscript (edge: LayoutEdge) -> LayoutAnchorType {
         switch edge {
         case .top:      return top
         case .leading:  return leading
