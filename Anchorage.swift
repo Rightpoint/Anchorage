@@ -54,7 +54,15 @@ public func == (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConst
     return activateConstraint(lhs.constraint(equalTo: rhs))
 }
 
-public func == <T: NSLayoutAnchor<AnyObject>>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+public func == <T: NSLayoutDimension>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(equalTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
+}
+
+public func == <T: NSLayoutXAxisAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(equalTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
+}
+
+public func == <T: NSLayoutYAxisAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(equalTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
 }
 
@@ -81,11 +89,23 @@ public func <= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(lessThanOrEqualToConstant: rhs))
 }
 
-public func <= <T: NSLayoutAnchor<AnyObject>>(lhs: T, rhs: T) -> NSLayoutConstraint {
+public func <= <T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(lessThanOrEqualTo: rhs))
+}
+public func <= <T: NSLayoutXAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(lessThanOrEqualTo: rhs))
+}
+public func <= <T: NSLayoutYAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(lessThanOrEqualTo: rhs))
 }
 
-public func <= <T: NSLayoutAnchor<AnyObject>>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+public func <= <T: NSLayoutDimension>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(lessThanOrEqualTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
+}
+public func <= <T: NSLayoutXAxisAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(lessThanOrEqualTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
+}
+public func <= <T: NSLayoutYAxisAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(lessThanOrEqualTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
 }
 
@@ -110,11 +130,27 @@ public func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(greaterThanOrEqualToConstant: rhs))
 }
 
-public func >=<T: NSLayoutAnchor<AnyObject>>(lhs: T, rhs: T) -> NSLayoutConstraint {
+public func >=<T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(greaterThanOrEqualTo: rhs))
 }
 
-public func >= <T: NSLayoutAnchor<AnyObject>>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+public func >=<T: NSLayoutXAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(greaterThanOrEqualTo: rhs))
+}
+
+public func >=<T: NSLayoutYAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(greaterThanOrEqualTo: rhs))
+}
+
+public func >= <T: NSLayoutDimension>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(greaterThanOrEqualTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
+}
+
+public func >= <T: NSLayoutXAxisAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
+    return activateConstraint(lhs.constraint(greaterThanOrEqualTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
+}
+
+public func >= <T: NSLayoutYAxisAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(greaterThanOrEqualTo: rhs.anchor!, constant: rhs.constant), withPriority: rhs.priority)
 }
 
