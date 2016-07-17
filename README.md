@@ -1,8 +1,10 @@
 # Anchorage
 
 [![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](http://cocoadocs.org/docsets/Anchorage)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-A lightweight collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`. 
+
+A lightweight collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`.
 Each equation or inequality acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s.
 
 **Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the (in)equality, so you should never need to set this property manually.**
@@ -51,7 +53,7 @@ view.widthAnchor == 4 * view.heightAnchor / 3
 
 ## Priority
 
-Priority of `NSLayoutConstraints` must be set before they are active. 
+Priority of `NSLayoutConstraints` must be set before they are active.
 The `~` is used to specify priority of the constraint resulting from an equation:
 
 ```swift
