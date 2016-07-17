@@ -3,11 +3,62 @@
 [![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](http://cocoadocs.org/docsets/Anchorage)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-
 A lightweight collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`.
 Each equation or inequality acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s.
 
 **Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the (in)equality, so you should never need to set this property manually.**
+
+# Installation
+
+## CocoaPods
+
+[CocoaPods](http://cocoapods.org/) is a dependency manager for Cocoa projects.
+You can install it with the following command:
+
+```sh
+$ gem install cocoapods
+```
+
+To integrate Anchorage into your Xcode project using CocoaPods, specify it in
+your Podfile:
+
+```ruby
+platform :ios, '9.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+  pod 'Anchorage', '~> 2.0'
+end
+```
+Then, run the following command:
+
+```sh
+$ pod install
+```
+
+## Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency
+manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following commands:
+
+```sh
+$ brew update
+$ brew install carthage
+```
+
+To integrate Anchorage into your Xcode project using Carthage, specify it in
+your Cartfile:
+
+```
+github "Raizlabs/Anchorage" ~> 2.0
+```
+
+Run `carthage update` to build the framework and drag the built
+`Anchorage.framework` into your Xcode project.
+
+# Usage
 
 ## Spacing
 
