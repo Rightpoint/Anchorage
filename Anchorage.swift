@@ -170,10 +170,12 @@ extension NSLayoutYAxisAnchor : LayoutAnchorType {}
 
 // MARK: - Priority
 
-infix operator ~ {
-    associativity none
-    precedence 135
+precedencegroup PriorityPrecedence {
+    associativity: none
+    higherThan: ComparisonPrecedence
 }
+
+infix operator ~: PriorityPrecedence
 
 @discardableResult public func ~ (lhs: CGFloat, rhs: UILayoutPriority) -> LayoutExpression<NSLayoutDimension> {
     return LayoutExpression(constant: lhs, priority: rhs)
