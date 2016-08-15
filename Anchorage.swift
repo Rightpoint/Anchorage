@@ -35,11 +35,6 @@ extension NSLayoutYAxisAnchor : LayoutAnchorType {}
 
 // MARK: - Equality Constraints
 
-infix operator == {
-    associativity none
-    precedence 130
-}
-
 @discardableResult public func == (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     return activateConstraint(lhs.constraint(equalToConstant: rhs))
 }
@@ -268,12 +263,12 @@ infix operator ~ {
 
 public struct LayoutExpression<T : LayoutAnchorType> {
 
-    private var anchor: T?
-    private var constant: CGFloat
-    private var multiplier: CGFloat
-    private var priority: UILayoutPriority
+    fileprivate var anchor: T?
+    fileprivate var constant: CGFloat
+    fileprivate var multiplier: CGFloat
+    fileprivate var priority: UILayoutPriority
 
-    private init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: UILayoutPriority = UILayoutPriorityRequired) {
+    fileprivate init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: UILayoutPriority = UILayoutPriorityRequired) {
         self.anchor = anchor
         self.constant = constant
         self.multiplier = multiplier
@@ -366,14 +361,14 @@ public struct EdgeAnchors: LayoutAnchorType {
 
     private var includedEdges = LayoutEdge.All
 
-    private init(top: NSLayoutYAxisAnchor, leading: NSLayoutXAxisAnchor, bottom: NSLayoutYAxisAnchor, trailing: NSLayoutXAxisAnchor) {
+    fileprivate init(top: NSLayoutYAxisAnchor, leading: NSLayoutXAxisAnchor, bottom: NSLayoutYAxisAnchor, trailing: NSLayoutXAxisAnchor) {
         self.top = top
         self.leading = leading
         self.bottom = bottom
         self.trailing = trailing
     }
 
-    private func filter(_ filter: [LayoutEdge]) -> EdgeAnchors {
+    fileprivate func filter(_ filter: [LayoutEdge]) -> EdgeAnchors {
         var filteredAnchors = self
         filteredAnchors.includedEdges = includedEdges.filter { filter.contains($0) }
 
@@ -412,7 +407,7 @@ public struct EdgeAnchors: LayoutAnchorType {
         return constraintsForAnchors(anchor, constant: c, priority: priority, builder: constraintBuilder)
     }
 
-    private subscript (edge: LayoutEdge) -> LayoutAnchorType {
+    fileprivate subscript (edge: LayoutEdge) -> LayoutAnchorType {
         switch edge {
         case .top:      return top
         case .leading:  return leading
@@ -472,7 +467,7 @@ public struct EdgeConstraints {
         return [top, leading, bottom, trailing].flatMap { $0 }
     }
 
-    private subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
+    fileprivate subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
         get {
             switch edge {
             case .top:      return top
