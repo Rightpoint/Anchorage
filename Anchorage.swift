@@ -503,7 +503,7 @@ private struct ConstraintBuilder {
     var bottom: Vertical
     var trailing: Horizontal
 
-    init(horizontal: Horizontal, vertical: Vertical) {
+    init(horizontal: @escaping Horizontal, vertical: @escaping Vertical) {
         top = vertical
         leading = horizontal
         bottom = vertical
