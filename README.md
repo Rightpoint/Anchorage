@@ -12,7 +12,7 @@ Each equation or inequality acts on one or more `NSLayoutAnchor`s, and returns a
 
 ## CocoaPods
 
-[CocoaPods](http://cocoapods.org/) is a dependency manager for Cocoa projects.
+[CocoaPods](https://cocoapods.org/) is a dependency manager for Cocoa projects.
 You can install it with the following command:
 
 ```sh
