@@ -55,7 +55,8 @@ public func == (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConst
 }
 
 public func == <T: NSLayoutAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
-    return activateConstraint(lhs.constraintEqualToAnchor(rhs.anchor, constant: rhs.constant), withPriority: rhs.priority)
+    guard let anchor = rhs.anchor else { fatalError("Invalid anchor in LayoutExpression \(rhs)") }
+    return activateConstraint(lhs.constraintEqualToAnchor(anchor, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 public func == (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension>) -> NSLayoutConstraint {
@@ -86,7 +87,8 @@ public func <= <T: NSLayoutAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
 }
 
 public func <= <T: NSLayoutAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
-    return activateConstraint(lhs.constraintLessThanOrEqualToAnchor(rhs.anchor, constant: rhs.constant), withPriority: rhs.priority)
+    guard let anchor = rhs.anchor else { fatalError("Invalid anchor in LayoutExpression \(rhs)") }
+    return activateConstraint(lhs.constraintLessThanOrEqualToAnchor(anchor, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 public func <= (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension>) -> NSLayoutConstraint {
@@ -115,7 +117,8 @@ public func >=<T: NSLayoutAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
 }
 
 public func >= <T: NSLayoutAnchor>(lhs: T, rhs: LayoutExpression<T>) -> NSLayoutConstraint {
-    return activateConstraint(lhs.constraintGreaterThanOrEqualToAnchor(rhs.anchor, constant: rhs.constant), withPriority: rhs.priority)
+    guard let anchor = rhs.anchor else { fatalError("Invalid anchor in LayoutExpression \(rhs)") }
+    return activateConstraint(lhs.constraintGreaterThanOrEqualToAnchor(anchor, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 public func >= (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension>) -> NSLayoutConstraint {
