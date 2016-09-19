@@ -79,11 +79,11 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 }
 
 @discardableResult public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-    return lhs.activeConstraints(equalTo: rhs)
+    return lhs.activate(constraintsEqualToEdges: rhs)
 }
 
 @discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-    return lhs.activeConstraints(equalTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+    return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 // MARK: - Inequality Constraints
@@ -126,11 +126,11 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 }
 
 @discardableResult public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-    return lhs.activeConstraints(lessThanOrEqualTo: rhs)
+    return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
 }
 
 @discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-    return lhs.activeConstraints(lessThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+    return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
@@ -171,11 +171,11 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 }
 
 @discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-    return lhs.activeConstraints(greaterThanOrEqualTo: rhs)
+    return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
 }
 
 @discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-    return lhs.activeConstraints(greaterThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+    return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 // MARK: - Priority
@@ -396,7 +396,7 @@ public struct AxisAnchors<T: LayoutAxisType>: LayoutAnchorType {
         }
     }
 
-    private func constraints(forAnchors anchors: AxisAnchors<T>?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> EdgeConstraints {
+    func constraints(forAnchors anchors: AxisAnchors<T>?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> EdgeConstraints {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -404,10 +404,10 @@ public struct AxisAnchors<T: LayoutAxisType>: LayoutAnchorType {
         var edgeConstraints = EdgeConstraints()
         let edges: [LayoutEdge] = [.leading, .trailing]
         for edge in edges {
-            if let x = self[edge] as? NSLayoutXAxisAnchor, otherX = anchors[edge] as? NSLayoutXAxisAnchor {
+            if let x = self[edge] as? NSLayoutXAxisAnchor, let otherX = anchors[edge] as? NSLayoutXAxisAnchor {
                 let expression = (otherX + edge.transform(constant: c)) ~ priority
                 edgeConstraints[edge] = builder.horizontalBuilder(forEdge: edge)(x, expression)
-            } else if let y = self[edge] as? NSLayoutYAxisAnchor, otherY = anchors[edge] as? NSLayoutYAxisAnchor {
+            } else if let y = self[edge] as? NSLayoutYAxisAnchor, let otherY = anchors[edge] as? NSLayoutYAxisAnchor {
                 let expression = (otherY + edge.transform(constant: c)) ~ priority
                 edgeConstraints[edge] = builder.verticalBuilder(forEdge: edge)(y, expression)
             } else if self[edge] != nil || anchors[edge] != nil {
@@ -442,7 +442,7 @@ public struct EdgeAnchors: LayoutAnchorType {
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    private func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> EdgeConstraints {
+    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> EdgeConstraints {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -502,7 +502,7 @@ public struct EdgeConstraints {
 
 // MARK: - Constraint Builders
 
-private struct ConstraintBuilder {
+struct ConstraintBuilder {
 
     typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor>) -> NSLayoutConstraint
     typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor>) -> NSLayoutConstraint
