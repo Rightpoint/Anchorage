@@ -71,19 +71,19 @@ import UIKit
     }
 
     public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-        return lhs.activate(constraintsEqualToEdges: rhs)
+        return lhs.activate(constraintsEqualTo: rhs)
     }
 
     public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-        return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+        return lhs.activate(constraintsEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
     public func == <T: LayoutAxisType> (lhs: AxisAnchors<T>, rhs: AxisAnchors<T>) -> EdgeConstraints {
-        return lhs.activate(constraintsEqualToEdges: rhs)
+        return lhs.activate(constraintsEqualTo: rhs)
     }
 
     public func == <T: LayoutAxisType> (lhs: AxisAnchors<T>, rhs: LayoutExpression<AxisAnchors<T>>) -> EdgeConstraints {
-        return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+        return lhs.activate(constraintsEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
     // MARK: - Compatability Inequality Constraints
@@ -126,19 +126,19 @@ import UIKit
     }
 
     public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-        return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
+        return lhs.activate(constraintsLessThanOrEqualTo: rhs)
     }
 
     public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-        return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+        return lhs.activate(constraintsLessThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
     public func <= <T: LayoutAxisType> (lhs: AxisAnchors<T>, rhs: AxisAnchors<T>) -> EdgeConstraints {
-        return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
+        return lhs.activate(constraintsLessThanOrEqualTo: rhs)
     }
 
     public func <= <T: LayoutAxisType> (lhs: AxisAnchors<T>, rhs: LayoutExpression<AxisAnchors<T>>) -> EdgeConstraints {
-        return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+        return lhs.activate(constraintsLessThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
     public func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
@@ -179,19 +179,19 @@ import UIKit
     }
 
     public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-        return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
+        return lhs.activate(constraintsGreaterThanOrEqualTo: rhs)
     }
 
     public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-        return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+        return lhs.activate(constraintsGreaterThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
     public func >= <T: LayoutAxisType> (lhs: AxisAnchors<T>, rhs: AxisAnchors<T>) -> EdgeConstraints {
-        return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
+        return lhs.activate(constraintsGreaterThanOrEqualTo: rhs)
     }
 
     public func >= <T: LayoutAxisType> (lhs: AxisAnchors<T>, rhs: LayoutExpression<AxisAnchors<T>>) -> EdgeConstraints {
-        return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+        return lhs.activate(constraintsGreaterThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
     // MARK: Compatability Priority
