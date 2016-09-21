@@ -70,19 +70,19 @@ import UIKit
         }
     }
 
-    public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
+    public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
         return lhs.activate(constraintsEqualToEdges: rhs)
     }
 
-    public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> ConstraintGroup {
+    public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
         return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
-    public func == <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintGroup {
+    public func == <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
         return lhs.activate(constraintsEqualToEdges: rhs)
     }
 
-    public func == <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> ConstraintGroup {
+    public func == <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
         return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
@@ -125,19 +125,19 @@ import UIKit
         }
     }
 
-    public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
+    public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
         return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
     }
 
-    public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> ConstraintGroup {
+    public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
         return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
-    public func <= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintGroup {
+    public func <= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
         return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
     }
 
-    public func <= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> ConstraintGroup {
+    public func <= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
         return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
@@ -145,15 +145,15 @@ import UIKit
         return activate(constraint: lhs.constraint(greaterThanOrEqualToConstant: rhs))
     }
 
-    public func >=<T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    public func >= <T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
         return activate(constraint: lhs.constraint(greaterThanOrEqualTo: rhs))
     }
 
-    public func >=<T: NSLayoutXAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    public func >= <T: NSLayoutXAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
         return activate(constraint: lhs.constraint(greaterThanOrEqualTo: rhs))
     }
 
-    public func >=<T: NSLayoutYAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
+    public func >= <T: NSLayoutYAxisAnchor>(lhs: T, rhs: T) -> NSLayoutConstraint {
         return activate(constraint: lhs.constraint(greaterThanOrEqualTo: rhs))
     }
 
@@ -178,19 +178,19 @@ import UIKit
         }
     }
 
-    public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
+    public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
         return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
     }
 
-    public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> ConstraintGroup {
+    public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
         return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
-    public func >= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintGroup {
+    public func >= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
         return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
     }
 
-    public func >= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> ConstraintGroup {
+    public func >= <T: LayoutAxisType, U: LayoutAxisType> (lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
         return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
