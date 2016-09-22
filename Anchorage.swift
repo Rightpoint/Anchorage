@@ -33,6 +33,10 @@ extension NSLayoutDimension : LayoutAnchorType {}
 extension NSLayoutXAxisAnchor : LayoutAnchorType {}
 extension NSLayoutYAxisAnchor : LayoutAnchorType {}
 
+public protocol LayoutAxisType {}
+extension NSLayoutXAxisAnchor : LayoutAxisType {}
+extension NSLayoutYAxisAnchor : LayoutAxisType {}
+
 #if swift(>=3.0)
 
     // MARK: - Equality Constraints
@@ -74,12 +78,20 @@ extension NSLayoutYAxisAnchor : LayoutAnchorType {}
     }
 }
 
-@discardableResult public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-    return lhs.activeConstraints(equalTo: rhs)
+@discardableResult public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
+    return lhs.activate(constraintsEqualToEdges: rhs)
 }
 
-@discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-    return lhs.activeConstraints(equalTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+@discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
+    return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+}
+
+@discardableResult public func == <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
+    return lhs.activate(constraintsEqualToEdges: rhs)
+}
+
+@discardableResult public func == <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
+    return lhs.activate(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 // MARK: - Inequality Constraints
@@ -121,12 +133,20 @@ extension NSLayoutYAxisAnchor : LayoutAnchorType {}
     }
 }
 
-@discardableResult public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-    return lhs.activeConstraints(lessThanOrEqualTo: rhs)
+@discardableResult public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
+    return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
 }
 
-@discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-    return lhs.activeConstraints(lessThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+@discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
+    return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+}
+
+@discardableResult public func <= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
+    return lhs.activate(constraintsLessThanOrEqualToEdges: rhs)
+}
+
+@discardableResult public func <= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
+    return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
@@ -166,12 +186,20 @@ extension NSLayoutYAxisAnchor : LayoutAnchorType {}
     }
 }
 
-@discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeConstraints {
-    return lhs.activeConstraints(greaterThanOrEqualTo: rhs)
+@discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
+    return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
 }
 
-@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeConstraints {
-    return lhs.activeConstraints(greaterThanOrEqualTo: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
+    return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+}
+
+@discardableResult public func >= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
+    return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs)
+}
+
+@discardableResult public func >= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
+    return lhs.activate(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 // MARK: - Priority
@@ -289,181 +317,165 @@ public struct LayoutExpression<T : LayoutAnchorType> {
 
 // MARK: - EdgeAnchorsProvider
 
-public protocol EdgeAnchorsProvider {
+public protocol AnchorGroupProvider {
 
-    var edgeAnchors: EdgeAnchors { get }
-
-}
-
-extension EdgeAnchorsProvider {
-
-    public var horizontalAnchors: EdgeAnchors {
-        return edgeAnchors.filter(onlyEdges: LayoutEdge.Horizontal)
-    }
-
-    public var verticalAnchors: EdgeAnchors {
-        return edgeAnchors.filter(onlyEdges: LayoutEdge.Vertical)
-    }
+    var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> { get }
+    var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> { get }
+    var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> { get }
 
 }
 
-extension UIView: EdgeAnchorsProvider {
+extension AnchorGroupProvider {
 
     public var edgeAnchors: EdgeAnchors {
-        return EdgeAnchors(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        return EdgeAnchors(horizontal: horizontalAnchors, vertical: verticalAnchors)
     }
 
 }
 
-extension UIViewController: EdgeAnchorsProvider {
 
-    public var edgeAnchors: EdgeAnchors {
-        return EdgeAnchors(top: topLayoutGuide.bottomAnchor, leading: view.leadingAnchor, bottom: bottomLayoutGuide.topAnchor, trailing: view.trailingAnchor)
+extension UIView: AnchorGroupProvider {
+
+    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+        return AnchorPair(first: leadingAnchor, second: trailingAnchor)
+    }
+    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+        return AnchorPair(first: topAnchor, second: bottomAnchor)
+    }
+    public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+        return AnchorPair(first: centerXAnchor, second: centerYAnchor)
     }
 
 }
 
-extension UILayoutGuide: EdgeAnchorsProvider {
+extension UIViewController: AnchorGroupProvider {
 
-    public var edgeAnchors: EdgeAnchors {
-        return EdgeAnchors(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+        return AnchorPair(first: view.leadingAnchor, second: view.trailingAnchor)
+    }
+    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+        return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
+    }
+    public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+        return AnchorPair(first: view.centerXAnchor, second: view.centerYAnchor)
     }
 
 }
 
-// MARK: - LayoutEdge
+extension UILayoutGuide: AnchorGroupProvider {
 
-enum LayoutEdge {
-
-    case top, leading, bottom, trailing
-    static let Horizontal = [leading, trailing]
-    static let Vertical = [top, bottom]
-    static let All = [top, leading, bottom, trailing]
-
-    var axis: UILayoutConstraintAxis {
-        switch self {
-        case .top, .bottom:
-            return .vertical
-        case.leading, .trailing:
-            return .horizontal
-        }
+    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+        return AnchorPair(first: leadingAnchor, second: trailingAnchor)
     }
-
-    func transform(constant theConstant: CGFloat) -> CGFloat {
-        switch self {
-        case .top, .leading:
-            return theConstant
-        case .bottom, .trailing:
-            return -theConstant
-        }
+    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+        return AnchorPair(first: topAnchor, second: bottomAnchor)
+    }
+    public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+        return AnchorPair(first: centerXAnchor, second: centerYAnchor)
     }
 
 }
 
-// MARK: - EdgeAnchors
+// MARK: - AnchorGroup
 
-public struct EdgeAnchors: LayoutAnchorType {
-    
-    private var top: NSLayoutYAxisAnchor
-    private var leading: NSLayoutXAxisAnchor
-    private var bottom: NSLayoutYAxisAnchor
-    private var trailing: NSLayoutXAxisAnchor
+public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType {
+    private var first: T
+    private var second: U
 
-    private var includedEdges = LayoutEdge.All
-
-    init(top: NSLayoutYAxisAnchor, leading: NSLayoutXAxisAnchor, bottom: NSLayoutYAxisAnchor, trailing: NSLayoutXAxisAnchor) {
-        self.top = top
-        self.leading = leading
-        self.bottom = bottom
-        self.trailing = trailing
+    init(first: T, second: U) {
+        self.first = first
+        self.second = second
     }
 
-    func filter(onlyEdges edges: [LayoutEdge]) -> EdgeAnchors {
-        var filteredAnchors = self
-        filteredAnchors.includedEdges = includedEdges.filter { edges.contains($0) }
-
-        return filteredAnchors
+    public func activate(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> AxisGroup {
+        let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activeConstraints(equalTo anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeConstraints {
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder(horizontal: ==, vertical: ==))
+    public func activate(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> AxisGroup {
+        let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activeConstraints(lessThanOrEqualTo anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeConstraints {
-        var constraintBuilder = ConstraintBuilder(horizontal: <=, vertical: <=)
-
-        if includedEdges.contains(.leading) && includedEdges.index(of: .trailing) == anchor?.includedEdges.index(of: .trailing) {
-            constraintBuilder.trailing = (>=)
-        }
-
-        if includedEdges.contains(.top) && includedEdges.index(of: .bottom) == anchor?.includedEdges.index(of: .bottom) {
-            constraintBuilder.bottom = (>=)
-        }
-
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: constraintBuilder)
+    public func activate(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> AxisGroup {
+        let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activeConstraints(greaterThanOrEqualTo anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeConstraints {
-        var constraintBuilder = ConstraintBuilder(horizontal: >=, vertical: >=)
-
-        if includedEdges.contains(.leading) && includedEdges.index(of: .trailing) == anchor?.includedEdges.index(of: .trailing) {
-            constraintBuilder.trailing = (<=)
-        }
-
-        if includedEdges.contains(.top) && includedEdges.index(of: .bottom) == anchor?.includedEdges.index(of: .bottom) {
-            constraintBuilder.bottom = (<=)
-        }
-
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: constraintBuilder)
-    }
-
-    subscript (edge: LayoutEdge) -> LayoutAnchorType {
-        switch edge {
-        case .top:      return top
-        case .leading:  return leading
-        case .bottom:   return bottom
-        case .trailing: return trailing
-        }
-    }
-
-    private func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> EdgeConstraints {
+    func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> AxisGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
 
-        var edgeConstraints = EdgeConstraints()
+        switch (first, anchors.first, second, anchors.second) {
+            // Leading, trailing
+        case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
+                  secondX as NSLayoutXAxisAnchor, otherSecondX as NSLayoutXAxisAnchor):
+            return AxisGroup(first: builder.leadingBuilder(firstX, (otherFirstX + c) ~ priority),
+                             second: builder.trailingBuilder(secondX, (otherSecondX - c) ~ priority))
+            //Top, bottom
+        case let (firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor,
+                  secondY as NSLayoutYAxisAnchor, otherSecondY as NSLayoutYAxisAnchor):
+            return AxisGroup(first: builder.topBuilder(firstY, (otherFirstY + c) ~ priority),
+                             second: builder.bottomBuilder(secondY, (otherSecondY - c) ~ priority))
+            //CenterX, centerY
+        case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
+                  firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor):
+            return AxisGroup(first: builder.leadingBuilder(firstX, (otherFirstX + c) ~ priority),
+                             second: builder.topBuilder(firstY, (otherFirstY - c) ~ priority))
+        default:
+            preconditionFailure("Layout axes of constrained anchors must match.")
+        }
+    }
+}
 
-        zip(includedEdges, anchors.includedEdges).forEach { (edge, otherEdge) in
-            edgeConstraints[edge] = {
-                switch (self[edge], anchors[otherEdge]) {
+public struct EdgeAnchors: LayoutAnchorType {
+    var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
+    var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
 
-                case let (x as NSLayoutXAxisAnchor, otherX as NSLayoutXAxisAnchor):
-                    let expression = (otherX + edge.transform(constant: c)) ~ priority
-                    return builder.horizontalBuilder(forEdge: edge)(x, expression)
+    init(horizontal: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, vertical: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>) {
+        self.horizontalAnchors = horizontal
+        self.verticalAnchors = vertical
+    }
 
-                case let (y as NSLayoutYAxisAnchor, otherY as NSLayoutYAxisAnchor):
-                    let expression = (otherY + edge.transform(constant: c)) ~ priority
-                    return builder.verticalBuilder(forEdge: edge)(y, expression)
+    public func activate(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeGroup {
+        let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+    }
 
-                default:
-                    preconditionFailure("Layout axis of constrained anchors must match.")
-                }
-            }()
+    public func activate(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeGroup {
+        let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+    }
+
+    public func activate(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: UILayoutPriority = UILayoutPriorityRequired) -> EdgeGroup {
+        let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+    }
+
+    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: UILayoutPriority, builder: ConstraintBuilder) -> EdgeGroup {
+        guard let anchors = anchors else {
+            preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
 
-        return edgeConstraints
+        let horizontalConstraints = horizontalAnchors.constraints(forAnchors: anchors.horizontalAnchors, constant: c, priority: priority, builder: builder)
+        let verticalConstraints = verticalAnchors.constraints(forAnchors: anchors.verticalAnchors, constant: c, priority: priority, builder: builder)
+        return EdgeGroup(top: verticalConstraints.first,
+                         leading: horizontalConstraints.first,
+                         bottom: verticalConstraints.second,
+                         trailing: verticalConstraints.second)
     }
 
 }
 
-// MARK: - EdgeConstraints
+// MARK: - ConstraintGroup
 
-public struct EdgeConstraints {
+public struct EdgeGroup {
 
-    public var top: NSLayoutConstraint?
-    public var leading: NSLayoutConstraint?
-    public var bottom: NSLayoutConstraint?
-    public var trailing: NSLayoutConstraint?
+    public var top: NSLayoutConstraint
+    public var leading: NSLayoutConstraint
+    public var bottom: NSLayoutConstraint
+    public var trailing: NSLayoutConstraint
 
     public var horizontal: [NSLayoutConstraint] {
         return [leading, trailing].flatMap { $0 }
@@ -477,66 +489,65 @@ public struct EdgeConstraints {
         return [top, leading, bottom, trailing].flatMap { $0 }
     }
 
-    subscript (edge: LayoutEdge) -> NSLayoutConstraint? {
-        get {
-            switch edge {
-            case .top:      return top
-            case .leading:  return leading
-            case .bottom:   return bottom
-            case .trailing: return trailing
-            }
-        }
+}
 
-        set {
-            switch edge {
-            case .top:      top = newValue
-            case .leading:  leading = newValue
-            case .bottom:   bottom = newValue
-            case .trailing: trailing = newValue
-            }
-        }
-    }
+public struct AxisGroup {
+
+    public var first: NSLayoutConstraint
+    public var second: NSLayoutConstraint
 
 }
 
 // MARK: - Constraint Builders
 
-private struct ConstraintBuilder {
+struct ConstraintBuilder {
 
     typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor>) -> NSLayoutConstraint
     typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor>) -> NSLayoutConstraint
 
-    var top: Vertical
-    var leading: Horizontal
-    var bottom: Vertical
-    var trailing: Horizontal
+    var topBuilder: Vertical
+    var leadingBuilder: Horizontal
+    var bottomBuilder: Vertical
+    var trailingBuilder: Horizontal
+    var centerYBuilder: Vertical
+    var centerXBuilder: Horizontal
 
     #if swift(>=3.0)
     init(horizontal: @escaping Horizontal, vertical: @escaping Vertical) {
-        top = vertical
-        leading = horizontal
-        bottom = vertical
-        trailing = horizontal
+        topBuilder = vertical
+        leadingBuilder = horizontal
+        bottomBuilder = vertical
+        trailingBuilder = horizontal
+        centerYBuilder = vertical
+        centerXBuilder = horizontal
+    }
+    init(leading: @escaping Horizontal, top: @escaping Vertical, trailing: @escaping Horizontal,
+         bottom: @escaping Vertical, centerX: @escaping Horizontal, centerY: @escaping Vertical) {
+        leadingBuilder = leading
+        topBuilder = top
+        trailingBuilder = trailing
+        bottomBuilder = bottom
+        centerYBuilder = centerY
+        centerXBuilder = centerX
     }
     #else
     init(horizontal: Horizontal, vertical: Vertical) {
-        top = vertical
-        leading = horizontal
-        bottom = vertical
-        trailing = horizontal
+        topBuilder = vertical
+        leadingBuilder = horizontal
+        bottomBuilder = vertical
+        trailingBuilder = horizontal
+        centerYBuilder = vertical
+        centerXBuilder = horizontal
+    }
+    init(leading: Horizontal, top: Vertical, trailing: Horizontal, bottom: Vertical, centerX: Horizontal, centerY: Vertical) {
+        leadingBuilder = leading
+        topBuilder = top
+        trailingBuilder = trailing
+        bottomBuilder = bottom
+        centerYBuilder = centerY
+        centerXBuilder = centerX
     }
     #endif
-
-
-    func horizontalBuilder(forEdge edge: LayoutEdge) -> Horizontal {
-        assert(edge.axis == .horizontal)
-        return (edge == .leading) ? leading : trailing
-    }
-
-    func verticalBuilder(forEdge edge: LayoutEdge) -> Vertical {
-        assert(edge.axis == .vertical)
-        return (edge == .top) ? top : bottom
-    }
 
 }
 
