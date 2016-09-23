@@ -7,16 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DD242631D95C299001D6725 /* AnchorageCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */; };
+		2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */; };
+		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
+		2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */; };
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorageCompatibility.swift; sourceTree = "<group>"; };
+		2DD242681D95C2CE001D6725 /* AnchorageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2DD2426C1D95C2CE001D6725 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2DD2426F1D95C2CE001D6725 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2DD242711D95C2CE001D6725 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2DD242651D95C2CE001D6725 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3C2050A71D3B20FD00995DF3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -27,10 +44,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DD242691D95C2CE001D6725 /* AnchorageDemo */ = {
+			isa = PBXGroup;
+			children = (
+				2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */,
+				2DD2426C1D95C2CE001D6725 /* Assets.xcassets */,
+				2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */,
+				2DD242711D95C2CE001D6725 /* Info.plist */,
+			);
+			path = AnchorageDemo;
+			sourceTree = "<group>";
+		};
 		3C2050A11D3B20FD00995DF3 = {
 			isa = PBXGroup;
 			children = (
 				3C2050AD1D3B20FD00995DF3 /* Anchorage */,
+				2DD242691D95C2CE001D6725 /* AnchorageDemo */,
 				3C2050AC1D3B20FD00995DF3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */,
+				2DD242681D95C2CE001D6725 /* AnchorageDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -46,6 +76,7 @@
 		3C2050AD1D3B20FD00995DF3 /* Anchorage */ = {
 			isa = PBXGroup;
 			children = (
+				2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */,
 				3C2050B61D3B213B00995DF3 /* Anchorage.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
 			);
@@ -66,6 +97,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2DD242671D95C2CE001D6725 /* AnchorageDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DD242721D95C2CE001D6725 /* Build configuration list for PBXNativeTarget "AnchorageDemo" */;
+			buildPhases = (
+				2DD242641D95C2CE001D6725 /* Sources */,
+				2DD242651D95C2CE001D6725 /* Frameworks */,
+				2DD242661D95C2CE001D6725 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AnchorageDemo;
+			productName = AnchorageDemo;
+			productReference = 2DD242681D95C2CE001D6725 /* AnchorageDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		3C2050AA1D3B20FD00995DF3 /* Anchorage */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3C2050B31D3B20FD00995DF3 /* Build configuration list for PBXNativeTarget "Anchorage" */;
@@ -90,9 +138,14 @@
 		3C2050A21D3B20FD00995DF3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Raizlabs;
 				TargetAttributes = {
+					2DD242671D95C2CE001D6725 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
 					3C2050AA1D3B20FD00995DF3 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 336S848KQ4;
@@ -108,6 +161,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 3C2050A11D3B20FD00995DF3;
 			productRefGroup = 3C2050AC1D3B20FD00995DF3 /* Products */;
@@ -115,11 +169,21 @@
 			projectRoot = "";
 			targets = (
 				3C2050AA1D3B20FD00995DF3 /* Anchorage */,
+				2DD242671D95C2CE001D6725 /* AnchorageDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2DD242661D95C2CE001D6725 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */,
+				2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3C2050A91D3B20FD00995DF3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,17 +194,65 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2DD242641D95C2CE001D6725 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3C2050A61D3B20FD00995DF3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */,
+				2DD242631D95C299001D6725 /* AnchorageCompatibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DD2426F1D95C2CE001D6725 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		2DD242731D95C2CE001D6725 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = AnchorageDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.connorneville.AnchorageDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		2DD242741D95C2CE001D6725 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = AnchorageDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.connorneville.AnchorageDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		3C2050B11D3B20FD00995DF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -278,6 +390,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2DD242721D95C2CE001D6725 /* Build configuration list for PBXNativeTarget "AnchorageDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DD242731D95C2CE001D6725 /* Debug */,
+				2DD242741D95C2CE001D6725 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		3C2050A51D3B20FD00995DF3 /* Build configuration list for PBXProject "Anchorage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
