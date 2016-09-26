@@ -36,15 +36,20 @@ class AnimatableConstraintCell: BaseCell {
 
     override func update(forDataSource dataSource: RootViewDataSource) {
         let newConstant = dataSource.animatableConstraintConstant
+        // Just because we don't want to animate anything the first
+        // time the cell loads.
         guard newConstant != 0 else {
             return
         }
+        layoutIfNeeded()
         animatableConstraint?.constant = newConstant
         UIView.animate(withDuration: 0.5, animations: {
+            // Animate the view's position change
             self.layoutIfNeeded()
             }, completion: { _ in
                 self.animatableConstraint?.constant = 0
-                UIView.animate(withDuration: 0.5, animations: { 
+                UIView.animate(withDuration: 0.5, animations: {
+                    // Animate the view going back to its original position
                     self.layoutIfNeeded()
                 })
         })
