@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DBB2D451D99596100A1E94B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D441D99596100A1E94B /* RootViewController.swift */; };
+		2DBB2D4B1D99597500A1E94B /* ToggleActiveHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D461D99597500A1E94B /* ToggleActiveHeightCell.swift */; };
+		2DBB2D4C1D99597500A1E94B /* MinimumWidthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D471D99597500A1E94B /* MinimumWidthViewCell.swift */; };
+		2DBB2D4D1D99597500A1E94B /* EqualSpaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D481D99597500A1E94B /* EqualSpaceViewCell.swift */; };
+		2DBB2D4E1D99597500A1E94B /* EdgeContainedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */; };
+		2DBB2D4F1D99597500A1E94B /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D4A1D99597500A1E94B /* BaseCell.swift */; };
+		2DBB2D501D99597E00A1E94B /* AnchorageCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */; };
+		2DBB2D511D99598000A1E94B /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 		2DD242631D95C299001D6725 /* AnchorageCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */; };
 		2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */; };
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
@@ -15,6 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2DBB2D441D99596100A1E94B /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		2DBB2D461D99597500A1E94B /* ToggleActiveHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToggleActiveHeightCell.swift; path = Cells/ToggleActiveHeightCell.swift; sourceTree = "<group>"; };
+		2DBB2D471D99597500A1E94B /* MinimumWidthViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MinimumWidthViewCell.swift; path = Cells/MinimumWidthViewCell.swift; sourceTree = "<group>"; };
+		2DBB2D481D99597500A1E94B /* EqualSpaceViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EqualSpaceViewCell.swift; path = Cells/EqualSpaceViewCell.swift; sourceTree = "<group>"; };
+		2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EdgeContainedLabelCell.swift; path = Cells/EdgeContainedLabelCell.swift; sourceTree = "<group>"; };
+		2DBB2D4A1D99597500A1E94B /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCell.swift; path = Cells/BaseCell.swift; sourceTree = "<group>"; };
 		2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorageCompatibility.swift; sourceTree = "<group>"; };
 		2DD242681D95C2CE001D6725 /* AnchorageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -44,9 +58,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DBB2D431D99595500A1E94B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2DBB2D461D99597500A1E94B /* ToggleActiveHeightCell.swift */,
+				2DBB2D471D99597500A1E94B /* MinimumWidthViewCell.swift */,
+				2DBB2D481D99597500A1E94B /* EqualSpaceViewCell.swift */,
+				2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */,
+				2DBB2D4A1D99597500A1E94B /* BaseCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		2DD242691D95C2CE001D6725 /* AnchorageDemo */ = {
 			isa = PBXGroup;
 			children = (
+				2DBB2D441D99596100A1E94B /* RootViewController.swift */,
+				2DBB2D431D99595500A1E94B /* Cells */,
 				2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */,
 				2DD2426C1D95C2CE001D6725 /* Assets.xcassets */,
 				2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */,
@@ -198,7 +226,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DBB2D4C1D99597500A1E94B /* MinimumWidthViewCell.swift in Sources */,
+				2DBB2D511D99598000A1E94B /* Anchorage.swift in Sources */,
+				2DBB2D501D99597E00A1E94B /* AnchorageCompatibility.swift in Sources */,
+				2DBB2D4E1D99597500A1E94B /* EdgeContainedLabelCell.swift in Sources */,
+				2DBB2D451D99596100A1E94B /* RootViewController.swift in Sources */,
+				2DBB2D4B1D99597500A1E94B /* ToggleActiveHeightCell.swift in Sources */,
+				2DBB2D4F1D99597500A1E94B /* BaseCell.swift in Sources */,
 				2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */,
+				2DBB2D4D1D99597500A1E94B /* EqualSpaceViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +433,7 @@
 				2DD242741D95C2CE001D6725 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3C2050A51D3B20FD00995DF3 /* Build configuration list for PBXProject "Anchorage" */ = {
 			isa = XCConfigurationList;
