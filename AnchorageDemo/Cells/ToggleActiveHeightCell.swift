@@ -6,7 +6,6 @@
 //  Copyright © 2016 Connor Neville. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class ToggleActiveHeightCell: BaseCell {

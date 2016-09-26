@@ -15,6 +15,7 @@ class RootViewController: UITableViewController {
         MinimumWidthViewCell.self,
         ToggleActiveHeightCell.self,
         EqualSpaceViewCell.self,
+        AnimatableConstraintCell.self
     ]
     let dataSource = RootViewDataSource()
 
@@ -54,6 +55,8 @@ class RootViewController: UITableViewController {
         case is EqualSpaceViewCell.Type:
             dataSource.equalSpacingConstraintConstant = (dataSource.equalSpacingConstraintConstant == 0) ?
                 10.0 : 0.0
+        case is AnimatableConstraintCell.Type:
+            dataSource.animatableConstraintConstant = 200.0
         default:
             break
         }
@@ -66,4 +69,5 @@ class RootViewDataSource {
     var minimumWidthConstraintConstant: CGFloat =  100.0
     var toggleHeightConstraintIsActive: Bool = true
     var equalSpacingConstraintConstant: CGFloat = 0.0
+    var animatableConstraintConstant: CGFloat = 0.0
 }
