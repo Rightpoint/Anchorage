@@ -82,7 +82,7 @@ let edgeConstraints = (button.edgeAnchors == container.edgeAnchors).all
 
 ## Autoresizing Mask
 
-Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of incase the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system supplied view.
+Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system supplied view.
 
 # Installation
 
@@ -103,7 +103,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-  pod 'Anchorage', '~> 2.0'
+  pod 'Anchorage', '~> 3.0'
 end
 ```
 Then, run the following command:
@@ -128,7 +128,7 @@ To integrate Anchorage into your Xcode project using Carthage, specify it in
 your Cartfile:
 
 ```
-github "Raizlabs/Anchorage" ~> 2.0
+github "Raizlabs/Anchorage" ~> 3.0
 ```
 
 Run `carthage update` to build the framework and drag the built
