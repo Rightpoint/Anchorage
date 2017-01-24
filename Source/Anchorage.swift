@@ -207,6 +207,7 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 precedencegroup PriorityPrecedence {
     associativity: none
     higherThan: ComparisonPrecedence
+    lowerThan: AdditionPrecedence
 }
 
 infix operator ~: PriorityPrecedence
