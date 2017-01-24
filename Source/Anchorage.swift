@@ -412,18 +412,18 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
             // Leading, trailing
         case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                   secondX as NSLayoutXAxisAnchor, otherSecondX as NSLayoutXAxisAnchor):
-            return AxisGroup(first: builder.leadingBuilder(firstX, (otherFirstX + c) ~ priority),
-                             second: builder.trailingBuilder(secondX, (otherSecondX - c) ~ priority))
+            return AxisGroup(first: builder.leadingBuilder(firstX, otherFirstX + c ~ priority),
+                             second: builder.trailingBuilder(secondX, otherSecondX - c ~ priority))
             //Top, bottom
         case let (firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor,
                   secondY as NSLayoutYAxisAnchor, otherSecondY as NSLayoutYAxisAnchor):
-            return AxisGroup(first: builder.topBuilder(firstY, (otherFirstY + c) ~ priority),
-                             second: builder.bottomBuilder(secondY, (otherSecondY - c) ~ priority))
+            return AxisGroup(first: builder.topBuilder(firstY, otherFirstY + c ~ priority),
+                             second: builder.bottomBuilder(secondY, otherSecondY - c ~ priority))
             //CenterX, centerY
         case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                   firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor):
-            return AxisGroup(first: builder.leadingBuilder(firstX, (otherFirstX + c) ~ priority),
-                             second: builder.topBuilder(firstY, (otherFirstY - c) ~ priority))
+            return AxisGroup(first: builder.leadingBuilder(firstX, otherFirstX + c ~ priority),
+                             second: builder.topBuilder(firstY, otherFirstY - c ~ priority))
         default:
             preconditionFailure("Layout axes of constrained anchors must match.")
         }

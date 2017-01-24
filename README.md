@@ -60,7 +60,7 @@ The `~` is used to specify priority of the constraint resulting from an equation
 
 ```swift
 // Align view 20 points from the center of its superview, with low priority
-view.centerXAnchor == (view.superview.centerXAnchor + 20) ~ UILayoutPriorityDefaultLow
+view.centerXAnchor == view.superview.centerXAnchor + 20 ~ UILayoutPriorityDefaultLow
 ```
 
 UIKit provides `UILayoutPriorityDefaultLow`, `UILayoutPriorityDefaultHigh`, and `UILayoutPriorityRequired` constants,
