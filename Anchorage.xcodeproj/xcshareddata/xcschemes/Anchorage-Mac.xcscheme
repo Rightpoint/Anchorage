@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F15462911E56842400C3948D"
-               BuildableName = "Anchorage-Mac.framework"
+               BuildableName = "Anchorage.framework"
                BlueprintName = "Anchorage-Mac"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F15462911E56842400C3948D"
-            BuildableName = "Anchorage-Mac.framework"
+            BuildableName = "Anchorage.framework"
             BlueprintName = "Anchorage-Mac"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F15462911E56842400C3948D"
-            BuildableName = "Anchorage-Mac.framework"
+            BuildableName = "Anchorage.framework"
             BlueprintName = "Anchorage-Mac"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
