@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
                BuildableName = "Anchorage.framework"
-               BlueprintName = "Anchorage"
+               BlueprintName = "Anchorage-iOS"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
             BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage"
+            BlueprintName = "Anchorage-iOS"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,7 +65,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
             BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage"
+            BlueprintName = "Anchorage-iOS"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

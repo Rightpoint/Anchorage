@@ -26,8 +26,12 @@
 //  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import UIKit
-
+#if os(macOS)
+    import Cocoa
+#else
+    import UIKit
+#endif
+    
 #if swift(>=3.0)
 #else
 
@@ -201,15 +205,15 @@ import UIKit
     precedence 135
     }
 
-    public func ~ (lhs: CGFloat, rhs: UILayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+    public func ~ (lhs: CGFloat, rhs: Alias.LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
         return LayoutExpression(constant: lhs, priority: rhs)
     }
 
-    public func ~ <T: LayoutAnchorType>(lhs: T, rhs: UILayoutPriority) -> LayoutExpression<T> {
+    public func ~ <T: LayoutAnchorType>(lhs: T, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
         return LayoutExpression(anchor: lhs, priority: rhs)
     }
 
-    public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: UILayoutPriority) -> LayoutExpression<T> {
+    public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
         var expr = lhs
         expr.priority = rhs
         return expr
