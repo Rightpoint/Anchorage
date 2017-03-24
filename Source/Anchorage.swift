@@ -240,6 +240,8 @@ precedencegroup PriorityPrecedence {
 
 infix operator ~: PriorityPrecedence
 
+// LayoutPriority
+
 @discardableResult public func ~ (lhs: CGFloat, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
     return LayoutExpression(constant: lhs, priority: rhs)
 }
@@ -252,6 +254,20 @@ infix operator ~: PriorityPrecedence
     var expr = lhs
     expr.priority = rhs
     return expr
+}
+
+// UILayoutPriority
+
+@discardableResult public func ~ (lhs: CGFloat, rhs: Alias.LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+    return lhs ~ .custom(rhs)
+}
+
+@discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
+    return lhs ~ .custom(rhs)
+}
+
+@discardableResult public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
+    return lhs ~ .custom(rhs)
 }
 
 // MARK: Layout Expressions
