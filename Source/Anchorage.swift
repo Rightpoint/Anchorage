@@ -370,7 +370,7 @@ public enum LayoutPriority {
     case fittingSize
     case custom(Alias.LayoutPriority)
 
-    var priority: Alias.LayoutPriority {
+    var value: Alias.LayoutPriority {
         switch self {
         case .required: return Alias.LayoutPriorityRequired
         case .high: return Alias.LayoutPriorityHigh
@@ -634,7 +634,7 @@ func activate(constraint theConstraint: NSLayoutConstraint, withPriority priorit
         first.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    theConstraint.priority = priority.priority
+    theConstraint.priority = priority.value
     theConstraint.isActive = true
 
     return theConstraint
