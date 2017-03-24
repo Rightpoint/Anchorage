@@ -553,15 +553,15 @@ public struct EdgeGroup {
     public var trailing: NSLayoutConstraint
 
     public var horizontal: [NSLayoutConstraint] {
-        return [leading, trailing].flatMap { $0 }
+        return [leading, trailing]
     }
 
     public var vertical: [NSLayoutConstraint] {
-        return [top, bottom].flatMap { $0 }
+        return [top, bottom]
     }
 
     public var all: [NSLayoutConstraint] {
-        return [top, leading, bottom, trailing].flatMap { $0 }
+        return [top, leading, bottom, trailing]
     }
 
 }
