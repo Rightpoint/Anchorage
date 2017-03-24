@@ -205,15 +205,15 @@
     precedence 135
     }
 
-    public func ~ (lhs: CGFloat, rhs: Alias.LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+    public func ~ (lhs: CGFloat, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
         return LayoutExpression(constant: lhs, priority: rhs)
     }
 
-    public func ~ <T: LayoutAnchorType>(lhs: T, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
+    public func ~ <T: LayoutAnchorType>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<T> {
         return LayoutExpression(anchor: lhs, priority: rhs)
     }
 
-    public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
+    public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: LayoutPriority) -> LayoutExpression<T> {
         var expr = lhs
         expr.priority = rhs
         return expr

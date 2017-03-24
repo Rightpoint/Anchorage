@@ -36,6 +36,9 @@
         public typealias LayoutGuide = NSLayoutGuide
         
         public static let LayoutPriorityRequired = NSLayoutPriorityRequired
+        public static let LayoutPriorityHigh = NSLayoutPriorityDefaultHigh
+        public static let LayoutPriorityLow = NSLayoutPriorityDefaultLow
+        public static let LayoutPriorityFittingSize = NSLayoutPriorityFittingSizeCompression
     }
 #else
     import UIKit
@@ -47,6 +50,9 @@
         public typealias LayoutGuide = UILayoutGuide
         
         public static let LayoutPriorityRequired = UILayoutPriorityRequired
+        public static let LayoutPriorityHigh = UILayoutPriorityDefaultHigh
+        public static let LayoutPriorityLow = UILayoutPriorityDefaultLow
+        public static let LayoutPriorityFittingSize = UILayoutPriorityFittingSizeLevel
     }
 #endif
 
@@ -234,15 +240,15 @@ precedencegroup PriorityPrecedence {
 
 infix operator ~: PriorityPrecedence
 
-@discardableResult public func ~ (lhs: CGFloat, rhs: Alias.LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func ~ (lhs: CGFloat, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
     return LayoutExpression(constant: lhs, priority: rhs)
 }
 
-@discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
+@discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<T> {
     return LayoutExpression(anchor: lhs, priority: rhs)
 }
 
-@discardableResult public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
+@discardableResult public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: LayoutPriority) -> LayoutExpression<T> {
     var expr = lhs
     expr.priority = rhs
     return expr
@@ -327,9 +333,9 @@ public struct LayoutExpression<T : LayoutAnchorType> {
     var anchor: T?
     var constant: CGFloat
     var multiplier: CGFloat
-    var priority: Alias.LayoutPriority
+    var priority: LayoutPriority
 
-    init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) {
+    init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: LayoutPriority = .required) {
         self.anchor = anchor
         self.constant = constant
         self.multiplier = multiplier
@@ -337,6 +343,28 @@ public struct LayoutExpression<T : LayoutAnchorType> {
     }
 
 }
+
+// MARK: - LayoutPriority
+
+public enum LayoutPriority {
+
+    case required
+    case high
+    case low
+    case fittingSize
+    case custom(Alias.LayoutPriority)
+
+    var priority: Alias.LayoutPriority {
+        switch self {
+        case .required: return Alias.LayoutPriorityRequired
+        case .high: return Alias.LayoutPriorityHigh
+        case .low: return Alias.LayoutPriorityLow
+        case .fittingSize: return Alias.LayoutPriorityFittingSize
+        case .custom(let priority): return priority
+        }
+    }
+}
+
 
 // MARK: - EdgeAnchorsProvider
 
@@ -418,22 +446,22 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
         self.second = second
     }
 
-    public func activate(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> AxisGroup {
+    public func activate(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> AxisGroup {
+    public func activate(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> AxisGroup {
+    public func activate(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: Alias.LayoutPriority, builder: ConstraintBuilder) -> AxisGroup {
+    func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> AxisGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -469,22 +497,22 @@ public struct EdgeAnchors: LayoutAnchorType {
         self.verticalAnchors = vertical
     }
 
-    public func activate(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> EdgeGroup {
+    public func activate(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> EdgeGroup {
+    public func activate(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> EdgeGroup {
+    public func activate(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: Alias.LayoutPriority, builder: ConstraintBuilder) -> EdgeGroup {
+    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> EdgeGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -584,13 +612,13 @@ struct ConstraintBuilder {
 
 // MARK: - Constraint Activation
 
-func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: Alias.LayoutPriority = Alias.LayoutPriorityRequired) -> NSLayoutConstraint {
+func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
     // Only disable autoresizing constraints on the LHS item, which is the one definitely intended to be governed by Auto Layout
     if let first = theConstraint.firstItem as? Alias.View{
         first.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    theConstraint.priority = priority
+    theConstraint.priority = priority.priority
     theConstraint.isActive = true
 
     return theConstraint
