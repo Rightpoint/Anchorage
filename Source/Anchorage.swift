@@ -344,19 +344,19 @@ infix operator ~: PriorityPrecedence
 
 // Adding to and subtracting from LayoutPriority
 
-@discardableResult public func + (lhs: LayoutPriority, rhs: CGFloat) -> Alias.LayoutPriority {
+public func + (lhs: LayoutPriority, rhs: CGFloat) -> Alias.LayoutPriority {
     return lhs.value + Alias.LayoutPriority(rhs)
 }
 
-@discardableResult public func - (lhs: LayoutPriority, rhs: CGFloat) -> Alias.LayoutPriority {
+public func - (lhs: LayoutPriority, rhs: CGFloat) -> Alias.LayoutPriority {
     return lhs.value - Alias.LayoutPriority(rhs)
 }
 
-@discardableResult public func + (lhs: CGFloat, rhs: LayoutPriority) -> Alias.LayoutPriority {
+public func + (lhs: CGFloat, rhs: LayoutPriority) -> Alias.LayoutPriority {
     return Alias.LayoutPriority(lhs) + rhs.value
 }
 
-@discardableResult public func - (lhs: CGFloat, rhs: LayoutPriority) -> Alias.LayoutPriority {
+public func - (lhs: CGFloat, rhs: LayoutPriority) -> Alias.LayoutPriority {
     return Alias.LayoutPriority(lhs) - rhs.value
 }
 
