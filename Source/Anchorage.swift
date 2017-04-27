@@ -65,12 +65,20 @@ public protocol LayoutAxisType {}
 extension NSLayoutXAxisAnchor : LayoutAxisType {}
 extension NSLayoutYAxisAnchor : LayoutAxisType {}
 
-#if swift(>=3.0)
+extension BinaryFloatingPoint {
+
+    init<T: BinaryFloatingPoint>(_ binaryFloatingPoint: T) {
+        let exponentPattern = RawExponent(binaryFloatingPoint.exponentBitPattern.toUIntMax())
+        let significandPattern = RawSignificand(binaryFloatingPoint.significandBitPattern.toUIntMax())
+        self.init(sign: binaryFloatingPoint.sign, exponentBitPattern: exponentPattern, significandBitPattern: significandPattern)
+    }
+
+}
 
 // MARK: - Equality Constraints
 
-@discardableResult public func == (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
-    return activate(constraint: lhs.constraint(equalToConstant: rhs))
+@discardableResult public func == <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+    return activate(constraint: lhs.constraint(equalToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func == (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
@@ -124,8 +132,8 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 
 // MARK: - Inequality Constraints
 
-@discardableResult public func <= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
-    return activate(constraint: lhs.constraint(lessThanOrEqualToConstant: rhs))
+@discardableResult public func <= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+    return activate(constraint: lhs.constraint(lessThanOrEqualToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func <= <T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
@@ -177,8 +185,8 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
     return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
-@discardableResult public func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
-    return activate(constraint: lhs.constraint(greaterThanOrEqualToConstant: rhs))
+@discardableResult public func >= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+    return activate(constraint: lhs.constraint(greaterThanOrEqualToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func >=<T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
@@ -242,8 +250,8 @@ infix operator ~: PriorityPrecedence
 
 // LayoutPriority
 
-@discardableResult public func ~ (lhs: CGFloat, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(constant: lhs, priority: rhs)
+@discardableResult public func ~ <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(constant: CGFloat(lhs), priority: rhs)
 }
 
 @discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<T> {
@@ -258,76 +266,76 @@ infix operator ~: PriorityPrecedence
 
 // UILayoutPriority
 
-@discardableResult public func ~ (lhs: CGFloat, rhs: Alias.LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
-    return lhs ~ .custom(rhs)
+@discardableResult public func ~ <T: BinaryFloatingPoint, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<NSLayoutDimension> {
+    return lhs ~ LayoutPriority(rhs)
 }
 
-@discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
-    return lhs ~ .custom(rhs)
+@discardableResult public func ~ <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T> {
+    return lhs ~ LayoutPriority(rhs)
 }
 
-@discardableResult public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: Alias.LayoutPriority) -> LayoutExpression<T> {
-    return lhs ~ .custom(rhs)
+@discardableResult public func ~ <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: LayoutExpression<T>, rhs: U) -> LayoutExpression<T> {
+    return lhs ~ LayoutPriority(rhs)
 }
 
 // MARK: Layout Expressions
 
-@discardableResult public func * (lhs: NSLayoutDimension, rhs: CGFloat) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(anchor: lhs, multiplier: rhs)
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(anchor: lhs, multiplier: CGFloat(rhs))
 }
 
-@discardableResult public func * (lhs: CGFloat, rhs: NSLayoutDimension) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(anchor: rhs, multiplier: lhs)
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: T, rhs: NSLayoutDimension) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(anchor: rhs, multiplier: CGFloat(lhs))
 }
 
-@discardableResult public func * (lhs: LayoutExpression<NSLayoutDimension>, rhs: CGFloat) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: LayoutExpression<NSLayoutDimension>, rhs: T) -> LayoutExpression<NSLayoutDimension> {
     var expr = lhs
-    expr.multiplier *= rhs
+    expr.multiplier *= CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func * (lhs: CGFloat, rhs: LayoutExpression<NSLayoutDimension>) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutExpression<NSLayoutDimension>) -> LayoutExpression<NSLayoutDimension> {
     var expr = rhs
-    expr.multiplier *= lhs
+    expr.multiplier *= CGFloat(lhs)
     return expr
 }
 
-@discardableResult public func / (lhs: NSLayoutDimension, rhs: CGFloat) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(anchor: lhs, multiplier: 1.0 / rhs)
+@discardableResult public func / <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(anchor: lhs, multiplier: 1.0 / CGFloat(rhs))
 }
 
-@discardableResult public func / (lhs: LayoutExpression<NSLayoutDimension>, rhs: CGFloat) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func / <T: BinaryFloatingPoint>(lhs: LayoutExpression<NSLayoutDimension>, rhs: T) -> LayoutExpression<NSLayoutDimension> {
     var expr = lhs
-    expr.multiplier /= rhs
+    expr.multiplier /= CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: T, rhs: CGFloat) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: lhs, constant: rhs)
+@discardableResult public func + <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T> {
+    return LayoutExpression(anchor: lhs, constant: CGFloat(rhs))
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: CGFloat, rhs: T) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: rhs, constant: lhs)
+@discardableResult public func + <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: U) -> LayoutExpression<U> {
+    return LayoutExpression(anchor: rhs, constant: CGFloat(lhs))
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
+@discardableResult public func + <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: LayoutExpression<T>, rhs: U) -> LayoutExpression<T> {
     var expr = lhs
-    expr.constant += rhs
+    expr.constant += CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: CGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
+@discardableResult public func + <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: LayoutExpression<U>) -> LayoutExpression<U> {
     var expr = rhs
-    expr.constant += lhs
+    expr.constant += CGFloat(lhs)
     return expr
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: T, rhs: CGFloat) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: lhs, constant: -rhs)
+@discardableResult public func - <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T> {
+    return LayoutExpression(anchor: lhs, constant: -CGFloat(rhs))
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: CGFloat, rhs: T) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: rhs, constant: -lhs)
+@discardableResult public func - <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: U) -> LayoutExpression<U> {
+    return LayoutExpression(anchor: rhs, constant: -CGFloat(lhs))
 }
 
 @discardableResult public func - <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
@@ -336,31 +344,31 @@ infix operator ~: PriorityPrecedence
     return expr
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: CGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
+@discardableResult public func - <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: LayoutExpression<U>) -> LayoutExpression<U> {
     var expr = rhs
-    expr.constant -= lhs
+    expr.constant -= CGFloat(lhs)
     return expr
 }
 
 // Adding to and subtracting from LayoutPriority
 
-public func + (lhs: LayoutPriority, rhs: CGFloat) -> LayoutPriority {
+public func + <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
     return .custom(lhs.value + Alias.LayoutPriority(rhs))
 }
 
-public func - (lhs: LayoutPriority, rhs: CGFloat) -> LayoutPriority {
-    return .custom(lhs.value - Alias.LayoutPriority(rhs))
-}
-
-public func + (lhs: CGFloat, rhs: LayoutPriority) -> LayoutPriority {
+public func + <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
     return .custom(Alias.LayoutPriority(lhs) + rhs.value)
 }
 
-public func - (lhs: CGFloat, rhs: LayoutPriority) -> LayoutPriority {
+public func - <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
+    return .custom(lhs.value - Alias.LayoutPriority(rhs))
+}
+
+public func - <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
     return .custom(Alias.LayoutPriority(lhs) - rhs.value)
 }
 
-#endif
+// MARK: - LayoutExpression
 
 public struct LayoutExpression<T : LayoutAnchorType> {
 
@@ -369,7 +377,7 @@ public struct LayoutExpression<T : LayoutAnchorType> {
     var multiplier: CGFloat
     var priority: LayoutPriority
 
-    init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: LayoutPriority = .required) {
+    fileprivate init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: LayoutPriority = .required) {
         self.anchor = anchor
         self.constant = constant
         self.multiplier = multiplier
@@ -396,6 +404,10 @@ public enum LayoutPriority {
         case .fittingSize: return Alias.LayoutPriorityFittingSize
         case .custom(let priority): return priority
         }
+    }
+
+    init<T: BinaryFloatingPoint>(_ value: T) {
+        self = .custom(Alias.LayoutPriority(value))
     }
 }
 
@@ -469,9 +481,10 @@ extension Alias.LayoutGuide: AnchorGroupProvider {
 
 }
 
-// MARK: - AnchorGroup
+// MARK: - AnchorPair
 
 public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType {
+
     private var first: T
     private var second: U
 
@@ -480,22 +493,22 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
         self.second = second
     }
 
-    public func activate(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
+    fileprivate func activate(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
+    fileprivate func activate(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
+    fileprivate func activate(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> AxisGroup {
+    fileprivate func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> AxisGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -522,31 +535,34 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
     }
 }
 
+// MARK: - EdgeAnchors
+
 public struct EdgeAnchors: LayoutAnchorType {
+
     var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
     var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
 
-    init(horizontal: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, vertical: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>) {
+    fileprivate init(horizontal: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, vertical: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>) {
         self.horizontalAnchors = horizontal
         self.verticalAnchors = vertical
     }
 
-    public func activate(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
+    fileprivate func activate(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
+    fileprivate func activate(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    public func activate(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
+    fileprivate func activate(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> EdgeGroup {
+    fileprivate func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> EdgeGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -561,39 +577,41 @@ public struct EdgeAnchors: LayoutAnchorType {
 
 }
 
-// MARK: - ConstraintGroup
+// MARK: - EdgeGroup
 
 public struct EdgeGroup {
 
-    public var top: NSLayoutConstraint
-    public var leading: NSLayoutConstraint
-    public var bottom: NSLayoutConstraint
-    public var trailing: NSLayoutConstraint
+    var top: NSLayoutConstraint
+    var leading: NSLayoutConstraint
+    var bottom: NSLayoutConstraint
+    var trailing: NSLayoutConstraint
 
-    public var horizontal: [NSLayoutConstraint] {
+    var horizontal: [NSLayoutConstraint] {
         return [leading, trailing]
     }
 
-    public var vertical: [NSLayoutConstraint] {
+    var vertical: [NSLayoutConstraint] {
         return [top, bottom]
     }
 
-    public var all: [NSLayoutConstraint] {
+    var all: [NSLayoutConstraint] {
         return [top, leading, bottom, trailing]
     }
 
 }
 
+// MARK: - Axis Group
+
 public struct AxisGroup {
 
-    public var first: NSLayoutConstraint
-    public var second: NSLayoutConstraint
+    var first: NSLayoutConstraint
+    var second: NSLayoutConstraint
 
 }
 
-// MARK: - Constraint Builders
+// MARK: - ConstraintBuilder
 
-struct ConstraintBuilder {
+fileprivate struct ConstraintBuilder {
 
     typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor>) -> NSLayoutConstraint
     typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor>) -> NSLayoutConstraint
@@ -605,7 +623,6 @@ struct ConstraintBuilder {
     var centerYBuilder: Vertical
     var centerXBuilder: Horizontal
 
-#if swift(>=3.0)
     init(horizontal: @escaping Horizontal, vertical: @escaping Vertical) {
         topBuilder = vertical
         leadingBuilder = horizontal
@@ -614,6 +631,7 @@ struct ConstraintBuilder {
         centerYBuilder = vertical
         centerXBuilder = horizontal
     }
+
     init(leading: @escaping Horizontal, top: @escaping Vertical, trailing: @escaping Horizontal,
          bottom: @escaping Vertical, centerX: @escaping Horizontal, centerY: @escaping Vertical) {
         leadingBuilder = leading
@@ -623,30 +641,12 @@ struct ConstraintBuilder {
         centerYBuilder = centerY
         centerXBuilder = centerX
     }
-#else
-    init(horizontal: Horizontal, vertical: Vertical) {
-        topBuilder = vertical
-        leadingBuilder = horizontal
-        bottomBuilder = vertical
-        trailingBuilder = horizontal
-        centerYBuilder = vertical
-        centerXBuilder = horizontal
-    }
-    init(leading: Horizontal, top: Vertical, trailing: Horizontal, bottom: Vertical, centerX: Horizontal, centerY: Vertical) {
-        leadingBuilder = leading
-        topBuilder = top
-        trailingBuilder = trailing
-        bottomBuilder = bottom
-        centerYBuilder = centerY
-        centerXBuilder = centerX
-    }
-#endif
     
 }
 
 // MARK: - Constraint Activation
 
-func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
+fileprivate func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
     // Only disable autoresizing constraints on the LHS item, which is the one definitely intended to be governed by Auto Layout
     if let first = theConstraint.firstItem as? Alias.View{
         first.translatesAutoresizingMaskIntoConstraints = false

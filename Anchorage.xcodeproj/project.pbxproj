@@ -13,15 +13,12 @@
 		2DBB2D4D1D99597500A1E94B /* EqualSpaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D481D99597500A1E94B /* EqualSpaceViewCell.swift */; };
 		2DBB2D4E1D99597500A1E94B /* EdgeContainedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */; };
 		2DBB2D4F1D99597500A1E94B /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D4A1D99597500A1E94B /* BaseCell.swift */; };
-		2DBB2D501D99597E00A1E94B /* AnchorageCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */; };
 		2DBB2D511D99598000A1E94B /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 		2DBB2D531D995FA000A1E94B /* AnimatableConstraintCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D521D995FA000A1E94B /* AnimatableConstraintCell.swift */; };
-		2DD242631D95C299001D6725 /* AnchorageCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */; };
 		2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */; };
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
 		2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */; };
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
-		F154629A1E56846100C3948D /* AnchorageCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */; };
 		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +30,6 @@
 		2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EdgeContainedLabelCell.swift; path = Cells/EdgeContainedLabelCell.swift; sourceTree = "<group>"; };
 		2DBB2D4A1D99597500A1E94B /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCell.swift; path = Cells/BaseCell.swift; sourceTree = "<group>"; };
 		2DBB2D521D995FA000A1E94B /* AnimatableConstraintCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatableConstraintCell.swift; path = Cells/AnimatableConstraintCell.swift; sourceTree = "<group>"; };
-		2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorageCompatibility.swift; sourceTree = "<group>"; };
 		2DD242681D95C2CE001D6725 /* AnchorageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DD2426C1D95C2CE001D6725 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,7 +114,6 @@
 		3C2050AD1D3B20FD00995DF3 /* Anchorage */ = {
 			isa = PBXGroup;
 			children = (
-				2DD242621D95C299001D6725 /* AnchorageCompatibility.swift */,
 				3C2050B61D3B213B00995DF3 /* Anchorage.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
 			);
@@ -279,7 +274,6 @@
 			files = (
 				2DBB2D4C1D99597500A1E94B /* MinimumWidthViewCell.swift in Sources */,
 				2DBB2D511D99598000A1E94B /* Anchorage.swift in Sources */,
-				2DBB2D501D99597E00A1E94B /* AnchorageCompatibility.swift in Sources */,
 				2DBB2D4E1D99597500A1E94B /* EdgeContainedLabelCell.swift in Sources */,
 				2DBB2D451D99596100A1E94B /* RootViewController.swift in Sources */,
 				2DBB2D4B1D99597500A1E94B /* ToggleActiveHeightCell.swift in Sources */,
@@ -295,7 +289,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */,
-				2DD242631D95C299001D6725 /* AnchorageCompatibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +296,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F154629A1E56846100C3948D /* AnchorageCompatibility.swift in Sources */,
 				F154629B1E56846200C3948D /* Anchorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
