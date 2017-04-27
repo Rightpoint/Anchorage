@@ -67,10 +67,12 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 
 extension BinaryFloatingPoint {
 
-    init<T: BinaryFloatingPoint>(_ binaryFloatingPoint: T) {
-        let exponentPattern = RawExponent(binaryFloatingPoint.exponentBitPattern.toUIntMax())
-        let significandPattern = RawSignificand(binaryFloatingPoint.significandBitPattern.toUIntMax())
-        self.init(sign: binaryFloatingPoint.sign, exponentBitPattern: exponentPattern, significandBitPattern: significandPattern)
+    public init<T: BinaryFloatingPoint>(_ bfp: T) {
+        self.init(
+            sign: bfp.sign,
+            exponentBitPattern: RawExponent(bfp.exponentBitPattern.toUIntMax()),
+            significandBitPattern: RawSignificand(bfp.significandBitPattern.toUIntMax())
+        )
     }
 
 }
@@ -264,20 +266,6 @@ infix operator ~: PriorityPrecedence
     return expr
 }
 
-// UILayoutPriority
-
-@discardableResult public func ~ <T: BinaryFloatingPoint, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<NSLayoutDimension> {
-    return lhs ~ LayoutPriority(rhs)
-}
-
-@discardableResult public func ~ <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T> {
-    return lhs ~ LayoutPriority(rhs)
-}
-
-@discardableResult public func ~ <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: LayoutExpression<T>, rhs: U) -> LayoutExpression<T> {
-    return lhs ~ LayoutPriority(rhs)
-}
-
 // MARK: Layout Expressions
 
 @discardableResult public func * <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> LayoutExpression<NSLayoutDimension> {
@@ -350,7 +338,57 @@ infix operator ~: PriorityPrecedence
     return expr
 }
 
-// Adding to and subtracting from LayoutPriority
+// MARK: - LayoutExpression
+
+public struct LayoutExpression<T : LayoutAnchorType> {
+
+    public var anchor: T?
+    public var constant: CGFloat
+    public var multiplier: CGFloat
+    public var priority: LayoutPriority
+
+    fileprivate init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: LayoutPriority = .required) {
+        self.anchor = anchor
+        self.constant = constant
+        self.multiplier = multiplier
+        self.priority = priority
+    }
+
+}
+
+// MARK: - LayoutPriority
+
+public enum LayoutPriority: ExpressibleByFloatLiteral, Equatable {
+
+    case required
+    case high
+    case low
+    case fittingSize
+    case custom(Alias.LayoutPriority)
+
+    public var value: Alias.LayoutPriority {
+        switch self {
+        case .required: return Alias.LayoutPriorityRequired
+        case .high: return Alias.LayoutPriorityHigh
+        case .low: return Alias.LayoutPriorityLow
+        case .fittingSize: return Alias.LayoutPriorityFittingSize
+        case .custom(let priority): return priority
+        }
+    }
+
+    public init(floatLiteral value: Alias.LayoutPriority) {
+        self.init(value)
+    }
+
+    public init<T: BinaryFloatingPoint>(_ value: T) {
+        self = .custom(Alias.LayoutPriority(value))
+    }
+
+}
+
+public func == (lhs: LayoutPriority, rhs: LayoutPriority) -> Bool {
+    return lhs.value == rhs.value
+}
 
 public func + <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
     return .custom(lhs.value + Alias.LayoutPriority(rhs))
@@ -367,50 +405,6 @@ public func - <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPri
 public func - <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
     return .custom(Alias.LayoutPriority(lhs) - rhs.value)
 }
-
-// MARK: - LayoutExpression
-
-public struct LayoutExpression<T : LayoutAnchorType> {
-
-    var anchor: T?
-    var constant: CGFloat
-    var multiplier: CGFloat
-    var priority: LayoutPriority
-
-    fileprivate init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: LayoutPriority = .required) {
-        self.anchor = anchor
-        self.constant = constant
-        self.multiplier = multiplier
-        self.priority = priority
-    }
-
-}
-
-// MARK: - LayoutPriority
-
-public enum LayoutPriority {
-
-    case required
-    case high
-    case low
-    case fittingSize
-    case custom(Alias.LayoutPriority)
-
-    var value: Alias.LayoutPriority {
-        switch self {
-        case .required: return Alias.LayoutPriorityRequired
-        case .high: return Alias.LayoutPriorityHigh
-        case .low: return Alias.LayoutPriorityLow
-        case .fittingSize: return Alias.LayoutPriorityFittingSize
-        case .custom(let priority): return priority
-        }
-    }
-
-    init<T: BinaryFloatingPoint>(_ value: T) {
-        self = .custom(Alias.LayoutPriority(value))
-    }
-}
-
 
 // MARK: - EdgeAnchorsProvider
 
@@ -429,7 +423,6 @@ extension AnchorGroupProvider {
     }
 
 }
-
 
 extension Alias.View: AnchorGroupProvider {
 
@@ -485,10 +478,10 @@ extension Alias.LayoutGuide: AnchorGroupProvider {
 
 public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType {
 
-    private var first: T
-    private var second: U
+    public var first: T
+    public var second: U
 
-    init(first: T, second: U) {
+    fileprivate init(first: T, second: U) {
         self.first = first
         self.second = second
     }
@@ -539,8 +532,8 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
 
 public struct EdgeAnchors: LayoutAnchorType {
 
-    var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
-    var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
+    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
+    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
 
     fileprivate init(horizontal: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, vertical: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>) {
         self.horizontalAnchors = horizontal
@@ -581,20 +574,20 @@ public struct EdgeAnchors: LayoutAnchorType {
 
 public struct EdgeGroup {
 
-    var top: NSLayoutConstraint
-    var leading: NSLayoutConstraint
-    var bottom: NSLayoutConstraint
-    var trailing: NSLayoutConstraint
+    public var top: NSLayoutConstraint
+    public var leading: NSLayoutConstraint
+    public var bottom: NSLayoutConstraint
+    public var trailing: NSLayoutConstraint
 
-    var horizontal: [NSLayoutConstraint] {
+    public var horizontal: [NSLayoutConstraint] {
         return [leading, trailing]
     }
 
-    var vertical: [NSLayoutConstraint] {
+    public var vertical: [NSLayoutConstraint] {
         return [top, bottom]
     }
 
-    var all: [NSLayoutConstraint] {
+    public var all: [NSLayoutConstraint] {
         return [top, leading, bottom, trailing]
     }
 
@@ -604,8 +597,8 @@ public struct EdgeGroup {
 
 public struct AxisGroup {
 
-    var first: NSLayoutConstraint
-    var second: NSLayoutConstraint
+    public var first: NSLayoutConstraint
+    public var second: NSLayoutConstraint
 
 }
 

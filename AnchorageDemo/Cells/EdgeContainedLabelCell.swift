@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Anchorage
 
 class EdgeContainedLabelCell: BaseCell {
     override class func reuseId() -> String {

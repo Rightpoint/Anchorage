@@ -13,7 +13,6 @@
 		2DBB2D4D1D99597500A1E94B /* EqualSpaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D481D99597500A1E94B /* EqualSpaceViewCell.swift */; };
 		2DBB2D4E1D99597500A1E94B /* EdgeContainedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */; };
 		2DBB2D4F1D99597500A1E94B /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D4A1D99597500A1E94B /* BaseCell.swift */; };
-		2DBB2D511D99598000A1E94B /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 		2DBB2D531D995FA000A1E94B /* AnimatableConstraintCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D521D995FA000A1E94B /* AnimatableConstraintCell.swift */; };
 		2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */; };
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
@@ -21,6 +20,16 @@
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D497F1161EB270CC00CBCF2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C2050AA1D3B20FD00995DF3;
+			remoteInfo = "Anchorage-iOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2DBB2D441D99596100A1E94B /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +161,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D497F1171EB270CC00CBCF2F /* PBXTargetDependency */,
 			);
 			name = AnchorageDemo;
 			productName = AnchorageDemo;
@@ -273,7 +283,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DBB2D4C1D99597500A1E94B /* MinimumWidthViewCell.swift in Sources */,
-				2DBB2D511D99598000A1E94B /* Anchorage.swift in Sources */,
 				2DBB2D4E1D99597500A1E94B /* EdgeContainedLabelCell.swift in Sources */,
 				2DBB2D451D99596100A1E94B /* RootViewController.swift in Sources */,
 				2DBB2D4B1D99597500A1E94B /* ToggleActiveHeightCell.swift in Sources */,
@@ -301,6 +310,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D497F1171EB270CC00CBCF2F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */;
+			targetProxy = D497F1161EB270CC00CBCF2F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */ = {
