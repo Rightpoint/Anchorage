@@ -66,7 +66,7 @@ private extension MinimumWidthViewCell {
 
         // We have 2 constraints that dictate the height of the red view. Auto layout tries to 
         // satisfy both if possible, but if not, it'll satisfy the higher priority one.
-        redView.widthAnchor == blueView.widthAnchor * 0.5 ~ .low
+        redView.widthAnchor == blueView.widthAnchor * 0.5 ~ .low + 1
         redView.widthAnchor <= 100 ~ .high
 
         redView.heightAnchor == 10

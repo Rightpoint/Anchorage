@@ -28,13 +28,13 @@
 
 #if os(macOS)
     import Cocoa
-    
+
     public enum Alias {
         public typealias View = NSView
         public typealias ViewController = NSViewController
         public typealias LayoutPriority = NSLayoutPriority
         public typealias LayoutGuide = NSLayoutGuide
-        
+
         public static let LayoutPriorityRequired = NSLayoutPriorityRequired
         public static let LayoutPriorityHigh = NSLayoutPriorityDefaultHigh
         public static let LayoutPriorityLow = NSLayoutPriorityDefaultLow
@@ -42,13 +42,13 @@
     }
 #else
     import UIKit
-    
+
     public enum Alias {
         public typealias View = UIView
         public typealias ViewController = UIViewController
         public typealias LayoutPriority = UILayoutPriority
         public typealias LayoutGuide = UILayoutGuide
-        
+
         public static let LayoutPriorityRequired = UILayoutPriorityRequired
         public static let LayoutPriorityHigh = UILayoutPriorityDefaultHigh
         public static let LayoutPriorityLow = UILayoutPriorityDefaultLow
@@ -67,7 +67,7 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 
 #if swift(>=3.0)
 
-    // MARK: - Equality Constraints
+// MARK: - Equality Constraints
 
 @discardableResult public func == (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     return activate(constraint: lhs.constraint(equalToConstant: rhs))
@@ -342,6 +342,24 @@ infix operator ~: PriorityPrecedence
     return expr
 }
 
+// Adding to and subtracting from LayoutPriority
+
+public func + (lhs: LayoutPriority, rhs: CGFloat) -> LayoutPriority {
+    return .custom(lhs.value + Alias.LayoutPriority(rhs))
+}
+
+public func - (lhs: LayoutPriority, rhs: CGFloat) -> LayoutPriority {
+    return .custom(lhs.value - Alias.LayoutPriority(rhs))
+}
+
+public func + (lhs: CGFloat, rhs: LayoutPriority) -> LayoutPriority {
+    return .custom(Alias.LayoutPriority(lhs) + rhs.value)
+}
+
+public func - (lhs: CGFloat, rhs: LayoutPriority) -> LayoutPriority {
+    return .custom(Alias.LayoutPriority(lhs) - rhs.value)
+}
+
 #endif
 
 public struct LayoutExpression<T : LayoutAnchorType> {
@@ -420,7 +438,7 @@ extension Alias.ViewController: AnchorGroupProvider {
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchorPair(first: view.leadingAnchor, second: view.trailingAnchor)
     }
-    
+
 #if os(macOS)
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchorPair(first: view.bottomAnchor, second: view.topAnchor)
@@ -430,7 +448,7 @@ extension Alias.ViewController: AnchorGroupProvider {
         return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
     }
 #endif
-    
+
     public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchorPair(first: view.centerXAnchor, second: view.centerYAnchor)
     }
@@ -483,17 +501,17 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
         }
 
         switch (first, anchors.first, second, anchors.second) {
-            // Leading, trailing
+        // Leading, trailing
         case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                   secondX as NSLayoutXAxisAnchor, otherSecondX as NSLayoutXAxisAnchor):
             return AxisGroup(first: builder.leadingBuilder(firstX, otherFirstX + c ~ priority),
                              second: builder.trailingBuilder(secondX, otherSecondX - c ~ priority))
-            //Top, bottom
+        //Top, bottom
         case let (firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor,
                   secondY as NSLayoutYAxisAnchor, otherSecondY as NSLayoutYAxisAnchor):
             return AxisGroup(first: builder.topBuilder(firstY, otherFirstY + c ~ priority),
                              second: builder.bottomBuilder(secondY, otherSecondY - c ~ priority))
-            //CenterX, centerY
+        //CenterX, centerY
         case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                   firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor):
             return AxisGroup(first: builder.leadingBuilder(firstX, otherFirstX + c ~ priority),
@@ -587,7 +605,7 @@ struct ConstraintBuilder {
     var centerYBuilder: Vertical
     var centerXBuilder: Horizontal
 
-    #if swift(>=3.0)
+#if swift(>=3.0)
     init(horizontal: @escaping Horizontal, vertical: @escaping Vertical) {
         topBuilder = vertical
         leadingBuilder = horizontal
@@ -605,7 +623,7 @@ struct ConstraintBuilder {
         centerYBuilder = centerY
         centerXBuilder = centerX
     }
-    #else
+#else
     init(horizontal: Horizontal, vertical: Vertical) {
         topBuilder = vertical
         leadingBuilder = horizontal
@@ -622,8 +640,8 @@ struct ConstraintBuilder {
         centerYBuilder = centerY
         centerXBuilder = centerX
     }
-    #endif
-
+#endif
+    
 }
 
 // MARK: - Constraint Activation
@@ -633,9 +651,9 @@ func activate(constraint theConstraint: NSLayoutConstraint, withPriority priorit
     if let first = theConstraint.firstItem as? Alias.View{
         first.translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     theConstraint.priority = priority.value
     theConstraint.isActive = true
-
+    
     return theConstraint
 }
