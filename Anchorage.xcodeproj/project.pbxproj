@@ -20,10 +20,19 @@
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 		7A39D6281EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */; };
 		7A39D6291EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */; };
+		7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */; };
+		7A39D6331EB53E1100BDE9C0 /* Anchorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */; };
 		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7A39D6341EB53E1100BDE9C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C2050AA1D3B20FD00995DF3;
+			remoteInfo = "Anchorage-iOS";
+		};
 		D497F1161EB270CC00CBCF2F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
@@ -50,6 +59,9 @@
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
 		7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressibleAsCGFloat.swift; sourceTree = "<group>"; };
+		7A39D62E1EB53E1100BDE9C0 /* AnchorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnchorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorageTests.swift; sourceTree = "<group>"; };
+		7A39D6321EB53E1100BDE9C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F15462921E56842400C3948D /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,6 +77,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A39D62B1EB53E1100BDE9C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A39D6331EB53E1100BDE9C0 /* Anchorage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +129,7 @@
 			children = (
 				3C2050AD1D3B20FD00995DF3 /* Anchorage */,
 				2DD242691D95C2CE001D6725 /* AnchorageDemo */,
+				7A39D62F1EB53E1100BDE9C0 /* AnchorageTests */,
 				3C2050AC1D3B20FD00995DF3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,6 +140,7 @@
 				3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */,
 				2DD242681D95C2CE001D6725 /* AnchorageDemo.app */,
 				F15462921E56842400C3948D /* Anchorage.framework */,
+				7A39D62E1EB53E1100BDE9C0 /* AnchorageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +154,15 @@
 			);
 			name = Anchorage;
 			path = Source;
+			sourceTree = "<group>";
+		};
+		7A39D62F1EB53E1100BDE9C0 /* AnchorageTests */ = {
+			isa = PBXGroup;
+			children = (
+				7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */,
+				7A39D6321EB53E1100BDE9C0 /* Info.plist */,
+			);
+			path = AnchorageTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +221,24 @@
 			productReference = 3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		7A39D62D1EB53E1100BDE9C0 /* AnchorageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A39D6381EB53E1100BDE9C0 /* Build configuration list for PBXNativeTarget "AnchorageTests" */;
+			buildPhases = (
+				7A39D62A1EB53E1100BDE9C0 /* Sources */,
+				7A39D62B1EB53E1100BDE9C0 /* Frameworks */,
+				7A39D62C1EB53E1100BDE9C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A39D6351EB53E1100BDE9C0 /* PBXTargetDependency */,
+			);
+			name = AnchorageTests;
+			productName = AnchorageTests;
+			productReference = 7A39D62E1EB53E1100BDE9C0 /* AnchorageTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F15462911E56842400C3948D /* Anchorage-Mac */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "Anchorage-Mac" */;
@@ -214,7 +263,7 @@
 		3C2050A21D3B20FD00995DF3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Raizlabs;
 				TargetAttributes = {
@@ -227,6 +276,11 @@
 						DevelopmentTeam = 336S848KQ4;
 						DevelopmentTeamName = "Raizlabs Corporation";
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
+					7A39D62D1EB53E1100BDE9C0 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 2KJHM26Y46;
 						ProvisioningStyle = Automatic;
 					};
 					F15462911E56842400C3948D = {
@@ -251,6 +305,7 @@
 				3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */,
 				F15462911E56842400C3948D /* Anchorage-Mac */,
 				2DD242671D95C2CE001D6725 /* AnchorageDemo */,
+				7A39D62D1EB53E1100BDE9C0 /* AnchorageTests */,
 			);
 		};
 /* End PBXProject section */
@@ -266,6 +321,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3C2050A91D3B20FD00995DF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A39D62C1EB53E1100BDE9C0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -306,6 +368,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7A39D62A1EB53E1100BDE9C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F154628D1E56842400C3948D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -318,6 +388,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		7A39D6351EB53E1100BDE9C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */;
+			targetProxy = 7A39D6341EB53E1100BDE9C0 /* PBXContainerItemProxy */;
+		};
 		D497F1171EB270CC00CBCF2F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */;
@@ -505,6 +580,34 @@
 			};
 			name = Release;
 		};
+		7A39D6361EB53E1100BDE9C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = 2KJHM26Y46;
+				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.AnchorageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		7A39D6371EB53E1100BDE9C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = 2KJHM26Y46;
+				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.AnchorageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		F15462971E56842400C3948D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -582,6 +685,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7A39D6381EB53E1100BDE9C0 /* Build configuration list for PBXNativeTarget "AnchorageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A39D6361EB53E1100BDE9C0 /* Debug */,
+				7A39D6371EB53E1100BDE9C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "Anchorage-Mac" */ = {
 			isa = XCConfigurationList;

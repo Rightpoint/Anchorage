@@ -346,7 +346,7 @@ public struct LayoutExpression<T : LayoutAnchorType> {
 
 // MARK: - LayoutPriority
 
-public enum LayoutPriority: ExpressibleByFloatLiteral, Equatable {
+public enum LayoutPriority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, Equatable {
 
     case required
     case high
@@ -366,6 +366,10 @@ public enum LayoutPriority: ExpressibleByFloatLiteral, Equatable {
 
     public init(floatLiteral value: Alias.LayoutPriority) {
         self.init(value)
+    }
+
+    public init(integerLiteral value: Int) {
+        self = .custom(Alias.LayoutPriority(value))
     }
 
     public init(_ value: ExpressibleAsCGFloat) {

@@ -48,3 +48,11 @@ extension Float80: ExpressibleAsCGFloat {
     }
 
 }
+
+extension Int: ExpressibleAsCGFloat {
+
+    public var asCGFloat: CGFloat {
+        return CGFloat(self)
+    }
+
+}
