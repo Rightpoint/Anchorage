@@ -512,8 +512,8 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
         //CenterX, centerY
         case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                   firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor):
-            return AxisGroup(first: builder.leadingBuilder(firstX, otherFirstX + c ~ priority),
-                             second: builder.topBuilder(firstY, otherFirstY - c ~ priority))
+            return AxisGroup(first: builder.centerXBuilder(firstX, otherFirstX + c ~ priority),
+                             second: builder.centerYBuilder(firstY, otherFirstY + c ~ priority))
         default:
             preconditionFailure("Layout axes of constrained anchors must match.")
         }
@@ -557,7 +557,7 @@ public struct EdgeAnchors: LayoutAnchorType {
         return EdgeGroup(top: verticalConstraints.first,
                          leading: horizontalConstraints.first,
                          bottom: verticalConstraints.second,
-                         trailing: verticalConstraints.second)
+                         trailing: horizontalConstraints.second)
     }
 
 }
