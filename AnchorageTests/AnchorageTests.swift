@@ -325,6 +325,49 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.secondAttribute, .bottom)
     }
 
+    func testInactiveConstraint() {
+        let constraint = Anchorage.inactiveConstraint(view1.widthAnchor == view2.widthAnchor)
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, UILayoutPriorityRequired, accuracy: fEpsilon)
+        XCTAssertFalse(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .equal)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testInactiveConstraints() {
+        let constraints = Anchorage.inactiveConstraints {
+            view1.widthAnchor == view2.widthAnchor
+            view1.heightAnchor == view2.heightAnchor / 2 ~ .low
+        }
+
+        let width = constraints[0]
+        let height = constraints[1]
+
+        assertIdentical(width.firstItem, view1)
+        assertIdentical(width.secondItem, view2)
+        XCTAssertEqualWithAccuracy(width.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(width.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(width.priority, UILayoutPriorityRequired, accuracy: fEpsilon)
+        XCTAssertFalse(width.isActive)
+        XCTAssertEqual(width.relation, .equal)
+        XCTAssertEqual(width.firstAttribute, .width)
+        XCTAssertEqual(width.secondAttribute, .width)
+
+        assertIdentical(height.firstItem, view1)
+        assertIdentical(height.secondItem, view2)
+        XCTAssertEqualWithAccuracy(height.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(height.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(height.priority, UILayoutPriorityDefaultLow, accuracy: fEpsilon)
+        XCTAssertFalse(height.isActive)
+        XCTAssertEqual(height.relation, .equal)
+        XCTAssertEqual(height.firstAttribute, .height)
+        XCTAssertEqual(height.secondAttribute, .height)
+    }
+
 }
 
 extension AnchorageTests {

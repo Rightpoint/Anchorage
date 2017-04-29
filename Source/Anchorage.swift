@@ -638,7 +638,46 @@ private func activate(constraint theConstraint: NSLayoutConstraint, withPriority
     }
     
     theConstraint.priority = priority.value
-    theConstraint.isActive = true
+    if InactiveConstraintBuilder.buildInactiveConstraints {
+        InactiveConstraintBuilder.pendingConstraints.append(theConstraint)
+    }
+    else {
+        theConstraint.isActive = true
+    }
     
     return theConstraint
+}
+
+// MARK: - Inactive Constraint Creation
+
+private enum InactiveConstraintBuilder {
+
+    static var buildInactiveConstraints = false
+    static var pendingConstraints: [NSLayoutConstraint] = []
+
+    /// Returns the pending constraints.
+    /// - Postcondition: After calling this method, the value of `pendingConstraints` will be the empty array.
+    /// - Returns: the pending constraints.
+    @discardableResult static func flushPendingConstraints() -> [NSLayoutConstraint] {
+        defer { pendingConstraints = [] }
+        return pendingConstraints
+    }
+
+}
+
+public func inactiveConstraint(_ closure: @autoclosure () -> NSLayoutConstraint) -> NSLayoutConstraint {
+    precondition(InactiveConstraintBuilder.pendingConstraints.isEmpty)
+    InactiveConstraintBuilder.buildInactiveConstraints = true
+    let constraint = closure()
+    InactiveConstraintBuilder.buildInactiveConstraints = false
+    InactiveConstraintBuilder.flushPendingConstraints()
+    return constraint
+}
+
+public func inactiveConstraints(_ closure: () -> Void) -> [NSLayoutConstraint] {
+    precondition(InactiveConstraintBuilder.pendingConstraints.isEmpty)
+    InactiveConstraintBuilder.buildInactiveConstraints = true
+    closure()
+    InactiveConstraintBuilder.buildInactiveConstraints = false
+    return InactiveConstraintBuilder.flushPendingConstraints()
 }
