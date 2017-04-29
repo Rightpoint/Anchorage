@@ -596,7 +596,7 @@ public struct AxisGroup {
 
 // MARK: - ConstraintBuilder
 
-fileprivate struct ConstraintBuilder {
+private struct ConstraintBuilder {
 
     typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor>) -> NSLayoutConstraint
     typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor>) -> NSLayoutConstraint
@@ -631,7 +631,7 @@ fileprivate struct ConstraintBuilder {
 
 // MARK: - Constraint Activation
 
-fileprivate func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
+private func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
     // Only disable autoresizing constraints on the LHS item, which is the one definitely intended to be governed by Auto Layout
     if let first = theConstraint.firstItem as? Alias.View{
         first.translatesAutoresizingMaskIntoConstraints = false
