@@ -325,19 +325,6 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.secondAttribute, .bottom)
     }
 
-    func testInactiveConstraint() {
-        let constraint = Anchorage.inactiveConstraint(view1.widthAnchor == view2.widthAnchor)
-        assertIdentical(constraint.firstItem, view1)
-        assertIdentical(constraint.secondItem, view2)
-        XCTAssertEqualWithAccuracy(constraint.constant, 0, accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(constraint.multiplier, 1, accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(constraint.priority, UILayoutPriorityRequired, accuracy: fEpsilon)
-        XCTAssertFalse(constraint.isActive)
-        XCTAssertEqual(constraint.relation, .equal)
-        XCTAssertEqual(constraint.firstAttribute, .width)
-        XCTAssertEqual(constraint.secondAttribute, .width)
-    }
-
     func testInactiveConstraints() {
         let constraints = Anchorage.inactiveConstraints {
             view1.widthAnchor == view2.widthAnchor
