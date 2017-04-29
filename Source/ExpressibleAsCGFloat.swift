@@ -19,27 +19,24 @@ extension CGFloat: ExpressibleAsCGFloat {
     public var asCGFloat: CGFloat {
         return self
     }
-    
-}
 
+}
 
 extension Float: ExpressibleAsCGFloat {
 
     public var asCGFloat: CGFloat {
         return CGFloat(self)
     }
-    
-}
 
+}
 
 extension Double: ExpressibleAsCGFloat {
 
     public var asCGFloat: CGFloat {
         return CGFloat(self)
     }
-    
-}
 
+}
 
 extension Float80: ExpressibleAsCGFloat {
 

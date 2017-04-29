@@ -328,7 +328,7 @@ infix operator ~: PriorityPrecedence
 
 // MARK: - LayoutExpression
 
-public struct LayoutExpression<T : LayoutAnchorType> {
+public struct LayoutExpression<T: LayoutAnchorType> {
 
     public var anchor: T?
     public var constant: CGFloat
@@ -626,7 +626,7 @@ private struct ConstraintBuilder {
         centerYBuilder = centerY
         centerXBuilder = centerX
     }
-    
+
 }
 
 // MARK: - Constraint Activation
@@ -636,7 +636,7 @@ private func activate(constraint theConstraint: NSLayoutConstraint, withPriority
     if let first = theConstraint.firstItem as? Alias.View {
         first.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     theConstraint.priority = priority.value
     if InactiveConstraintBuilder.buildInactiveConstraints {
         InactiveConstraintBuilder.pendingConstraints.append(theConstraint)
@@ -644,7 +644,7 @@ private func activate(constraint theConstraint: NSLayoutConstraint, withPriority
     else {
         theConstraint.isActive = true
     }
-    
+
     return theConstraint
 }
 

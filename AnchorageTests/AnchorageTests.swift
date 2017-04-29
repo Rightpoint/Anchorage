@@ -154,7 +154,6 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
-
     func testEqualityWithOffsetAndPriorityMath() {
         let constraint = view1.widthAnchor == view2.widthAnchor + 10 ~ .high - 1
         assertIdentical(constraint.firstItem, view1)
@@ -300,7 +299,6 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(trailing.relation, .equal)
         XCTAssertEqual(trailing.firstAttribute, .trailing)
         XCTAssertEqual(trailing.secondAttribute, .trailing)
-
 
         let top = constraints.top
         assertIdentical(top.firstItem, view1)
