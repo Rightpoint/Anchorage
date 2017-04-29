@@ -633,7 +633,7 @@ private struct ConstraintBuilder {
 
 private func activate(constraint theConstraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
     // Only disable autoresizing constraints on the LHS item, which is the one definitely intended to be governed by Auto Layout
-    if let first = theConstraint.firstItem as? Alias.View{
+    if let first = theConstraint.firstItem as? Alias.View {
         first.translatesAutoresizingMaskIntoConstraints = false
     }
     
