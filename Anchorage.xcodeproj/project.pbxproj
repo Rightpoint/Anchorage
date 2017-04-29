@@ -18,6 +18,8 @@
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
 		2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */; };
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
+		7A39D6281EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */; };
+		7A39D6291EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */; };
 		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,7 @@
 		3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
+		7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressibleAsCGFloat.swift; sourceTree = "<group>"; };
 		F15462921E56842400C3948D /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				3C2050B61D3B213B00995DF3 /* Anchorage.swift */,
+				7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
 			);
 			name = Anchorage;
@@ -298,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */,
+				7A39D6281EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F154629B1E56846200C3948D /* Anchorage.swift in Sources */,
+				7A39D6291EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
