@@ -638,8 +638,8 @@ private func activate(constraint theConstraint: NSLayoutConstraint, withPriority
     }
 
     theConstraint.priority = priority.value
-    if InactiveConstraintBuilder.buildInactiveConstraints {
-        InactiveConstraintBuilder.pendingConstraints.append(theConstraint)
+    if BatchingConstraintBuilder.buildInactiveConstraints {
+        BatchingConstraintBuilder.pendingConstraints.append(theConstraint)
     }
     else {
         theConstraint.isActive = true
@@ -648,9 +648,9 @@ private func activate(constraint theConstraint: NSLayoutConstraint, withPriority
     return theConstraint
 }
 
-// MARK: - Inactive Constraint Creation
+// MARK: - Batched Constraint Creation
 
-private enum InactiveConstraintBuilder {
+private enum BatchingConstraintBuilder {
 
     static var buildInactiveConstraints = false
     static var pendingConstraints: [NSLayoutConstraint] = []
@@ -665,14 +665,19 @@ private enum InactiveConstraintBuilder {
 
 }
 
-/// Any Anchorage constraints created inside the passed closure will not be activated automatically.
+/// Any Anchorage constraints created inside the passed closure are returned in the array.
 ///
+/// - Parameter active: Whether the created constraints should be active when they are returned.
 /// - Parameter closure: A closure that runs some Anchorage expressions.
-/// - Returns: An array of inactivate `NSLayoutConstraint`s.
-public func inactiveConstraints(_ closure: () -> Void) -> [NSLayoutConstraint] {
-    precondition(InactiveConstraintBuilder.pendingConstraints.isEmpty)
-    InactiveConstraintBuilder.buildInactiveConstraints = true
+/// - Returns: An array of new `NSLayoutConstraint`s.
+public func batchConstraints(active: Bool, closure: () -> Void) -> [NSLayoutConstraint] {
+    precondition(BatchingConstraintBuilder.pendingConstraints.isEmpty)
+    BatchingConstraintBuilder.buildInactiveConstraints = true
     closure()
-    InactiveConstraintBuilder.buildInactiveConstraints = false
-    return InactiveConstraintBuilder.flushPendingConstraints()
+    BatchingConstraintBuilder.buildInactiveConstraints = false
+    let constraints = BatchingConstraintBuilder.flushPendingConstraints()
+    if active {
+        NSLayoutConstraint.activate(constraints)
+    }
+    return constraints
 }

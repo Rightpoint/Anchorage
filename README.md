@@ -7,7 +7,7 @@
 
 A lightweight collection of intuitive operators and utilities that simplify Auto Layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so it fully supports `UILayoutGuide`.
 
-Each expression acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s. If you want inactive constraints, [here's how to do that](#creating-inactive-constraints).
+Each expression acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s. If you want inactive constraints, [here's how to do that](#batching-constraints).
 
 # Usage
 
@@ -90,18 +90,22 @@ let topConstraint = (imageView.topAnchor == container.topAnchor)
 let edgeConstraints = (button.edgeAnchors == container.edgeAnchors).all
 ```
 
-## Creating Inactive Constraints
+## Batching Constraints
 
 By default, Anchorage returns active layout constraints. If you'd rather return inactive constraints for use with the [`NSLayoutConstraint.activate(_:)` method](https://developer.apple.com/reference/uikit/nslayoutconstraint/1526955-activate) for performance reasons, you can do it like this:
 
 ```swift
-let constraints = Anchorage.inactiveConstraints {
+let constraints = Anchorage.batchConstraints(active: false) {
     view1.widthAnchor == view2.widthAnchor
     view1.heightAnchor == view2.heightAnchor / 2 ~ .low
     // ... as many constraints as you want
 }
+
+// Later:
 NSLayoutConstraint.activate(constraints)
 ```
+
+You can also pass `active: true` if you want the constraints in the array to be automatically activated in a batch.
 
 ## Autoresizing Mask
 

@@ -323,8 +323,8 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.secondAttribute, .bottom)
     }
 
-    func testInactiveConstraints() {
-        let constraints = Anchorage.inactiveConstraints {
+    func testInactiveBatchConstraints() {
+        let constraints = Anchorage.batchConstraints(active: false) {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
         }
@@ -348,6 +348,36 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqualWithAccuracy(height.multiplier, 0.5, accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(height.priority, UILayoutPriorityDefaultLow, accuracy: fEpsilon)
         XCTAssertFalse(height.isActive)
+        XCTAssertEqual(height.relation, .equal)
+        XCTAssertEqual(height.firstAttribute, .height)
+        XCTAssertEqual(height.secondAttribute, .height)
+    }
+
+    func testActiveBatchConstraints() {
+        let constraints = Anchorage.batchConstraints(active: true) {
+            view1.widthAnchor == view2.widthAnchor
+            view1.heightAnchor == view2.heightAnchor / 2 ~ .low
+        }
+
+        let width = constraints[0]
+        let height = constraints[1]
+
+        assertIdentical(width.firstItem, view1)
+        assertIdentical(width.secondItem, view2)
+        XCTAssertEqualWithAccuracy(width.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(width.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(width.priority, UILayoutPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(width.isActive)
+        XCTAssertEqual(width.relation, .equal)
+        XCTAssertEqual(width.firstAttribute, .width)
+        XCTAssertEqual(width.secondAttribute, .width)
+
+        assertIdentical(height.firstItem, view1)
+        assertIdentical(height.secondItem, view2)
+        XCTAssertEqualWithAccuracy(height.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(height.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(height.priority, UILayoutPriorityDefaultLow, accuracy: fEpsilon)
+        XCTAssertTrue(height.isActive)
         XCTAssertEqual(height.relation, .equal)
         XCTAssertEqual(height.firstAttribute, .height)
         XCTAssertEqual(height.secondAttribute, .height)
