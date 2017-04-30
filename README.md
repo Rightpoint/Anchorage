@@ -5,8 +5,9 @@
 [![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](https://cocoadocs.org/docsets/Anchorage)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-A lightweight collection of intuitive operators and utilities that simplify iOS layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so fully supports `UILayoutGuide`.
-Each expression acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s.
+A lightweight collection of intuitive operators and utilities that simplify Auto Layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so it fully supports `UILayoutGuide`.
+
+Each expression acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s. If you want inactive constraints, [here's how to do that](#creating-inactive-constraints).
 
 # Usage
 
@@ -87,6 +88,19 @@ let topConstraint = (imageView.topAnchor == container.topAnchor)
 // You can retrieve the NSLayoutConstraints individually,
 // or get an [NSLayoutConstraint] via .all, .horizontal, or .vertical
 let edgeConstraints = (button.edgeAnchors == container.edgeAnchors).all
+```
+
+## Creating Inactive Constraints
+
+By default, Anchorage returns active layout constraints. If you'd rather return inactive constraints for use with the [`NSLayoutConstraint.activate(_:)` method](https://developer.apple.com/reference/uikit/nslayoutconstraint/1526955-activate) for performance reasons, you can do it like this:
+
+```swift
+let constraints = Anchorage.inactiveConstraints {
+    view1.widthAnchor == view2.widthAnchor
+    view1.heightAnchor == view2.heightAnchor / 2 ~ .low
+    // ... as many constraints as you want
+}
+NSLayoutConstraint.activate(constraints)
 ```
 
 ## Autoresizing Mask

@@ -665,6 +665,10 @@ private enum InactiveConstraintBuilder {
 
 }
 
+/// Any Anchorage constraints created inside the passed closure will not be activated automatically.
+///
+/// - Parameter closure: A closure that runs some Anchorage expressions.
+/// - Returns: An array of inactivate `NSLayoutConstraint`s.
 public func inactiveConstraints(_ closure: () -> Void) -> [NSLayoutConstraint] {
     precondition(InactiveConstraintBuilder.pendingConstraints.isEmpty)
     InactiveConstraintBuilder.buildInactiveConstraints = true
