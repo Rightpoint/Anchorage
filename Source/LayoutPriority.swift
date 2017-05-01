@@ -73,17 +73,17 @@ public func == (lhs: LayoutPriority, rhs: LayoutPriority) -> Bool {
 }
 
 public func + <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
-    return .custom(lhs.value + Alias.LayoutPriority(CGFloat(rhs)))
+    return .custom(lhs.value + Alias.LayoutPriority(rhs))
 }
 
 public func + <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
-    return .custom(Alias.LayoutPriority(CGFloat(lhs)) + rhs.value)
+    return .custom(Alias.LayoutPriority(lhs) + rhs.value)
 }
 
 public func - <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
-    return .custom(lhs.value - Alias.LayoutPriority(CGFloat(rhs)))
+    return .custom(lhs.value - Alias.LayoutPriority(rhs))
 }
 
 public func - <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
-    return .custom(Alias.LayoutPriority(CGFloat(lhs)) - rhs.value)
+    return .custom(Alias.LayoutPriority(lhs) - rhs.value)
 }
