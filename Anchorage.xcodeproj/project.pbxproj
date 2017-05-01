@@ -54,6 +54,8 @@
 		D469DCB71EB7A975000F3DDD /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		D469DCB81EB7AB2F000F3DDD /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		D469DCB91EB7AB2F000F3DDD /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB41EB7A904000F3DDD /* Priority.swift */; };
+		D4F91CD41EB7FB8500AA571C /* FloatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F91CD21EB7FB8200AA571C /* FloatTests.swift */; };
+		D4F91CD51EB7FB8500AA571C /* FloatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F91CD21EB7FB8200AA571C /* FloatTests.swift */; };
 		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +116,7 @@
 		D401673E1EB7A58D0025DCA5 /* Compatability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compatability.swift; sourceTree = "<group>"; };
 		D469DCB41EB7A904000F3DDD /* Priority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorGroupProvider.swift; sourceTree = "<group>"; };
+		D4F91CD21EB7FB8200AA571C /* FloatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatTests.swift; sourceTree = "<group>"; };
 		F15462921E56842400C3948D /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -241,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */,
+				D4F91CD21EB7FB8200AA571C /* FloatTests.swift */,
 				7A39D6321EB53E1100BDE9C0 /* Info.plist */,
 			);
 			path = AnchorageTests;
@@ -620,6 +624,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4F91CD41EB7FB8500AA571C /* FloatTests.swift in Sources */,
 				7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +633,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4F91CD51EB7FB8500AA571C /* FloatTests.swift in Sources */,
 				CD71F7A31EB7DD2D008C1CC4 /* AnchorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

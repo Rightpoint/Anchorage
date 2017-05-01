@@ -29,10 +29,12 @@ import XCTest
     let TestPriorityLow = UILayoutPriorityDefaultLow
 #endif
 
-class AnchorageTests: XCTestCase {
+let cgEpsilon: CGFloat = 0.00001
+let fEpsilon: Float = 0.00001
+let dEpsilon: Double = 0.00001
+let f80Epsilon: Float80 = 0.00001
 
-    let cgEpsilon: CGFloat = 0.00001
-    let fEpsilon: Float = 0.00001
+class AnchorageTests: XCTestCase {
 
     let view1 = TestView()
     let view2 = TestView()
@@ -47,36 +49,6 @@ class AnchorageTests: XCTestCase {
         window.addSubview(view1)
         window.addSubview(view2)
 #endif
-    }
-
-    func testZeroFloatingPointConversion() {
-        XCTAssertEqualWithAccuracy(CGFloat(0), CGFloat(0).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float(0)), Float(0).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Double(0)), Double(0).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float80(0)), Float80(0).toCGFloat(), accuracy: cgEpsilon)
-
-        XCTAssertEqualWithAccuracy(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
-
-        XCTAssertEqual(CGFloat.infinity, CGFloat.infinity.toCGFloat())
-        XCTAssertEqual(CGFloat(Float.infinity), Float.infinity.toCGFloat())
-        XCTAssertEqual(CGFloat(Double.infinity), Double.infinity.toCGFloat())
-        XCTAssertEqual(CGFloat(Float80.infinity), Float80.infinity.toCGFloat())
-
-        XCTAssertEqual(-CGFloat.infinity, (-CGFloat.infinity).toCGFloat())
-        XCTAssertEqual(-CGFloat(Float.infinity), (-Float.infinity).toCGFloat())
-        XCTAssertEqual(-CGFloat(Double.infinity), (-Double.infinity).toCGFloat())
-        XCTAssertEqual(-CGFloat(Float80.infinity), (-Float80.infinity).toCGFloat())
-    }
-
-
-    func testPiFloatingPointConversion() {
-        XCTAssertEqualWithAccuracy(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
     }
 
     func testBasicEquality() {
@@ -470,14 +442,6 @@ extension AnchorageTests {
 
     func assertIdentical(_ expression1: @autoclosure (Void) -> AnyObject?, _ expression2: @autoclosure (Void) -> AnyObject?, _ message: @autoclosure (Void) -> String = "Objects were not identical", file: StaticString = #file, line: UInt = #line) {
         XCTAssertTrue(expression1() === expression2(), message, file: file, line: line)
-    }
-
-}
-
-public extension BinaryFloatingPoint {
-
-    func toCGFloat() -> CGFloat {
-        return CGFloat(self)
     }
 
 }
