@@ -221,6 +221,32 @@ class AnchorageTests: XCTestCase {
     }
 
     func testCenterAnchors() {
+        let constraints = view1.centerAnchors == view2.centerAnchors
+
+        let horizontal = constraints.first
+        assertIdentical(horizontal.firstItem, view1)
+        assertIdentical(horizontal.secondItem, view2)
+        XCTAssertEqualWithAccuracy(horizontal.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(horizontal.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(horizontal.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(horizontal.isActive)
+        XCTAssertEqual(horizontal.relation, .equal)
+        XCTAssertEqual(horizontal.firstAttribute, .centerX)
+        XCTAssertEqual(horizontal.secondAttribute, .centerX)
+
+        let vertical = constraints.second
+        assertIdentical(vertical.firstItem, view1)
+        assertIdentical(vertical.secondItem, view2)
+        XCTAssertEqualWithAccuracy(vertical.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(vertical.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(vertical.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(vertical.isActive)
+        XCTAssertEqual(vertical.relation, .equal)
+        XCTAssertEqual(vertical.firstAttribute, .centerY)
+        XCTAssertEqual(vertical.secondAttribute, .centerY)
+    }
+
+    func testCenterAnchorsWithOffsetAndPriority() {
         let constraints = view1.centerAnchors == view2.centerAnchors + 10 ~ .high - 1
 
         let horizontal = constraints.first
