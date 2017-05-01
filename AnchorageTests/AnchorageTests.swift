@@ -149,7 +149,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityLiteralMath() {
-        let constraint = view1.widthAnchor == view2.widthAnchor ~ LayoutPriority(750 - 1)
+        let constraint = view1.widthAnchor == view2.widthAnchor ~ Priority(750 - 1)
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
         XCTAssertEqualWithAccuracy(constraint.constant, 0, accuracy: cgEpsilon)

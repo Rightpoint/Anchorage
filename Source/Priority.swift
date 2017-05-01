@@ -1,5 +1,5 @@
 //
-//  LayoutPriority.swift
+//  Priority.swift
 //  Anchorage
 //
 //  Created by Rob Visentin on 5/1/17.
@@ -32,25 +32,25 @@
     import UIKit
 #endif
 
-public enum LayoutPriority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, Equatable {
+public enum Priority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, Equatable {
 
     case required
     case high
     case low
     case fittingSize
-    case custom(Alias.LayoutPriority)
+    case custom(LayoutPriority)
 
-    public var value: Alias.LayoutPriority {
+    public var value: LayoutPriority {
         switch self {
-        case .required: return Alias.LayoutPriorityRequired
-        case .high: return Alias.LayoutPriorityHigh
-        case .low: return Alias.LayoutPriorityLow
-        case .fittingSize: return Alias.LayoutPriorityFittingSize
+        case .required: return LayoutPriorityRequired
+        case .high: return LayoutPriorityHigh
+        case .low: return LayoutPriorityLow
+        case .fittingSize: return LayoutPriorityFittingSize
         case .custom(let priority): return priority
         }
     }
 
-    public init(floatLiteral value: Alias.LayoutPriority) {
+    public init(floatLiteral value: LayoutPriority) {
         self.init(value)
     }
 
@@ -59,31 +59,31 @@ public enum LayoutPriority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiter
     }
 
     public init(_ value: Int) {
-        self = .custom(Alias.LayoutPriority(value))
+        self = .custom(LayoutPriority(value))
     }
 
     public init<T: BinaryFloatingPoint>(_ value: T) {
-        self = .custom(Alias.LayoutPriority(value))
+        self = .custom(LayoutPriority(value))
     }
 
 }
 
-public func == (lhs: LayoutPriority, rhs: LayoutPriority) -> Bool {
+public func == (lhs: Priority, rhs: Priority) -> Bool {
     return lhs.value == rhs.value
 }
 
-public func + <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
-    return .custom(lhs.value + Alias.LayoutPriority(rhs))
+public func + <T: BinaryFloatingPoint>(lhs: Priority, rhs: T) -> Priority {
+    return .custom(lhs.value + LayoutPriority(rhs))
 }
 
-public func + <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
-    return .custom(Alias.LayoutPriority(lhs) + rhs.value)
+public func + <T: BinaryFloatingPoint>(lhs: T, rhs: Priority) -> Priority {
+    return .custom(LayoutPriority(lhs) + rhs.value)
 }
 
-public func - <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
-    return .custom(lhs.value - Alias.LayoutPriority(rhs))
+public func - <T: BinaryFloatingPoint>(lhs: Priority, rhs: T) -> Priority {
+    return .custom(lhs.value - LayoutPriority(rhs))
 }
 
-public func - <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
-    return .custom(Alias.LayoutPriority(lhs) - rhs.value)
+public func - <T: BinaryFloatingPoint>(lhs: T, rhs: Priority) -> Priority {
+    return .custom(LayoutPriority(lhs) - rhs.value)
 }

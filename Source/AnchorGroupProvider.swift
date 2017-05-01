@@ -48,7 +48,7 @@ extension AnchorGroupProvider {
 
 }
 
-extension Alias.View: AnchorGroupProvider {
+extension View: AnchorGroupProvider {
 
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchorPair(first: leadingAnchor, second: trailingAnchor)
@@ -62,7 +62,7 @@ extension Alias.View: AnchorGroupProvider {
 
 }
 
-extension Alias.ViewController: AnchorGroupProvider {
+extension ViewController: AnchorGroupProvider {
 
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchorPair(first: view.leadingAnchor, second: view.trailingAnchor)
@@ -84,7 +84,7 @@ extension Alias.ViewController: AnchorGroupProvider {
 
 }
 
-extension Alias.LayoutGuide: AnchorGroupProvider {
+extension LayoutGuide: AnchorGroupProvider {
 
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchorPair(first: leadingAnchor, second: trailingAnchor)

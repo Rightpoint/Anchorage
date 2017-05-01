@@ -214,15 +214,15 @@ precedencegroup PriorityPrecedence {
 
 infix operator ~: PriorityPrecedence
 
-@discardableResult public func ~ <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func ~ <T: BinaryFloatingPoint>(lhs: T, rhs: Priority) -> LayoutExpression<NSLayoutDimension> {
     return LayoutExpression(constant: CGFloat(lhs), priority: rhs)
 }
 
-@discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<T> {
+@discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: Priority) -> LayoutExpression<T> {
     return LayoutExpression(anchor: lhs, priority: rhs)
 }
 
-@discardableResult public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: LayoutPriority) -> LayoutExpression<T> {
+@discardableResult public func ~ <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: Priority) -> LayoutExpression<T> {
     var expr = lhs
     expr.priority = rhs
     return expr

@@ -29,31 +29,11 @@
 #if os(macOS)
     import Cocoa
 
-    public enum Alias {
-        public typealias View = NSView
-        public typealias ViewController = NSViewController
-        public typealias LayoutPriority = NSLayoutPriority
-        public typealias LayoutGuide = NSLayoutGuide
-
-        public static let LayoutPriorityRequired = NSLayoutPriorityRequired
-        public static let LayoutPriorityHigh = NSLayoutPriorityDefaultHigh
-        public static let LayoutPriorityLow = NSLayoutPriorityDefaultLow
-        public static let LayoutPriorityFittingSize = NSLayoutPriorityFittingSizeCompression
-    }
+    public typealias LayoutPriority = NSLayoutPriority
 #else
     import UIKit
 
-    public enum Alias {
-        public typealias View = UIView
-        public typealias ViewController = UIViewController
-        public typealias LayoutPriority = UILayoutPriority
-        public typealias LayoutGuide = UILayoutGuide
-
-        public static let LayoutPriorityRequired = UILayoutPriorityRequired
-        public static let LayoutPriorityHigh = UILayoutPriorityDefaultHigh
-        public static let LayoutPriorityLow = UILayoutPriorityDefaultLow
-        public static let LayoutPriorityFittingSize = UILayoutPriorityFittingSizeLevel
-    }
+    public typealias LayoutPriority = UILayoutPriority
 #endif
 
 public extension BinaryFloatingPoint {

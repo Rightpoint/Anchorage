@@ -28,8 +28,26 @@
 
 #if os(macOS)
     import Cocoa
+
+    internal typealias View = NSView
+    internal typealias ViewController = NSViewController
+    internal typealias LayoutGuide = NSLayoutGuide
+
+    internal let LayoutPriorityRequired = NSLayoutPriorityRequired
+    internal let LayoutPriorityHigh = NSLayoutPriorityDefaultHigh
+    internal let LayoutPriorityLow = NSLayoutPriorityDefaultLow
+    internal let LayoutPriorityFittingSize = NSLayoutPriorityFittingSizeCompression
 #else
     import UIKit
+
+    internal typealias View = UIView
+    internal typealias ViewController = UIViewController
+    internal typealias LayoutGuide = UILayoutGuide
+
+    internal let LayoutPriorityRequired = UILayoutPriorityRequired
+    internal let LayoutPriorityHigh = UILayoutPriorityDefaultHigh
+    internal let LayoutPriorityLow = UILayoutPriorityDefaultLow
+    internal let LayoutPriorityFittingSize = UILayoutPriorityFittingSizeLevel
 #endif
 
 // MARK: - LayoutExpression
@@ -39,9 +57,9 @@ public struct LayoutExpression<T: LayoutAnchorType> {
     public var anchor: T?
     public var constant: CGFloat
     public var multiplier: CGFloat
-    public var priority: LayoutPriority
+    public var priority: Priority
 
-    internal init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: LayoutPriority = .required) {
+    internal init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: Priority = .required) {
         self.anchor = anchor
         self.constant = constant
         self.multiplier = multiplier
@@ -66,22 +84,22 @@ public struct AnchorPair<T: LayoutAxisType, U: LayoutAxisType>: LayoutAnchorType
 
 internal extension AnchorPair {
 
-    func finalize(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
+    func finalize(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Priority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func finalize(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
+    func finalize(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Priority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func finalize(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> AxisGroup {
+    func finalize(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Priority = .required) -> AxisGroup {
         let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> AxisGroup {
+    func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: Priority, builder: ConstraintBuilder) -> AxisGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -124,22 +142,22 @@ internal extension EdgeAnchors {
         self.verticalAnchors = vertical
     }
 
-    func finalize(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
+    func finalize(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(horizontal: ==, vertical: ==)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func finalize(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
+    func finalize(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func finalize(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: LayoutPriority = .required) -> EdgeGroup {
+    func finalize(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> EdgeGroup {
         let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=)
         return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
     }
 
-    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: LayoutPriority, builder: ConstraintBuilder) -> EdgeGroup {
+    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: Priority, builder: ConstraintBuilder) -> EdgeGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -228,9 +246,9 @@ internal func performInBatch(closure: () -> Void) {
 
 // MARK: - Constraint Activation
 
-internal func finalize(constraint: NSLayoutConstraint, withPriority priority: LayoutPriority = .required) -> NSLayoutConstraint {
+internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Priority = .required) -> NSLayoutConstraint {
     // Only disable autoresizing constraints on the LHS item, which is the one definitely intended to be governed by Auto Layout
-    if let first = constraint.firstItem as? Alias.View {
+    if let first = constraint.firstItem as? View {
         first.translatesAutoresizingMaskIntoConstraints = false
     }
 
