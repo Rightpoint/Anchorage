@@ -18,8 +18,6 @@
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
 		2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */; };
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
-		7A39D6281EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */; };
-		7A39D6291EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */; };
 		7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */; };
 		7A39D6331EB53E1100BDE9C0 /* Anchorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */; };
 		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
@@ -58,7 +56,6 @@
 		3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
-		7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressibleAsCGFloat.swift; sourceTree = "<group>"; };
 		7A39D62E1EB53E1100BDE9C0 /* AnchorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnchorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorageTests.swift; sourceTree = "<group>"; };
 		7A39D6321EB53E1100BDE9C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -149,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				3C2050B61D3B213B00995DF3 /* Anchorage.swift */,
-				7A39D6271EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
 			);
 			name = Anchorage;
@@ -364,7 +360,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */,
-				7A39D6281EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,7 +376,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F154629B1E56846200C3948D /* Anchorage.swift in Sources */,
-				7A39D6291EB53D1900BDE9C0 /* ExpressibleAsCGFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,6 +687,7 @@
 				7A39D6371EB53E1100BDE9C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "Anchorage-Mac" */ = {
 			isa = XCConfigurationList;

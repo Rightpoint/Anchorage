@@ -56,6 +56,31 @@
     }
 #endif
 
+extension BinaryFloatingPoint {
+
+    static var exponentBias: Int {
+        return (1 << (Self.exponentBitCount - 1)) - 1
+    }
+
+    init<T: BinaryFloatingPoint>(_ value: T) {
+        assert(Self.radix == T.radix)
+        
+        let exp = value.exponent.toIntMax()
+        let convertedExp = UIntMax(exp + IntMax(Self.exponentBias))
+
+        let sig = value.significandBitPattern.toUIntMax()
+        let sigBitDiff = IntMax(Self.significandBitCount - T.significandBitCount)
+        let convertedSig = (sigBitDiff >= 0) ? (sig << UIntMax(sigBitDiff)) : (sig >> UIntMax(-sigBitDiff))
+
+        self.init(
+            sign: value.sign,
+            exponentBitPattern: RawExponent(convertedExp),
+            significandBitPattern: RawSignificand(convertedSig)
+        )
+    }
+    
+}
+
 public protocol LayoutAnchorType {}
 extension NSLayoutDimension : LayoutAnchorType {}
 extension NSLayoutXAxisAnchor : LayoutAnchorType {}
@@ -67,8 +92,8 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 
 // MARK: - Equality Constraints
 
-@discardableResult public func == (lhs: NSLayoutDimension, rhs: ExpressibleAsCGFloat) -> NSLayoutConstraint {
-    return activate(constraint: lhs.constraint(equalToConstant: rhs.asCGFloat))
+@discardableResult public func == <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+    return activate(constraint: lhs.constraint(equalToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func == (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
@@ -122,8 +147,8 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
 
 // MARK: - Inequality Constraints
 
-@discardableResult public func <= (lhs: NSLayoutDimension, rhs: ExpressibleAsCGFloat) -> NSLayoutConstraint {
-    return activate(constraint: lhs.constraint(lessThanOrEqualToConstant: rhs.asCGFloat))
+@discardableResult public func <= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+    return activate(constraint: lhs.constraint(lessThanOrEqualToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func <= <T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
@@ -175,8 +200,8 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
     return lhs.activate(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
-@discardableResult public func >= (lhs: NSLayoutDimension, rhs: ExpressibleAsCGFloat) -> NSLayoutConstraint {
-    return activate(constraint: lhs.constraint(greaterThanOrEqualToConstant: rhs.asCGFloat))
+@discardableResult public func >= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+    return activate(constraint: lhs.constraint(greaterThanOrEqualToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func >=<T: NSLayoutDimension>(lhs: T, rhs: T) -> NSLayoutConstraint {
@@ -240,8 +265,8 @@ infix operator ~: PriorityPrecedence
 
 // LayoutPriority
 
-@discardableResult public func ~ (lhs: ExpressibleAsCGFloat, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(constant: lhs.asCGFloat, priority: rhs)
+@discardableResult public func ~ <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(constant: CGFloat(lhs), priority: rhs)
 }
 
 @discardableResult public func ~ <T: LayoutAnchorType>(lhs: T, rhs: LayoutPriority) -> LayoutExpression<T> {
@@ -256,73 +281,73 @@ infix operator ~: PriorityPrecedence
 
 // MARK: Layout Expressions
 
-@discardableResult public func * (lhs: NSLayoutDimension, rhs: ExpressibleAsCGFloat) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(anchor: lhs, multiplier: rhs.asCGFloat)
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(anchor: lhs, multiplier: CGFloat(rhs))
 }
 
-@discardableResult public func * (lhs: ExpressibleAsCGFloat, rhs: NSLayoutDimension) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(anchor: rhs, multiplier: lhs.asCGFloat)
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: T, rhs: NSLayoutDimension) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(anchor: rhs, multiplier: CGFloat(lhs))
 }
 
-@discardableResult public func * (lhs: LayoutExpression<NSLayoutDimension>, rhs: ExpressibleAsCGFloat) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: LayoutExpression<NSLayoutDimension>, rhs: T) -> LayoutExpression<NSLayoutDimension> {
     var expr = lhs
-    expr.multiplier *= rhs.asCGFloat
+    expr.multiplier *= CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func * (lhs: ExpressibleAsCGFloat, rhs: LayoutExpression<NSLayoutDimension>) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func * <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutExpression<NSLayoutDimension>) -> LayoutExpression<NSLayoutDimension> {
     var expr = rhs
-    expr.multiplier *= lhs.asCGFloat
+    expr.multiplier *= CGFloat(lhs)
     return expr
 }
 
-@discardableResult public func / (lhs: NSLayoutDimension, rhs: ExpressibleAsCGFloat) -> LayoutExpression<NSLayoutDimension> {
-    return LayoutExpression(anchor: lhs, multiplier: 1.0 / rhs.asCGFloat)
+@discardableResult public func / <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> LayoutExpression<NSLayoutDimension> {
+    return LayoutExpression(anchor: lhs, multiplier: 1.0 / CGFloat(rhs))
 }
 
-@discardableResult public func / (lhs: LayoutExpression<NSLayoutDimension>, rhs: ExpressibleAsCGFloat) -> LayoutExpression<NSLayoutDimension> {
+@discardableResult public func / <T: BinaryFloatingPoint>(lhs: LayoutExpression<NSLayoutDimension>, rhs: T) -> LayoutExpression<NSLayoutDimension> {
     var expr = lhs
-    expr.multiplier /= rhs.asCGFloat
+    expr.multiplier /= CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: T, rhs: ExpressibleAsCGFloat) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: lhs, constant: rhs.asCGFloat)
+@discardableResult public func + <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T> {
+    return LayoutExpression(anchor: lhs, constant: CGFloat(rhs))
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: ExpressibleAsCGFloat, rhs: T) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: rhs, constant: lhs.asCGFloat)
+@discardableResult public func + <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: U) -> LayoutExpression<U> {
+    return LayoutExpression(anchor: rhs, constant: CGFloat(lhs))
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: ExpressibleAsCGFloat) -> LayoutExpression<T> {
+@discardableResult public func + <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: LayoutExpression<T>, rhs: U) -> LayoutExpression<T> {
     var expr = lhs
-    expr.constant += rhs.asCGFloat
+    expr.constant += CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func + <T: LayoutAnchorType>(lhs: ExpressibleAsCGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
+@discardableResult public func + <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: LayoutExpression<U>) -> LayoutExpression<U> {
     var expr = rhs
-    expr.constant += lhs.asCGFloat
+    expr.constant += CGFloat(lhs)
     return expr
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: T, rhs: ExpressibleAsCGFloat) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: lhs, constant: -rhs.asCGFloat)
+@discardableResult public func - <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T> {
+    return LayoutExpression(anchor: lhs, constant: -CGFloat(rhs))
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: ExpressibleAsCGFloat, rhs: T) -> LayoutExpression<T> {
-    return LayoutExpression(anchor: rhs, constant: -lhs.asCGFloat)
+@discardableResult public func - <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: U) -> LayoutExpression<U> {
+    return LayoutExpression(anchor: rhs, constant: -CGFloat(lhs))
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: LayoutExpression<T>, rhs: CGFloat) -> LayoutExpression<T> {
+@discardableResult public func - <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: LayoutExpression<T>, rhs: U) -> LayoutExpression<T> {
     var expr = lhs
-    expr.constant -= rhs
+    expr.constant -= CGFloat(rhs)
     return expr
 }
 
-@discardableResult public func - <T: LayoutAnchorType>(lhs: ExpressibleAsCGFloat, rhs: LayoutExpression<T>) -> LayoutExpression<T> {
+@discardableResult public func - <T: BinaryFloatingPoint, U: LayoutAnchorType>(lhs: T, rhs: LayoutExpression<U>) -> LayoutExpression<U> {
     var expr = rhs
-    expr.constant -= lhs.asCGFloat
+    expr.constant -= CGFloat(lhs)
     return expr
 }
 
@@ -369,11 +394,15 @@ public enum LayoutPriority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiter
     }
 
     public init(integerLiteral value: Int) {
+        self.init(value)
+    }
+
+    public init(_ value: Int) {
         self = .custom(Alias.LayoutPriority(value))
     }
 
-    public init(_ value: ExpressibleAsCGFloat) {
-        self = .custom(Alias.LayoutPriority(value.asCGFloat))
+    public init<T: BinaryFloatingPoint>(_ value: T) {
+        self = .custom(Alias.LayoutPriority(value))
     }
 
 }
@@ -382,20 +411,20 @@ public func == (lhs: LayoutPriority, rhs: LayoutPriority) -> Bool {
     return lhs.value == rhs.value
 }
 
-public func + (lhs: LayoutPriority, rhs: ExpressibleAsCGFloat) -> LayoutPriority {
-    return .custom(lhs.value + Alias.LayoutPriority(rhs.asCGFloat))
+public func + <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
+    return .custom(lhs.value + Alias.LayoutPriority(CGFloat(rhs)))
 }
 
-public func + (lhs: ExpressibleAsCGFloat, rhs: LayoutPriority) -> LayoutPriority {
-    return .custom(Alias.LayoutPriority(lhs.asCGFloat) + rhs.value)
+public func + <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
+    return .custom(Alias.LayoutPriority(CGFloat(lhs)) + rhs.value)
 }
 
-public func - (lhs: LayoutPriority, rhs: ExpressibleAsCGFloat) -> LayoutPriority {
-    return .custom(lhs.value - Alias.LayoutPriority(rhs.asCGFloat))
+public func - <T: BinaryFloatingPoint>(lhs: LayoutPriority, rhs: T) -> LayoutPriority {
+    return .custom(lhs.value - Alias.LayoutPriority(CGFloat(rhs)))
 }
 
-public func - (lhs: ExpressibleAsCGFloat, rhs: LayoutPriority) -> LayoutPriority {
-    return .custom(Alias.LayoutPriority(lhs.asCGFloat) - rhs.value)
+public func - <T: BinaryFloatingPoint>(lhs: T, rhs: LayoutPriority) -> LayoutPriority {
+    return .custom(Alias.LayoutPriority(CGFloat(lhs)) - rhs.value)
 }
 
 // MARK: - EdgeAnchorsProvider

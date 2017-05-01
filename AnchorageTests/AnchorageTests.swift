@@ -24,6 +24,13 @@ class AnchorageTests: XCTestCase {
         window.addSubview(view2)
     }
 
+    func testFloatingPointConversion() {
+        XCTAssertEqualWithAccuracy(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
+    }
+
     func testBasicEquality() {
         let constraint = view1.widthAnchor == view2.widthAnchor
         assertIdentical(constraint.firstItem, view1)
@@ -400,6 +407,14 @@ extension AnchorageTests {
         return variable
     }
 
+}
+
+public extension BinaryFloatingPoint {
+
+    func toCGFloat() -> CGFloat {
+        return CGFloat(self)
+    }
+    
 }
 
 extension NSLayoutAttribute: CustomDebugStringConvertible {
