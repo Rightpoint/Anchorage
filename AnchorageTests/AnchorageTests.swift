@@ -49,7 +49,15 @@ class AnchorageTests: XCTestCase {
 #endif
     }
 
-    func testFloatingPointConversion() {
+    func testZeroFloatingPointConversion() {
+        XCTAssertEqualWithAccuracy(CGFloat(0), CGFloat(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Float(0)), Float(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Double(0)), Double(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Float80(0)), Float80(0).toCGFloat(), accuracy: cgEpsilon)
+    }
+
+
+    func testPiFloatingPointConversion() {
         XCTAssertEqualWithAccuracy(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
