@@ -430,7 +430,7 @@ public extension BinaryFloatingPoint {
     func toCGFloat() -> CGFloat {
         return CGFloat(self)
     }
-    
+
 }
 
 extension NSLayoutAttribute: CustomDebugStringConvertible {

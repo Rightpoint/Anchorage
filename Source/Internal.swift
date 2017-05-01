@@ -127,7 +127,7 @@ internal extension AnchorPair {
                 preconditionFailure("Layout axes of constrained anchors must match.")
             }
         }
-        
+
         return axisGroup
     }
 
@@ -172,7 +172,7 @@ internal extension EdgeAnchors {
                                   bottom: verticalConstraints.second,
                                   trailing: horizontalConstraints.second)
         }
-        
+
         return edgeGroup
     }
 
@@ -228,7 +228,7 @@ internal class ConstraintBatch {
     func activate() {
         NSLayoutConstraint.activate(constraints)
     }
-    
+
 }
 
 /// Perform a closure immediately if a batch is already active,

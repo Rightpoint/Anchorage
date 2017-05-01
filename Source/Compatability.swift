@@ -58,5 +58,5 @@ public extension BinaryFloatingPoint {
             significandBitPattern: RawSignificand(convertedSig)
         )
     }
-    
+
 }

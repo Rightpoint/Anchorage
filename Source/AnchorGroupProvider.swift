@@ -104,7 +104,7 @@ public struct EdgeAnchors: LayoutAnchorType {
 
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
-    
+
 }
 
 // MARK: - Axis Group
@@ -136,5 +136,5 @@ public struct EdgeGroup {
     public var all: [NSLayoutConstraint] {
         return [top, leading, bottom, trailing]
     }
-    
+
 }
