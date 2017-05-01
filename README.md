@@ -95,7 +95,7 @@ let edgeConstraints = (button.edgeAnchors == container.edgeAnchors).all
 By default, Anchorage returns active layout constraints. If you'd rather return inactive constraints for use with the [`NSLayoutConstraint.activate(_:)` method](https://developer.apple.com/reference/uikit/nslayoutconstraint/1526955-activate) for performance reasons, you can do it like this:
 
 ```swift
-let constraints = Anchorage.batchConstraints(active: false) {
+let constraints = Anchorage.batch(active: false) {
     view1.widthAnchor == view2.widthAnchor
     view1.heightAnchor == view2.heightAnchor / 2 ~ .low
     // ... as many constraints as you want

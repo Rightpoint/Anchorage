@@ -324,7 +324,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testInactiveBatchConstraints() {
-        let constraints = Anchorage.batchConstraints(active: false) {
+        let constraints = Anchorage.batch(active: false) {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
         }
@@ -354,7 +354,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testActiveBatchConstraints() {
-        let constraints = Anchorage.batchConstraints(active: true) {
+        let constraints = Anchorage.batch(active: true) {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
         }

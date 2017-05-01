@@ -670,7 +670,7 @@ private enum BatchingConstraintBuilder {
 /// - Parameter active: Whether the created constraints should be active when they are returned.
 /// - Parameter closure: A closure that runs some Anchorage expressions.
 /// - Returns: An array of new `NSLayoutConstraint`s.
-public func batchConstraints(active: Bool, closure: () -> Void) -> [NSLayoutConstraint] {
+public func batch(active: Bool, closure: () -> Void) -> [NSLayoutConstraint] {
     precondition(BatchingConstraintBuilder.pendingConstraints.isEmpty)
     BatchingConstraintBuilder.buildInactiveConstraints = true
     closure()
