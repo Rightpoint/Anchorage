@@ -1,8 +1,9 @@
 # Anchorage
 
-[![Swift 2.x + 3.0](https://img.shields.io/badge/Swift-2.3%20+%203.0-orange.svg?style=flat)](https://swift.org)
+[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://swift.org)
 [![CircleCI](https://img.shields.io/circleci/project/github/Raizlabs/Anchorage.svg)]()
 [![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](https://cocoadocs.org/docsets/Anchorage)
+[![Platform](https://img.shields.io/cocoapods/p/BonMot.svg?style=flat)](http://cocoapods.org/pods/BonMot)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 A lightweight collection of intuitive operators and utilities that simplify Auto Layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API, so it fully supports `UILayoutGuide`.
@@ -66,15 +67,11 @@ view.centerXAnchor == view.superview.centerXAnchor + 20 ~ .low
 ```
 The layout priority is an enum with the following values:
 
-- .required - UILayoutPriorityRequired (default)
-- .high - UILayoutPriorityDefaultHigh
-- .low - UILayoutPriorityDefaultLow
-- .fittingSize - UILayoutPriorityFittingSizeLevel
-- .custom(UILayoutPriority) - you can specify any float
-
-
-These map to the `UILayoutPriorityDefaultLow`, `UILayoutPriorityDefaultHigh`, and `UILayoutPriorityRequired` constants,
-but you may specify any `Float` for a priority value.
+- `.required` - `UILayoutPriorityRequired` (default)
+- `.high` - `UILayoutPriorityDefaultHigh`
+- `.low` - `UILayoutPriorityDefaultLow`
+- `.fittingSize` - `UILayoutPriorityFittingSizeLevel`
+- `.custom(UILayoutPriority)` - you can specify any float
 
 ## Storing Constraints
 
@@ -109,47 +106,20 @@ You can also pass `active: true` if you want the constraints in the array to be 
 
 ## Autoresizing Mask
 
-Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system supplied view.
+Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system-supplied view.
 
 # Installation
 
 ## CocoaPods
 
-[CocoaPods](https://cocoapods.org/) is a dependency manager for Cocoa projects.
-You can install it with the following command:
-
-```sh
-$ gem install cocoapods
-```
-
 To integrate Anchorage into your Xcode project using CocoaPods, specify it in
 your Podfile:
 
 ```ruby
-platform :ios, '9.0'
-use_frameworks!
-
-target '<Your Target Name>' do
-  pod 'Anchorage', '~> 3.0'
-end
-```
-Then, run the following command:
-
-```sh
-$ pod install
+pod 'Anchorage'
 ```
 
 ## Carthage
-
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency
-manager that builds your dependencies and provides you with binary frameworks.
-
-You can install Carthage with [Homebrew](https://brew.sh/) using the following commands:
-
-```sh
-$ brew update
-$ brew install carthage
-```
 
 To integrate Anchorage into your Xcode project using Carthage, specify it in
 your Cartfile:
