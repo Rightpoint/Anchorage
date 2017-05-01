@@ -43,19 +43,35 @@ public extension BinaryFloatingPoint {
     }
 
     public init<T: BinaryFloatingPoint>(_ value: T) {
-        assert(Self.radix == T.radix)
+        assert(Self.radix == T.radix && Self.radix == 2)
 
-        let exp = value.exponent.toIntMax()
-        let convertedExp = UIntMax(exp + IntMax(Self.exponentBias))
+        let pattern: (exp: UIntMax, sig: UIntMax)
 
-        let sig = value.significandBitPattern.toUIntMax()
-        let sigBitDiff = IntMax(Self.significandBitCount - T.significandBitCount)
-        let convertedSig = (sigBitDiff >= 0) ? (sig << UIntMax(sigBitDiff)) : (sig >> UIntMax(-sigBitDiff))
+        switch value.floatingPointClass {
+        case .positiveZero, .negativeZero:
+            pattern = (exp: 0, sig: 0)
+        case .positiveInfinity, .negativeInfinity:
+            pattern = (exp: UIntMax.max, sig: 0)
+        case .signalingNaN:
+            pattern = (exp: UIntMax.max, sig: 1)
+        case .quietNaN:
+            pattern = (exp: UIntMax.max, sig: UIntMax(1 << (Self.significandBitCount - 1)))
+        default:
+            pattern.exp = UIntMax(bitPattern: value.exponent.toIntMax() + IntMax(Self.exponentBias))
+
+            let sig = value.significandBitPattern.toUIntMax()
+            if Self.significandBitCount >= T.significandBitCount {
+                pattern.sig = sig << UIntMax(Self.significandBitCount - T.significandBitCount)
+            }
+            else {
+                pattern.sig = sig >> UIntMax(T.significandBitCount - Self.significandBitCount)
+            }
+        }
 
         self.init(
             sign: value.sign,
-            exponentBitPattern: RawExponent(convertedExp),
-            significandBitPattern: RawSignificand(convertedSig)
+            exponentBitPattern: RawExponent(pattern.exp),
+            significandBitPattern: RawSignificand(pattern.sig)
         )
     }
 

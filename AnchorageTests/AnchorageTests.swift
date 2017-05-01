@@ -54,6 +54,21 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqualWithAccuracy(CGFloat(Float(0)), Float(0).toCGFloat(), accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(CGFloat(Double(0)), Double(0).toCGFloat(), accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(CGFloat(Float80(0)), Float80(0).toCGFloat(), accuracy: cgEpsilon)
+
+        XCTAssertEqualWithAccuracy(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
+
+        XCTAssertEqual(CGFloat.infinity, CGFloat.infinity.toCGFloat())
+        XCTAssertEqual(CGFloat(Float.infinity), Float.infinity.toCGFloat())
+        XCTAssertEqual(CGFloat(Double.infinity), Double.infinity.toCGFloat())
+        XCTAssertEqual(CGFloat(Float80.infinity), Float80.infinity.toCGFloat())
+
+        XCTAssertEqual(-CGFloat.infinity, (-CGFloat.infinity).toCGFloat())
+        XCTAssertEqual(-CGFloat(Float.infinity), (-Float.infinity).toCGFloat())
+        XCTAssertEqual(-CGFloat(Double.infinity), (-Double.infinity).toCGFloat())
+        XCTAssertEqual(-CGFloat(Float80.infinity), (-Float80.infinity).toCGFloat())
     }
 
 
