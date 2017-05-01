@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F15462911E56842400C3948D"
-               BuildableName = "Anchorage.framework"
-               BlueprintName = "Anchorage-Mac"
+               BlueprintIdentifier = "CD6A0E9B1EB7D36400FFF5DB"
+               BuildableName = "RunAllTests"
+               BlueprintName = "RunAllTests"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F15462911E56842400C3948D"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-Mac"
+            BlueprintIdentifier = "CD6A0E9B1EB7D36400FFF5DB"
+            BuildableName = "RunAllTests"
+            BlueprintName = "RunAllTests"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F15462911E56842400C3948D"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-Mac"
+            BlueprintIdentifier = "CD6A0E9B1EB7D36400FFF5DB"
+            BuildableName = "RunAllTests"
+            BlueprintName = "RunAllTests"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
