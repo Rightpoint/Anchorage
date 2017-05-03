@@ -22,6 +22,11 @@ class FloatTests: XCTestCase {
         XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
 
+        XCTAssertEqualWithAccuracy(-CGFloat.pi, (-CGFloat.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(-CGFloat(Float.pi), (-Float.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(-CGFloat(Double.pi), (-Double.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(-CGFloat(Float80.pi), (-Float80.pi).toCGFloat(), accuracy: cgEpsilon)
+
         XCTAssertEqual(CGFloat.infinity, CGFloat.infinity.toCGFloat())
         XCTAssertEqual(CGFloat(Float.infinity), Float.infinity.toCGFloat())
         XCTAssertEqual(CGFloat(Double.infinity), Double.infinity.toCGFloat())
@@ -31,6 +36,16 @@ class FloatTests: XCTestCase {
         XCTAssertEqual(-CGFloat(Float.infinity), (-Float.infinity).toCGFloat())
         XCTAssertEqual(-CGFloat(Double.infinity), (-Double.infinity).toCGFloat())
         XCTAssertEqual(-CGFloat(Float80.infinity), (-Float80.infinity).toCGFloat())
+
+        XCTAssert(CGFloat.nan.toCGFloat().isNaN)
+        XCTAssert(Float.nan.toCGFloat().isNaN)
+        XCTAssert(Double.nan.toCGFloat().isNaN)
+        XCTAssert(Float80.nan.toCGFloat().isNaN)
+
+        XCTAssert(CGFloat.signalingNaN.toCGFloat().isSignalingNaN)
+        XCTAssert(Float.signalingNaN.toCGFloat().isSignalingNaN)
+        XCTAssert(Double.signalingNaN.toCGFloat().isSignalingNaN)
+        XCTAssert(Float80.signalingNaN.toCGFloat().isSignalingNaN)
     }
 
     func testFloatConversion() {
@@ -44,6 +59,11 @@ class FloatTests: XCTestCase {
         XCTAssertEqualWithAccuracy(Float(Double.pi), Double.pi.toFloat(), accuracy: fEpsilon)
         XCTAssertEqualWithAccuracy(Float(Float80.pi), Float80.pi.toFloat(), accuracy: fEpsilon)
 
+        XCTAssertEqualWithAccuracy(-Float.pi, (-CGFloat.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqualWithAccuracy(-Float(Float.pi), (-Float.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqualWithAccuracy(-Float(Double.pi), (-Double.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqualWithAccuracy(-Float(Float80.pi), (-Float80.pi).toFloat(), accuracy: fEpsilon)
+
         XCTAssertEqual(Float.infinity, CGFloat.infinity.toFloat())
         XCTAssertEqual(Float(Float.infinity), Float.infinity.toFloat())
         XCTAssertEqual(Float(Double.infinity), Double.infinity.toFloat())
@@ -53,6 +73,16 @@ class FloatTests: XCTestCase {
         XCTAssertEqual(-Float(Float.infinity), (-Float.infinity).toFloat())
         XCTAssertEqual(-Float(Double.infinity), (-Double.infinity).toFloat())
         XCTAssertEqual(-Float(Float80.infinity), (-Float80.infinity).toFloat())
+
+        XCTAssert(CGFloat.nan.toFloat().isNaN)
+        XCTAssert(Float.nan.toFloat().isNaN)
+        XCTAssert(Double.nan.toFloat().isNaN)
+        XCTAssert(Float80.nan.toFloat().isNaN)
+
+        XCTAssert(CGFloat.signalingNaN.toFloat().isSignalingNaN)
+        XCTAssert(Float.signalingNaN.toFloat().isSignalingNaN)
+        XCTAssert(Double.signalingNaN.toFloat().isSignalingNaN)
+        XCTAssert(Float80.signalingNaN.toFloat().isSignalingNaN)
     }
 
     func testDoubleConversion() {
@@ -66,6 +96,11 @@ class FloatTests: XCTestCase {
         XCTAssertEqualWithAccuracy(Double(Double.pi), Double.pi.toDouble(), accuracy: dEpsilon)
         XCTAssertEqualWithAccuracy(Double(Float80.pi), Float80.pi.toDouble(), accuracy: dEpsilon)
 
+        XCTAssertEqualWithAccuracy(-Double.pi, (-CGFloat.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqualWithAccuracy(-Double(Float.pi), (-Float.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqualWithAccuracy(-Double(Double.pi), (-Double.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqualWithAccuracy(-Double(Float80.pi), (-Float80.pi).toDouble(), accuracy: dEpsilon)
+
         XCTAssertEqual(Double.infinity, CGFloat.infinity.toDouble())
         XCTAssertEqual(Double(Float.infinity), Float.infinity.toDouble())
         XCTAssertEqual(Double(Double.infinity), Double.infinity.toDouble())
@@ -75,6 +110,16 @@ class FloatTests: XCTestCase {
         XCTAssertEqual(-Double(Float.infinity), (-Float.infinity).toDouble())
         XCTAssertEqual(-Double(Double.infinity), (-Double.infinity).toDouble())
         XCTAssertEqual(-Double(Float80.infinity), (-Float80.infinity).toDouble())
+
+        XCTAssert(CGFloat.nan.toDouble().isNaN)
+        XCTAssert(Float.nan.toDouble().isNaN)
+        XCTAssert(Double.nan.toDouble().isNaN)
+        XCTAssert(Float80.nan.toDouble().isNaN)
+
+        XCTAssert(CGFloat.signalingNaN.toDouble().isSignalingNaN)
+        XCTAssert(Float.signalingNaN.toDouble().isSignalingNaN)
+        XCTAssert(Double.signalingNaN.toDouble().isSignalingNaN)
+        XCTAssert(Float80.signalingNaN.toDouble().isSignalingNaN)
     }
 
     func testFloat80Conversion() {
@@ -95,6 +140,11 @@ class FloatTests: XCTestCase {
         AssertEqualWithAccuracy(Float80(Double.pi), Double.pi.toFloat80(), accuracy: f80Epsilon)
         AssertEqualWithAccuracy(Float80(Float80.pi), Float80.pi.toFloat80(), accuracy: f80Epsilon)
 
+        AssertEqualWithAccuracy(-Float80.pi, (-CGFloat.pi).toFloat80(), accuracy: f80Epsilon)
+        AssertEqualWithAccuracy(-Float80(Float.pi), (-Float.pi).toFloat80(), accuracy: f80Epsilon)
+        AssertEqualWithAccuracy(-Float80(Double.pi), (-Double.pi).toFloat80(), accuracy: f80Epsilon)
+        AssertEqualWithAccuracy(-Float80(Float80.pi), (-Float80.pi).toFloat80(), accuracy: f80Epsilon)
+
         XCTAssertEqual(Float80.infinity, CGFloat.infinity.toFloat80())
         XCTAssertEqual(Float80(Float.infinity), Float.infinity.toFloat80())
         XCTAssertEqual(Float80(Double.infinity), Double.infinity.toFloat80())
@@ -104,6 +154,16 @@ class FloatTests: XCTestCase {
         XCTAssertEqual(-Float80(Float.infinity), (-Float.infinity).toFloat80())
         XCTAssertEqual(-Float80(Double.infinity), (-Double.infinity).toFloat80())
         XCTAssertEqual(-Float80(Float80.infinity), (-Float80.infinity).toFloat80())
+
+        XCTAssert(CGFloat.nan.toFloat80().isNaN)
+        XCTAssert(Float.nan.toFloat80().isNaN)
+        XCTAssert(Double.nan.toFloat80().isNaN)
+        XCTAssert(Float80.nan.toFloat80().isNaN)
+
+        XCTAssert(CGFloat.signalingNaN.toFloat80().isSignalingNaN)
+        XCTAssert(Float.signalingNaN.toFloat80().isSignalingNaN)
+        XCTAssert(Double.signalingNaN.toFloat80().isSignalingNaN)
+        XCTAssert(Float80.signalingNaN.toFloat80().isSignalingNaN)
     }
 
 }
