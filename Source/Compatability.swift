@@ -47,7 +47,7 @@ public extension BinaryFloatingPoint {
     }
 
     public init<T: BinaryFloatingPoint>(_ value: T) {
-        assert(Self.radix == T.radix && Self.radix == 2)
+        assert(Self.radix == T.radix)
 
         let pattern: (exp: UIntMax, sig: UIntMax)
 
