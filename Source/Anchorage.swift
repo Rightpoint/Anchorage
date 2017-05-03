@@ -37,10 +37,6 @@ extension NSLayoutDimension : LayoutAnchorType {}
 extension NSLayoutXAxisAnchor : LayoutAnchorType {}
 extension NSLayoutYAxisAnchor : LayoutAnchorType {}
 
-public protocol LayoutAxisType {}
-extension NSLayoutXAxisAnchor : LayoutAxisType {}
-extension NSLayoutYAxisAnchor : LayoutAxisType {}
-
 // MARK: - Equality Constraints
 
 @discardableResult public func == <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
@@ -80,19 +76,19 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
     }
 }
 
-@discardableResult public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
+@discardableResult public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
     return lhs.finalize(constraintsEqualToEdges: rhs)
 }
 
-@discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
+@discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> ConstraintGroup {
     return lhs.finalize(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
-@discardableResult public func == <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
+@discardableResult public func == <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsEqualToEdges: rhs)
 }
 
-@discardableResult public func == <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
+@discardableResult public func == <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> ConstraintPair {
     return lhs.finalize(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
@@ -135,19 +131,19 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
     }
 }
 
-@discardableResult public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
+@discardableResult public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs)
 }
 
-@discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
+@discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> ConstraintGroup {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
-@discardableResult public func <= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
+@discardableResult public func <= <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs)
 }
 
-@discardableResult public func <= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
+@discardableResult public func <= <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
@@ -188,19 +184,19 @@ extension NSLayoutYAxisAnchor : LayoutAxisType {}
     }
 }
 
-@discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> EdgeGroup {
+@discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
 }
 
-@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> EdgeGroup {
+@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors>) -> ConstraintGroup {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
-@discardableResult public func >= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> AxisGroup {
+@discardableResult public func >= <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
 }
 
-@discardableResult public func >= <T: LayoutAxisType, U: LayoutAxisType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> AxisGroup {
+@discardableResult public func >= <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>>) -> ConstraintPair {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 

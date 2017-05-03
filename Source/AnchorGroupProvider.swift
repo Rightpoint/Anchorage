@@ -37,6 +37,7 @@ public protocol AnchorGroupProvider {
     var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> { get }
     var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> { get }
     var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> { get }
+    var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> { get }
 
 }
 
@@ -53,11 +54,17 @@ extension View: AnchorGroupProvider {
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchorPair(first: leadingAnchor, second: trailingAnchor)
     }
+
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchorPair(first: topAnchor, second: bottomAnchor)
     }
+
     public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchorPair(first: centerXAnchor, second: centerYAnchor)
+    }
+
+    public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
+        return AnchorPair(first: widthAnchor, second: heightAnchor)
     }
 
 }
@@ -65,21 +72,25 @@ extension View: AnchorGroupProvider {
 extension ViewController: AnchorGroupProvider {
 
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
-        return AnchorPair(first: view.leadingAnchor, second: view.trailingAnchor)
+        return view.horizontalAnchors
     }
 
     #if os(macOS)
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
-        return AnchorPair(first: view.bottomAnchor, second: view.topAnchor)
+        return view.verticalAnchors
     }
     #else
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
-    return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
+        return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
     }
     #endif
 
     public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
-        return AnchorPair(first: view.centerXAnchor, second: view.centerYAnchor)
+        return view.centerAnchors
+    }
+
+    public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
+        return view.sizeAnchors
     }
 
 }
@@ -89,11 +100,17 @@ extension LayoutGuide: AnchorGroupProvider {
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchorPair(first: leadingAnchor, second: trailingAnchor)
     }
+
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchorPair(first: topAnchor, second: bottomAnchor)
     }
+
     public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchorPair(first: centerXAnchor, second: centerYAnchor)
+    }
+
+    public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
+        return AnchorPair(first: widthAnchor, second: heightAnchor)
     }
 
 }
@@ -109,16 +126,16 @@ public struct EdgeAnchors: LayoutAnchorType {
 
 // MARK: - Axis Group
 
-public struct AxisGroup {
+public struct ConstraintPair {
 
     public var first: NSLayoutConstraint
     public var second: NSLayoutConstraint
 
 }
 
-// MARK: - EdgeGroup
+// MARK: - ConstraintGroup
 
-public struct EdgeGroup {
+public struct ConstraintGroup {
 
     public var top: NSLayoutConstraint
     public var leading: NSLayoutConstraint
