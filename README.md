@@ -62,8 +62,8 @@ Priority of `NSLayoutConstraints` must be set before they are active.
 The `~` is used to specify priority of the constraint resulting from an equation:
 
 ```swift
-// Align view 20 points from the center of its superview, with low priority
-view.centerXAnchor == view.superview.centerXAnchor + 20 ~ .low
+// Align view 20 points from the center of its superview, with (low + 1) priority
+view.centerXAnchor == view.superview.centerXAnchor + 20 ~ .low + 1
 ```
 The layout priority is an enum with the following values:
 
@@ -72,6 +72,8 @@ The layout priority is an enum with the following values:
 - `.low` - `UILayoutPriorityDefaultLow`
 - `.fittingSize` - `UILayoutPriorityFittingSizeLevel`
 - `.custom(UILayoutPriority)` - you can specify any float
+
+You can also use `+` and `-` to get priorities that are relative to the system default ones.
 
 ## Storing Constraints
 
