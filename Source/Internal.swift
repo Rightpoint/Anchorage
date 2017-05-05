@@ -52,14 +52,14 @@
 
 // MARK: - LayoutExpression
 
-public struct LayoutExpression<T: LayoutAnchorType> {
+public struct LayoutExpression<T: LayoutAnchorType, U: LayoutConstantType> {
 
     public var anchor: T?
-    public var constant: CGFloat
+    public var constant: U
     public var multiplier: CGFloat
     public var priority: Priority
 
-    internal init(anchor: T? = nil, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0, priority: Priority = .required) {
+    internal init(anchor: T? = nil, constant: U, multiplier: CGFloat = 1.0, priority: Priority = .required) {
         self.anchor = anchor
         self.constant = constant
         self.multiplier = multiplier
@@ -84,19 +84,44 @@ public struct AnchorPair<T: LayoutAnchorType, U: LayoutAnchorType>: LayoutAnchor
 
 internal extension AnchorPair {
 
+    func finalize(constraintsEqualToConstant size: CGSize, priority: Priority = .required) -> ConstraintPair {
+        return constraints(forConstant: size, priority: priority, builder: ConstraintBuilder.equality);
+    }
+
+    func finalize(constraintsLessThanOrEqualToConstant size: CGSize, priority: Priority = .required) -> ConstraintPair {
+        return constraints(forConstant: size, priority: priority, builder: ConstraintBuilder.lessThanOrEqual);
+    }
+
+    func finalize(constraintsGreaterThanOrEqualToConstant size: CGSize, priority: Priority = .required) -> ConstraintPair {
+        return constraints(forConstant: size, priority: priority, builder: ConstraintBuilder.greaterThanOrEqual);
+    }
+
     func finalize(constraintsEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintPair {
-        let builder = ConstraintBuilder(horizontal: ==, vertical: ==, dimension: ==)
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.equality)
     }
 
     func finalize(constraintsLessThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintPair {
-        let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=, dimension: <=)
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.lessThanOrEqual)
     }
 
     func finalize(constraintsGreaterThanOrEqualToEdges anchor: AnchorPair<T, U>?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintPair {
-        let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=, dimension: >=)
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.greaterThanOrEqual)
+    }
+
+    func constraints(forConstant size: CGSize, priority: Priority, builder: ConstraintBuilder) -> ConstraintPair {
+        var constraints: ConstraintPair!
+
+        performInBatch {
+            switch (first, second) {
+            case let (first as NSLayoutDimension, second as NSLayoutDimension):
+                  constraints = ConstraintPair(first: builder.dimensionBuilder(first, size.width ~ priority),
+                                               second: builder.dimensionBuilder(second, size.height ~ priority))
+            default:
+                preconditionFailure("Only AnchorPair<NSLayoutDimension, NSLayoutDimension> can be constrained to a constant size.")
+            }
+        }
+
+        return constraints;
     }
 
     func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: Priority, builder: ConstraintBuilder) -> ConstraintPair {
@@ -148,18 +173,15 @@ internal extension EdgeAnchors {
     }
 
     func finalize(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintGroup {
-        let builder = ConstraintBuilder(horizontal: ==, vertical: ==, dimension: ==)
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.equality)
     }
 
     func finalize(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintGroup {
-        let builder = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=, dimension: <=)
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.lessThanOrEqual)
     }
 
     func finalize(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintGroup {
-        let builder = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=, dimension: >=)
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: builder)
+        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.greaterThanOrEqual)
     }
 
     func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: Priority, builder: ConstraintBuilder) -> ConstraintGroup {
@@ -187,9 +209,13 @@ internal extension EdgeAnchors {
 
 internal struct ConstraintBuilder {
 
-    typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor>) -> NSLayoutConstraint
-    typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor>) -> NSLayoutConstraint
-    typealias Dimension = (NSLayoutDimension, LayoutExpression<NSLayoutDimension>) -> NSLayoutConstraint
+    typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint
+    typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint
+    typealias Dimension = (NSLayoutDimension, LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint
+
+    static let equality = ConstraintBuilder(horizontal: ==, vertical: ==, dimension: ==)
+    static let lessThanOrEqual = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=, dimension: <=)
+    static let greaterThanOrEqual = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=, dimension: >=)
 
     var topBuilder: Vertical
     var leadingBuilder: Horizontal
