@@ -114,8 +114,10 @@ internal extension AnchorPair {
         performInBatch {
             switch (first, second) {
             case let (first as NSLayoutDimension, second as NSLayoutDimension):
-                  constraints = ConstraintPair(first: builder.dimensionBuilder(first, size.width ~ priority),
-                                               second: builder.dimensionBuilder(second, size.height ~ priority))
+                constraints = ConstraintPair(
+                    first: builder.dimensionBuilder(first, size.width ~ priority),
+                    second: builder.dimensionBuilder(second, size.height ~ priority)
+                )
             default:
                 preconditionFailure("Only AnchorPair<NSLayoutDimension, NSLayoutDimension> can be constrained to a constant size.")
             }
@@ -140,23 +142,31 @@ internal extension AnchorPair {
             // Leading, Trailing
             case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                       secondX as NSLayoutXAxisAnchor, otherSecondX as NSLayoutXAxisAnchor):
-                constraints = ConstraintPair(first: builder.leadingBuilder(firstX, otherFirstX + c1 ~ priority),
-                                             second: builder.trailingBuilder(secondX, otherSecondX - c2 ~ priority))
+                constraints = ConstraintPair(
+                    first: builder.leadingBuilder(firstX, otherFirstX + c1 ~ priority),
+                    second: builder.trailingBuilder(secondX, otherSecondX - c2 ~ priority)
+                )
             // Top, Bottom
             case let (firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor,
                       secondY as NSLayoutYAxisAnchor, otherSecondY as NSLayoutYAxisAnchor):
-                constraints = ConstraintPair(first: builder.topBuilder(firstY, otherFirstY + c1 ~ priority),
-                                             second: builder.bottomBuilder(secondY, otherSecondY - c2 ~ priority))
+                constraints = ConstraintPair(
+                    first: builder.topBuilder(firstY, otherFirstY + c1 ~ priority),
+                    second: builder.bottomBuilder(secondY, otherSecondY - c2 ~ priority)
+                )
             // CenterX, CenterY
             case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                       firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor):
-                constraints = ConstraintPair(first: builder.centerXBuilder(firstX, otherFirstX + c1 ~ priority),
-                                             second: builder.centerYBuilder(firstY, otherFirstY + c2 ~ priority))
+                constraints = ConstraintPair(
+                    first: builder.centerXBuilder(firstX, otherFirstX + c1 ~ priority),
+                    second: builder.centerYBuilder(firstY, otherFirstY + c2 ~ priority)
+                )
             // Width, Height
             case let (first as NSLayoutDimension, otherFirst as NSLayoutDimension,
                       second as NSLayoutDimension, otherSecond as NSLayoutDimension):
-                constraints = ConstraintPair(first: builder.dimensionBuilder(first, otherFirst + c1 ~ priority),
-                                             second: builder.dimensionBuilder(second, otherSecond + c2 ~ priority))
+                constraints = ConstraintPair(
+                    first: builder.dimensionBuilder(first, otherFirst + c1 ~ priority),
+                    second: builder.dimensionBuilder(second, otherSecond + c2 ~ priority)
+                )
             default:
                 preconditionFailure("Constrained anchors must match in either axis or type.")
             }
@@ -230,10 +240,12 @@ internal extension EdgeAnchors {
         performInBatch {
             let horizontalConstraints = horizontalAnchors.constraints(forAnchors: anchors.horizontalAnchors, firstConstant: insets.left, secondConstant: insets.right, priority: priority, builder: builder)
             let verticalConstraints = verticalAnchors.constraints(forAnchors: anchors.verticalAnchors, firstConstant: insets.top, secondConstant: insets.bottom, priority: priority, builder: builder)
-            constraints = ConstraintGroup(top: verticalConstraints.first,
-                                          leading: horizontalConstraints.first,
-                                          bottom: verticalConstraints.second,
-                                          trailing: horizontalConstraints.second)
+            constraints = ConstraintGroup(
+                top: verticalConstraints.first,
+                leading: horizontalConstraints.first,
+                bottom: verticalConstraints.second,
+                trailing: horizontalConstraints.second
+            )
         }
 
         return constraints
