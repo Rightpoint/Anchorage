@@ -341,7 +341,7 @@ infix operator ~: PriorityPrecedence
 /// - Parameter active: Whether the created constraints should be active when they are returned.
 /// - Parameter closure: A closure that runs some Anchorage expressions.
 /// - Returns: An array of new `NSLayoutConstraint`s.
-@discardableResult public func batch(active: Bool, closure: () -> Void) -> [NSLayoutConstraint] {
+@discardableResult public func batch(active: Bool = true, closure: () -> Void) -> [NSLayoutConstraint] {
     precondition(currentBatch == nil)
     defer {
         currentBatch = nil
