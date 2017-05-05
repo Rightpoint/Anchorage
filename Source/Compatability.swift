@@ -34,6 +34,7 @@
     import UIKit
 
     public typealias LayoutPriority = UILayoutPriority
+    public typealias EdgeInsets = UIEdgeInsets
 #endif
 
 public extension BinaryFloatingPoint {

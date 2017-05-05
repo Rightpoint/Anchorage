@@ -35,6 +35,7 @@
 public protocol LayoutConstantType {}
 extension CGFloat: LayoutConstantType {}
 extension CGSize: LayoutConstantType {}
+extension EdgeInsets: LayoutConstantType {}
 
 public protocol LayoutAnchorType {}
 extension NSLayoutAnchor: LayoutAnchorType {}
@@ -80,6 +81,10 @@ extension NSLayoutAnchor: LayoutAnchorType {}
 
 @discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
     return lhs.finalize(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+}
+
+@discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+    return lhs.finalize(constraintsEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func == <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
@@ -141,6 +146,10 @@ extension NSLayoutAnchor: LayoutAnchorType {}
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
+@discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+    return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
+}
+
 @discardableResult public func <= <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs)
 }
@@ -196,6 +205,10 @@ extension NSLayoutAnchor: LayoutAnchorType {}
 
 @discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+}
+
+@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+    return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func >= <T: LayoutAnchorType, U: LayoutAnchorType>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
@@ -292,6 +305,10 @@ infix operator ~: PriorityPrecedence
     return expr
 }
 
+@discardableResult public func + (lhs: EdgeAnchors, rhs: EdgeInsets) -> LayoutExpression<EdgeAnchors, EdgeInsets> {
+    return LayoutExpression(anchor: lhs, constant: rhs)
+}
+
 @discardableResult public func - <T: LayoutAnchorType, U: BinaryFloatingPoint>(lhs: T, rhs: U) -> LayoutExpression<T, CGFloat> {
     return LayoutExpression(anchor: lhs, constant: -CGFloat(rhs))
 }
@@ -310,6 +327,10 @@ infix operator ~: PriorityPrecedence
     var expr = rhs
     expr.constant -= CGFloat(lhs)
     return expr
+}
+
+@discardableResult public func - (lhs: EdgeAnchors, rhs: EdgeInsets) -> LayoutExpression<EdgeAnchors, EdgeInsets> {
+    return LayoutExpression(anchor: lhs, constant: -rhs)
 }
 
 // MARK: - Batching

@@ -125,6 +125,10 @@ internal extension AnchorPair {
     }
 
     func constraints(forAnchors anchors: AnchorPair<T, U>?, constant c: CGFloat, priority: Priority, builder: ConstraintBuilder) -> ConstraintPair {
+        return constraints(forAnchors: anchors, firstConstant: c, secondConstant: c, priority: priority, builder: builder)
+    }
+
+    func constraints(forAnchors anchors: AnchorPair<T, U>?, firstConstant c1: CGFloat, secondConstant c2: CGFloat, priority: Priority, builder: ConstraintBuilder) -> ConstraintPair {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -136,23 +140,23 @@ internal extension AnchorPair {
             // Leading, Trailing
             case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                       secondX as NSLayoutXAxisAnchor, otherSecondX as NSLayoutXAxisAnchor):
-                constraints = ConstraintPair(first: builder.leadingBuilder(firstX, otherFirstX + c ~ priority),
-                                             second: builder.trailingBuilder(secondX, otherSecondX - c ~ priority))
+                constraints = ConstraintPair(first: builder.leadingBuilder(firstX, otherFirstX + c1 ~ priority),
+                                             second: builder.trailingBuilder(secondX, otherSecondX - c2 ~ priority))
             // Top, Bottom
             case let (firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor,
                       secondY as NSLayoutYAxisAnchor, otherSecondY as NSLayoutYAxisAnchor):
-                constraints = ConstraintPair(first: builder.topBuilder(firstY, otherFirstY + c ~ priority),
-                                             second: builder.bottomBuilder(secondY, otherSecondY - c ~ priority))
+                constraints = ConstraintPair(first: builder.topBuilder(firstY, otherFirstY + c1 ~ priority),
+                                             second: builder.bottomBuilder(secondY, otherSecondY - c2 ~ priority))
             // CenterX, CenterY
             case let (firstX as NSLayoutXAxisAnchor, otherFirstX as NSLayoutXAxisAnchor,
                       firstY as NSLayoutYAxisAnchor, otherFirstY as NSLayoutYAxisAnchor):
-                constraints = ConstraintPair(first: builder.centerXBuilder(firstX, otherFirstX + c ~ priority),
-                                             second: builder.centerYBuilder(firstY, otherFirstY + c ~ priority))
+                constraints = ConstraintPair(first: builder.centerXBuilder(firstX, otherFirstX + c1 ~ priority),
+                                             second: builder.centerYBuilder(firstY, otherFirstY + c2 ~ priority))
             // Width, Height
             case let (first as NSLayoutDimension, otherFirst as NSLayoutDimension,
                       second as NSLayoutDimension, otherSecond as NSLayoutDimension):
-                constraints = ConstraintPair(first: builder.dimensionBuilder(first, otherFirst + c ~ priority),
-                                             second: builder.dimensionBuilder(second, otherSecond + c ~ priority))
+                constraints = ConstraintPair(first: builder.dimensionBuilder(first, otherFirst + c1 ~ priority),
+                                             second: builder.dimensionBuilder(second, otherSecond + c2 ~ priority))
             default:
                 preconditionFailure("Constrained anchors must match in either axis or type.")
             }
@@ -165,6 +169,26 @@ internal extension AnchorPair {
 
 // MARK: - EdgeAnchors
 
+internal extension EdgeInsets {
+
+    init(constant: CGFloat) {
+        top = constant
+        left = constant
+        bottom = constant
+        right = constant
+    }
+
+}
+
+internal prefix func - (rhs: EdgeInsets) -> EdgeInsets {
+    return EdgeInsets(
+        top: -rhs.top,
+        left: -rhs.left,
+        bottom: -rhs.bottom,
+        right: -rhs.right
+    )
+}
+
 internal extension EdgeAnchors {
 
     init(horizontal: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, vertical: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>) {
@@ -172,19 +196,31 @@ internal extension EdgeAnchors {
         self.verticalAnchors = vertical
     }
 
+    func finalize(constraintsEqualToEdges anchor: EdgeAnchors?, insets: EdgeInsets, priority: Priority = .required) -> ConstraintGroup {
+        return constraints(forAnchors: anchor, insets: insets, priority: priority, builder: ConstraintBuilder.equality)
+    }
+
+    func finalize(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, insets: EdgeInsets, priority: Priority = .required) -> ConstraintGroup {
+        return constraints(forAnchors: anchor, insets: insets, priority: priority, builder: ConstraintBuilder.lessThanOrEqual)
+    }
+
+    func finalize(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, insets: EdgeInsets, priority: Priority = .required) -> ConstraintGroup {
+        return constraints(forAnchors: anchor, insets: insets, priority: priority, builder: ConstraintBuilder.greaterThanOrEqual)
+    }
+
     func finalize(constraintsEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintGroup {
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.equality)
+        return constraints(forAnchors: anchor, insets: EdgeInsets(constant: c), priority: priority, builder: ConstraintBuilder.equality)
     }
 
     func finalize(constraintsLessThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintGroup {
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.lessThanOrEqual)
+        return constraints(forAnchors: anchor, insets: EdgeInsets(constant: c), priority: priority, builder: ConstraintBuilder.lessThanOrEqual)
     }
 
     func finalize(constraintsGreaterThanOrEqualToEdges anchor: EdgeAnchors?, constant c: CGFloat = 0.0, priority: Priority = .required) -> ConstraintGroup {
-        return constraints(forAnchors: anchor, constant: c, priority: priority, builder: ConstraintBuilder.greaterThanOrEqual)
+        return constraints(forAnchors: anchor, insets: EdgeInsets(constant: c), priority: priority, builder: ConstraintBuilder.greaterThanOrEqual)
     }
 
-    func constraints(forAnchors anchors: EdgeAnchors?, constant c: CGFloat, priority: Priority, builder: ConstraintBuilder) -> ConstraintGroup {
+    func constraints(forAnchors anchors: EdgeAnchors?, insets: EdgeInsets, priority: Priority, builder: ConstraintBuilder) -> ConstraintGroup {
         guard let anchors = anchors else {
             preconditionFailure("Encountered nil edge anchors, indicating internal inconsistency of this API.")
         }
@@ -192,8 +228,8 @@ internal extension EdgeAnchors {
         var constraints: ConstraintGroup!
 
         performInBatch {
-            let horizontalConstraints = horizontalAnchors.constraints(forAnchors: anchors.horizontalAnchors, constant: c, priority: priority, builder: builder)
-            let verticalConstraints = verticalAnchors.constraints(forAnchors: anchors.verticalAnchors, constant: c, priority: priority, builder: builder)
+            let horizontalConstraints = horizontalAnchors.constraints(forAnchors: anchors.horizontalAnchors, firstConstant: insets.left, secondConstant: insets.right, priority: priority, builder: builder)
+            let verticalConstraints = verticalAnchors.constraints(forAnchors: anchors.verticalAnchors, firstConstant: insets.top, secondConstant: insets.bottom, priority: priority, builder: builder)
             constraints = ConstraintGroup(top: verticalConstraints.first,
                                           leading: horizontalConstraints.first,
                                           bottom: verticalConstraints.second,
