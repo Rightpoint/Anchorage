@@ -320,7 +320,7 @@ internal class ConstraintBatch {
 /// - Parameter closure: The work to perform inside of a batch
 internal func performInBatch(closure: () -> Void) {
     if currentBatch == nil {
-        batch(active: true, closure: closure)
+        batch(closure)
     }
     else {
         closure()

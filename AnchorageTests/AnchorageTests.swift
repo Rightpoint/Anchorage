@@ -509,7 +509,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testActiveBatchConstraints() {
-        let constraints = Anchorage.batch(active: true) {
+        let constraints = Anchorage.batch {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
         }
