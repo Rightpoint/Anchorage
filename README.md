@@ -43,7 +43,7 @@ view.widthAnchor == 4 * view.heightAnchor / 3
 
 ## Composite Anchors
 
-Constraint multiple edges at a time with this syntax:
+Constrain multiple edges at a time with this syntax:
 
 ```swift
 // Constrain the leading, trailing, top and bottom edges to be equal
