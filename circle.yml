@@ -21,6 +21,7 @@ test:
     # step significantly. Because recursion is fun, let's point it at ourselves.
     # Relevant CocoaPods bug: https://github.com/CocoaPods/CocoaPods/issues/6154
     - bundle exec pod lib lint --sources="https://github.com/Raizlabs/Anchorage"
+    - bundle exec slather
 
 deployment:
   release:
