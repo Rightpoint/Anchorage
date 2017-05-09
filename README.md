@@ -69,7 +69,7 @@ When constraining leading/trailing or top/bottom, it is far more common to work 
 
 ## Priority
 
-The `~` is used to specify priority of the constraint resulting from any Anchorage equation:
+The `~` is used to specify priority of the constraint resulting from any Anchorage expression:
 
 ```swift
 // Align view 20 points from the center of its superview, with system-defined low priority
