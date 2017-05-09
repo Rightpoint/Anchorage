@@ -18,8 +18,8 @@ import XCTest
 #if os(macOS)
     typealias TestView = NSView
     typealias TestViewController = NSViewController
-    typealias TestWindow = NSWindow
     typealias TestLayoutGuide = NSLayoutGuide
+    typealias TestWindow = NSWindow
     let TestPriorityRequired = NSLayoutPriorityRequired
     let TestPriorityHigh = NSLayoutPriorityDefaultHigh
     let TestPriorityLow = NSLayoutPriorityDefaultLow
@@ -53,8 +53,11 @@ class AnchorageTests: XCTestCase {
 
     override func setUp() {
         #if os(macOS)
+            view1.addLayoutGuide(guide1)
             window.contentView!.addSubview(view1)
+            view2.addLayoutGuide(guide2)
             window.contentView!.addSubview(view2)
+
             controller1.view = TestView()
             window.contentView!.addSubview(controller1.view)
             controller2.view = TestView()
