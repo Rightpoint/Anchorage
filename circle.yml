@@ -21,7 +21,11 @@ test:
     # step significantly. Because recursion is fun, let's point it at ourselves.
     # Relevant CocoaPods bug: https://github.com/CocoaPods/CocoaPods/issues/6154
     - bundle exec pod lib lint --sources="https://github.com/Raizlabs/Anchorage"
-    - bundle exec slather
+
+    # run slather to get code coverage information
+    - bundle exec slather coverage -s --scheme Anchorage-iOS Anchorage.xcodeproj/
+    - bundle exec slather coverage -s --scheme Anchorage-macOS Anchorage.xcodeproj/
+    - bundle exec slather coverage -s --scheme Anchorage-tvOS Anchorage.xcodeproj/
 
 deployment:
   release:
