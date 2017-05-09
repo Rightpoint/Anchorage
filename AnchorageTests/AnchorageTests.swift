@@ -17,12 +17,14 @@ import XCTest
 
 #if os(macOS)
     typealias TestView = NSView
+    typealias TestViewController = NSViewController
     typealias TestWindow = NSWindow
     let TestPriorityRequired = NSLayoutPriorityRequired
     let TestPriorityHigh = NSLayoutPriorityDefaultHigh
     let TestPriorityLow = NSLayoutPriorityDefaultLow
 #else
     typealias TestView = UIView
+    typealias TestViewController = UIViewController
     typealias TestWindow = UIWindow
     let TestPriorityRequired = UILayoutPriorityRequired
     let TestPriorityHigh = UILayoutPriorityDefaultHigh
@@ -38,6 +40,9 @@ class AnchorageTests: XCTestCase {
 
     let view1 = TestView()
     let view2 = TestView()
+
+    let controller1 = TestViewController()
+    let controller2 = TestViewController()
 
     let window = TestWindow()
 
@@ -103,6 +108,32 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testLessThanWithOffset() {
+        let constraint = view1.widthAnchor <= view2.widthAnchor + 10
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 10, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .lessThanOrEqual)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testGreaterThanWithOffset() {
+        let constraint = view1.widthAnchor >= view2.widthAnchor + 10
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 10, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .greaterThanOrEqual)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
     func testEqualityWithMultiplier() {
         let constraint = view1.widthAnchor == view2.widthAnchor / 2
         assertIdentical(constraint.firstItem, view1)
@@ -116,6 +147,32 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testLessThanWithMultiplier() {
+        let constraint = view1.widthAnchor <= view2.widthAnchor / 2
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .lessThanOrEqual)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testGreaterThanWithMultiplier() {
+        let constraint = view1.widthAnchor >= view2.widthAnchor / 2
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .greaterThanOrEqual)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
     func testEqualityWithOffsetAndMultiplier() {
         let constraint = view1.widthAnchor == (view2.widthAnchor + 10) / 2
         assertIdentical(constraint.firstItem, view1)
@@ -125,6 +182,32 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
         XCTAssertTrue(constraint.isActive)
         XCTAssertEqual(constraint.relation, .equal)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testLessThanWithOffsetAndMultiplier() {
+        let constraint = view1.widthAnchor <= (view2.widthAnchor + 10) / 2
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 10, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .lessThanOrEqual)
+        XCTAssertEqual(constraint.firstAttribute, .width)
+        XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testGreaterThanWithOffsetAndMultiplier() {
+        let constraint = view1.widthAnchor >= (view2.widthAnchor + 10) / 2
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, view2)
+        XCTAssertEqualWithAccuracy(constraint.constant, 10, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(constraint.priority, TestPriorityRequired, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .greaterThanOrEqual)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
@@ -207,7 +290,7 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
-    func testCenterAnchors() {
+    func testViewCenterAnchors() {
         let constraints = view1.centerAnchors == view2.centerAnchors
 
         let horizontal = constraints.first
@@ -231,6 +314,11 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(vertical.relation, .equal)
         XCTAssertEqual(vertical.firstAttribute, .centerY)
         XCTAssertEqual(vertical.secondAttribute, .centerY)
+    }
+
+    func testControllerCenterAnchors() {
+        let constraints = controller1.centerAnchors == controller2.centerAnchors
+
     }
 
     func testCenterAnchorsWithOffsetAndPriority() {
@@ -428,7 +516,7 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.secondAttribute, .bottom)
     }
 
-    func testEdgeAnchorsWithInsets() {
+    func testAddingEdgeAnchorsWithInsets() {
         let insets = EdgeInsets(top: 10, left: 5, bottom: 15, right: 20)
 
         let constraints = view1.edgeAnchors == view2.edgeAnchors + insets ~ .high - 1
@@ -470,6 +558,56 @@ class AnchorageTests: XCTestCase {
         assertIdentical(bottom.firstItem, view1)
         assertIdentical(bottom.secondItem, view2)
         XCTAssertEqualWithAccuracy(bottom.constant, -15, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(bottom.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(bottom.priority, TestPriorityHigh - 1, accuracy: fEpsilon)
+        XCTAssertTrue(bottom.isActive)
+        XCTAssertEqual(bottom.relation, .equal)
+        XCTAssertEqual(bottom.firstAttribute, .bottom)
+        XCTAssertEqual(bottom.secondAttribute, .bottom)
+    }
+
+    func testSubtractingEdgeAnchorsWithInsets() {
+        let insets = EdgeInsets(top: 10, left: 5, bottom: 15, right: 20)
+
+        let constraints = view1.edgeAnchors == view2.edgeAnchors - insets ~ .high - 1
+
+        let leading = constraints.leading
+        assertIdentical(leading.firstItem, view1)
+        assertIdentical(leading.secondItem, view2)
+        XCTAssertEqualWithAccuracy(leading.constant, -5, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(leading.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(leading.priority, TestPriorityHigh - 1, accuracy: fEpsilon)
+        XCTAssertTrue(leading.isActive)
+        XCTAssertEqual(leading.relation, .equal)
+        XCTAssertEqual(leading.firstAttribute, .leading)
+        XCTAssertEqual(leading.secondAttribute, .leading)
+
+        let trailing = constraints.trailing
+        assertIdentical(trailing.firstItem, view1)
+        assertIdentical(trailing.secondItem, view2)
+        XCTAssertEqualWithAccuracy(trailing.constant, 20, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(trailing.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(trailing.priority, TestPriorityHigh - 1, accuracy: fEpsilon)
+        XCTAssertTrue(trailing.isActive)
+        XCTAssertEqual(trailing.relation, .equal)
+        XCTAssertEqual(trailing.firstAttribute, .trailing)
+        XCTAssertEqual(trailing.secondAttribute, .trailing)
+
+        let top = constraints.top
+        assertIdentical(top.firstItem, view1)
+        assertIdentical(top.secondItem, view2)
+        XCTAssertEqualWithAccuracy(top.constant, -10, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(top.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqualWithAccuracy(top.priority, TestPriorityHigh - 1, accuracy: fEpsilon)
+        XCTAssertTrue(top.isActive)
+        XCTAssertEqual(top.relation, .equal)
+        XCTAssertEqual(top.firstAttribute, .top)
+        XCTAssertEqual(top.secondAttribute, .top)
+
+        let bottom = constraints.bottom
+        assertIdentical(bottom.firstItem, view1)
+        assertIdentical(bottom.secondItem, view2)
+        XCTAssertEqualWithAccuracy(bottom.constant, 15, accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(bottom.multiplier, 1, accuracy: cgEpsilon)
         XCTAssertEqualWithAccuracy(bottom.priority, TestPriorityHigh - 1, accuracy: fEpsilon)
         XCTAssertTrue(bottom.isActive)
