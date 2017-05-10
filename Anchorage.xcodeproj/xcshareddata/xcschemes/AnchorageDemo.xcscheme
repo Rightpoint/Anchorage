@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-               BuildableName = "Anchorage.framework"
-               BlueprintName = "Anchorage-iOS"
+               BlueprintIdentifier = "2DD242671D95C2CE001D6725"
+               BuildableName = "AnchorageDemo.app"
+               BlueprintName = "AnchorageDemo"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,8 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -43,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
+            BlueprintIdentifier = "2DD242671D95C2CE001D6725"
+            BuildableName = "AnchorageDemo.app"
+            BlueprintName = "AnchorageDemo"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,15 +61,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
+            BlueprintIdentifier = "2DD242671D95C2CE001D6725"
+            BuildableName = "AnchorageDemo.app"
+            BlueprintName = "AnchorageDemo"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,15 +80,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
+            BlueprintIdentifier = "2DD242671D95C2CE001D6725"
+            BuildableName = "AnchorageDemo.app"
+            BlueprintName = "AnchorageDemo"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

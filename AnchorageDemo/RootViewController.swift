@@ -66,7 +66,7 @@ class RootViewController: UITableViewController {
 
 class RootViewDataSource {
     var edgeContainedLabelCellFontSize: CGFloat = 12.0
-    var minimumWidthConstraintConstant: CGFloat =  100.0
+    var minimumWidthConstraintConstant: CGFloat = 100.0
     var toggleHeightConstraintIsActive: Bool = true
     var equalSpacingConstraintConstant: CGFloat = 0.0
     var animatableConstraintConstant: CGFloat = 0.0

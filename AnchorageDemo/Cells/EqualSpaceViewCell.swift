@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Anchorage
 
 class EqualSpaceViewCell: BaseCell {
     override class func reuseId() -> String {

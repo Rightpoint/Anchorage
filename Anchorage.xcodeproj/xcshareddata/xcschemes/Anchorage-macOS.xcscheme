@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+               BlueprintIdentifier = "F15462911E56842400C3948D"
                BuildableName = "Anchorage.framework"
-               BlueprintName = "Anchorage-iOS"
+               BlueprintName = "Anchorage-macOS"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,9 +33,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7A39D62D1EB53E1100BDE9C0"
-               BuildableName = "AnchorageTests-iOS.xctest"
-               BlueprintName = "AnchorageTests-iOS"
+               BlueprintIdentifier = "CD6A0E661EB7CDEF00FFF5DB"
+               BuildableName = "AnchorageTests-macOS.xctest"
+               BlueprintName = "AnchorageTests-macOS"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+            BlueprintIdentifier = "F15462911E56842400C3948D"
             BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
+            BlueprintName = "Anchorage-macOS"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+            BlueprintIdentifier = "F15462911E56842400C3948D"
             BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
+            BlueprintName = "Anchorage-macOS"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +83,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+            BlueprintIdentifier = "F15462911E56842400C3948D"
             BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
+            BlueprintName = "Anchorage-macOS"
             ReferencedContainer = "container:Anchorage.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
