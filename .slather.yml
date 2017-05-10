@@ -3,3 +3,5 @@ xcodeproj: Anchorage.xcodeproj
 scheme: Anchorage-iOS
 source_directory: Source/
 output_directory: Codecov/
+ignore:
+ - AnchorageTests/*
