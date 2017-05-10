@@ -1,0 +1,5 @@
+coverage_service: cobertura_xml
+xcodeproj: Anchorage.xcodeproj
+scheme: Anchorage-iOS
+source_directory: Source/
+output_directory: Codecov/
