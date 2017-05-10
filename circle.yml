@@ -23,9 +23,9 @@ test:
     - bundle exec pod lib lint --sources="https://github.com/Raizlabs/Anchorage"
 
     # run slather to get code coverage information
-    - bundle exec slather coverage -s --scheme Anchorage-iOS Anchorage.xcodeproj/
-    - bundle exec slather coverage -s --scheme Anchorage-macOS Anchorage.xcodeproj/
-    - bundle exec slather coverage -s --scheme Anchorage-tvOS Anchorage.xcodeproj/
+    - bundle exec slather
+    # send coverage to codecov.io
+    - bash <(curl -s https://codecov.io/bash) -f Codecov/cobertura.xml -X coveragepy -X gcov -X xcode
 
 deployment:
   release:
