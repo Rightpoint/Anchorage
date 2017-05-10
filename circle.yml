@@ -22,10 +22,8 @@ test:
     # Relevant CocoaPods bug: https://github.com/CocoaPods/CocoaPods/issues/6154
     - bundle exec pod lib lint --sources="https://github.com/Raizlabs/Anchorage"
 
-    # run slather to get code coverage information
-    - bundle exec slather
     # send coverage to codecov.io
-    - bash <(curl -s https://codecov.io/bash) -f Codecov/cobertura.xml -X coveragepy -X gcov -X xcode
+    - bash <(curl -s https://codecov.io/bash) -J 'Anchorage'
 
 deployment:
   release:
