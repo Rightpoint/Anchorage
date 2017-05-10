@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Anchorage"
-  s.version          = "3.3.0"
+  s.version          = "4.0.0"
   s.summary          = "A collection of operators and utilities that simplify iOS layout code."
   s.description      = <<-DESC
                        Create constraints using intuitive operators built directly on top of the NSLayoutAnchor API. Layout has never been simpler!
