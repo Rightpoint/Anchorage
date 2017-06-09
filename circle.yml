@@ -12,6 +12,7 @@ test:
   override:
     - ./scripts/macOS.sh
     - ./scripts/iOS.sh
+    - ./scripts/iOS_demo.sh
     - ./scripts/tvOS.sh
   post:
     - carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
