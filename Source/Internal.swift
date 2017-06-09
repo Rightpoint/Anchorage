@@ -33,10 +33,17 @@
     internal typealias ViewController = NSViewController
     internal typealias LayoutGuide = NSLayoutGuide
 
-    internal let LayoutPriorityRequired = NSLayoutPriorityRequired
-    internal let LayoutPriorityHigh = NSLayoutPriorityDefaultHigh
-    internal let LayoutPriorityLow = NSLayoutPriorityDefaultLow
-    internal let LayoutPriorityFittingSize = NSLayoutPriorityFittingSizeCompression
+    #if swift(>=4.0)
+        internal let LayoutPriorityRequired = NSLayoutConstraint.Priority.required
+        internal let LayoutPriorityHigh = NSLayoutConstraint.Priority.defaultHigh
+        internal let LayoutPriorityLow = NSLayoutConstraint.Priority.defaultLow
+        internal let LayoutPriorityFittingSize = NSLayoutConstraint.Priority.fittingSizeCompression
+    #else
+        internal let LayoutPriorityRequired = NSLayoutPriorityRequired
+        internal let LayoutPriorityHigh = NSLayoutPriorityDefaultHigh
+        internal let LayoutPriorityLow = NSLayoutPriorityDefaultLow
+        internal let LayoutPriorityFittingSize = NSLayoutPriorityFittingSizeCompression
+    #endif
 #else
     import UIKit
 
@@ -44,10 +51,17 @@
     internal typealias ViewController = UIViewController
     internal typealias LayoutGuide = UILayoutGuide
 
-    internal let LayoutPriorityRequired = UILayoutPriorityRequired
-    internal let LayoutPriorityHigh = UILayoutPriorityDefaultHigh
-    internal let LayoutPriorityLow = UILayoutPriorityDefaultLow
-    internal let LayoutPriorityFittingSize = UILayoutPriorityFittingSizeLevel
+    #if swift(>=4.0)
+        internal let LayoutPriorityRequired = UILayoutPriority.required
+        internal let LayoutPriorityHigh = UILayoutPriority.defaultHigh
+        internal let LayoutPriorityLow = UILayoutPriority.defaultLow
+        internal let LayoutPriorityFittingSize = UILayoutPriority.fittingSizeLevel
+    #else
+        internal let LayoutPriorityRequired = UILayoutPriorityRequired
+        internal let LayoutPriorityHigh = UILayoutPriorityDefaultHigh
+        internal let LayoutPriorityLow = UILayoutPriorityDefaultLow
+        internal let LayoutPriorityFittingSize = UILayoutPriorityFittingSizeLevel
+    #endif
 #endif
 
 // MARK: - LayoutExpression
