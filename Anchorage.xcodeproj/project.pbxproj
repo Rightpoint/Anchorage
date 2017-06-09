@@ -549,7 +549,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
+			shellScript = "xcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=3.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=4.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
 		};
 		CD6A0EA01EB7D45D00FFF5DB /* Build and test macOS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -563,7 +563,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-macOS -sdk macosx -destination \"arch=x86_64\" CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
+			shellScript = "xcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-macOS -sdk macosx -destination \"arch=x86_64\" SWIFT_VERSION=3.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-macOS -sdk macosx -destination \"arch=x86_64\" SWIFT_VERSION=4.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
 		};
 		CD6A0EA11EB7D57E00FFF5DB /* Build and test tvOS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -577,7 +577,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme \"Anchorage-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV 1080p\" CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
+			shellScript = "xcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme \"Anchorage-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV 1080p\" SWIFT_VERSION=3.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme \"Anchorage-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV 1080p\" SWIFT_VERSION=4.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
 		};
 		CD6A0EA21EB7DBA300FFF5DB /* Build iOS example project */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -591,7 +591,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild build -project Anchorage.xcodeproj -scheme AnchorageDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\n";
+			shellScript = "xcodebuild build -project Anchorage.xcodeproj -scheme AnchorageDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=3.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\nxcodebuild build -project Anchorage.xcodeproj -scheme AnchorageDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=4.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=";
 		};
 /* End PBXShellScriptBuildPhase section */
 
