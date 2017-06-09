@@ -12,8 +12,10 @@ test:
   override:
     - ./scripts/macOS_Swift_3.sh
     - ./scripts/macOS_Swift_4.sh
-    - ./scripts/iOS_Swift_3.sh
-    - ./scripts/iOS_Swift_4.sh
+    - ./scripts/iOS_Swift_3_32_bit.sh
+    - ./scripts/iOS_Swift_4_32_bit.sh
+    - ./scripts/iOS_Swift_3_64_bit.sh
+    - ./scripts/iOS_Swift_4_64_bit.sh
     - ./scripts/iOS_demo_Swift_3.sh
     - ./scripts/iOS_demo_Swift_4.sh
     - ./scripts/tvOS_Swift_3.sh
