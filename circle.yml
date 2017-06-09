@@ -10,10 +10,14 @@ dependencies:
 
 test:
   override:
-    - ./scripts/macOS.sh
-    - ./scripts/iOS.sh
-    - ./scripts/iOS_demo.sh
-    - ./scripts/tvOS.sh
+    - ./scripts/macOS_Swift_3.sh
+    - ./scripts/macOS_Swift_4.sh
+    - ./scripts/iOS_Swift_3.sh
+    - ./scripts/iOS_Swift_4.sh
+    - ./scripts/iOS_demo_Swift_3.sh
+    - ./scripts/iOS_demo_Swift_4.sh
+    - ./scripts/tvOS_Swift_3.sh
+    - ./scripts/tvOS_Swift_4.sh
   post:
     - carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
     # This is to work around the fact that CocoaPods wants to set up the master CocoaPods specs
