@@ -46,17 +46,6 @@
 #endif
 
 #if swift(>=4.0)
-    typealias UIntMax = UInt64
-    typealias IntMax = Int64
-
-    extension SignedInteger {
-
-        func toIntMax() -> IntMax {
-            return IntMax(self)
-        }
-
-    }
-
 #else
     extension LayoutPriority {
 
@@ -70,52 +59,40 @@
     }
 #endif
 
-public extension BinaryFloatingPoint {
+extension CGFloat {
 
-    public static var exponentBias: Int {
-        return (1 << (Self.exponentBitCount - 1)) - 1
-    }
-
-    public static var exponentMax: Int {
-        return (1 << exponentBitCount) - 1
-    }
-
-    public init<T: BinaryFloatingPoint>(_ value: T) {
-        assert(Self.radix == T.radix)
-
-        let pattern: (exp: UIntMax, sig: UIntMax)
-
-        switch value.floatingPointClass {
-        case .positiveZero, .negativeZero:
-            pattern = (exp: 0, sig: 0)
-        case .positiveInfinity, .negativeInfinity:
-            pattern = (exp: UIntMax(bitPattern: IntMax(Self.exponentMax)), sig: 0)
-        case .signalingNaN:
-            pattern = (exp: UIntMax(bitPattern: IntMax(Self.exponentMax)), sig: 1)
-        case .quietNaN:
-            pattern = (exp: UIntMax(bitPattern: IntMax(Self.exponentMax)), sig: UIntMax(bitPattern: IntMax(1 << (Self.significandBitCount - 1))))
+    init<T: BinaryFloatingPoint>(_ value: T) {
+        switch value {
+        case is Double:
+            self.init(value as! Double)
+        case is Float:
+            self.init(value as! Float)
+        case is CGFloat:
+            self.init(value as! CGFloat)
+        case is Float80:
+            self.init(value as! Float80)
         default:
-
-            #if swift(>=4.0)
-                pattern.exp = UIntMax(bitPattern: Int64(value.exponent) + IntMax(Self.exponentBias))
-                let sig = UIntMax(value.significandBitPattern)
-            #else
-                pattern.exp = UIntMax(bitPattern: value.exponent.toIntMax() + IntMax(Self.exponentBias))
-                let sig = value.significandBitPattern.toUIntMax()
-            #endif
-            if Self.significandBitCount >= T.significandBitCount {
-                pattern.sig = sig << UIntMax(bitPattern: IntMax(Self.significandBitCount - T.significandBitCount))
-            }
-            else {
-                pattern.sig = sig >> UIntMax(bitPattern: IntMax(T.significandBitCount - Self.significandBitCount))
-            }
+            fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
         }
+    }
 
-        self.init(
-            sign: value.sign,
-            exponentBitPattern: RawExponent(pattern.exp),
-            significandBitPattern: RawSignificand(pattern.sig)
-        )
+}
+
+extension Float {
+
+    init<T: BinaryFloatingPoint>(_ value: T) {
+        switch value {
+        case is Double:
+            self.init(value as! Double)
+        case is Float:
+            self.init(value as! Float)
+        case is CGFloat:
+            self.init(value as! CGFloat)
+        case is Float80:
+            self.init(value as! Float80)
+        default:
+            fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
+        }
     }
 
 }
