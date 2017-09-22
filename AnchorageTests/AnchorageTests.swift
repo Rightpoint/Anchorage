@@ -17,12 +17,9 @@ import XCTest
 
 #if swift(>=4.0)
 #else
-
     func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) where T : FloatingPoint {
         XCTAssertEqualWithAccuracy(expression1, expression2, accuracy: accuracy, message, file: file, line: line)
     }
-
-
 #endif
 
 #if os(macOS)
