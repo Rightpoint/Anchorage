@@ -12,20 +12,20 @@ import XCTest
 class FloatTests: XCTestCase {
 
     func testCGFloatConversion() {
-        XCTAssertEqualWithAccuracy(CGFloat(0), CGFloat(0).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float(0)), Float(0).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Double(0)), Double(0).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float80(0)), Float80(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(0), CGFloat(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(Float(0)), Float(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(Double(0)), Double(0).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(Float80(0)), Float80(0).toCGFloat(), accuracy: cgEpsilon)
 
-        XCTAssertEqualWithAccuracy(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat.pi, CGFloat.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(Float.pi), Float.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(Double.pi), Double.pi.toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(CGFloat(Float80.pi), Float80.pi.toCGFloat(), accuracy: cgEpsilon)
 
-        XCTAssertEqualWithAccuracy(-CGFloat.pi, (-CGFloat.pi).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(-CGFloat(Float.pi), (-Float.pi).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(-CGFloat(Double.pi), (-Double.pi).toCGFloat(), accuracy: cgEpsilon)
-        XCTAssertEqualWithAccuracy(-CGFloat(Float80.pi), (-Float80.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(-CGFloat.pi, (-CGFloat.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(-CGFloat(Float.pi), (-Float.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(-CGFloat(Double.pi), (-Double.pi).toCGFloat(), accuracy: cgEpsilon)
+        XCTAssertEqual(-CGFloat(Float80.pi), (-Float80.pi).toCGFloat(), accuracy: cgEpsilon)
 
         XCTAssertEqual(CGFloat.infinity, CGFloat.infinity.toCGFloat())
         XCTAssertEqual(CGFloat(Float.infinity), Float.infinity.toCGFloat())
@@ -49,20 +49,20 @@ class FloatTests: XCTestCase {
     }
 
     func testFloatConversion() {
-        XCTAssertEqualWithAccuracy(Float(0), CGFloat(0).toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(Float(Float(0)), Float(0).toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(Float(Double(0)), Double(0).toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(Float(Float80(0)), Float80(0).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(0), CGFloat(0).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(Float(0)), Float(0).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(Double(0)), Double(0).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(Float80(0)), Float80(0).toFloat(), accuracy: fEpsilon)
 
-        XCTAssertEqualWithAccuracy(Float.pi, CGFloat.pi.toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(Float(Float.pi), Float.pi.toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(Float(Double.pi), Double.pi.toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(Float(Float80.pi), Float80.pi.toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float.pi, CGFloat.pi.toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(Float.pi), Float.pi.toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(Double.pi), Double.pi.toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(Float(Float80.pi), Float80.pi.toFloat(), accuracy: fEpsilon)
 
-        XCTAssertEqualWithAccuracy(-Float.pi, (-CGFloat.pi).toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(-Float(Float.pi), (-Float.pi).toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(-Float(Double.pi), (-Double.pi).toFloat(), accuracy: fEpsilon)
-        XCTAssertEqualWithAccuracy(-Float(Float80.pi), (-Float80.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(-Float.pi, (-CGFloat.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(-Float(Float.pi), (-Float.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(-Float(Double.pi), (-Double.pi).toFloat(), accuracy: fEpsilon)
+        XCTAssertEqual(-Float(Float80.pi), (-Float80.pi).toFloat(), accuracy: fEpsilon)
 
         XCTAssertEqual(Float.infinity, CGFloat.infinity.toFloat())
         XCTAssertEqual(Float(Float.infinity), Float.infinity.toFloat())
@@ -86,20 +86,20 @@ class FloatTests: XCTestCase {
     }
 
     func testDoubleConversion() {
-        XCTAssertEqualWithAccuracy(Double(0), CGFloat(0).toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(Double(Float(0)), Float(0).toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(Double(Double(0)), Double(0).toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(Double(Float80(0)), Float80(0).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(0), CGFloat(0).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(Float(0)), Float(0).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(Double(0)), Double(0).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(Float80(0)), Float80(0).toDouble(), accuracy: dEpsilon)
 
-        XCTAssertEqualWithAccuracy(Double.pi, CGFloat.pi.toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(Double(Float.pi), Float.pi.toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(Double(Double.pi), Double.pi.toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(Double(Float80.pi), Float80.pi.toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double.pi, CGFloat.pi.toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(Float.pi), Float.pi.toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(Double.pi), Double.pi.toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(Double(Float80.pi), Float80.pi.toDouble(), accuracy: dEpsilon)
 
-        XCTAssertEqualWithAccuracy(-Double.pi, (-CGFloat.pi).toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(-Double(Float.pi), (-Float.pi).toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(-Double(Double.pi), (-Double.pi).toDouble(), accuracy: dEpsilon)
-        XCTAssertEqualWithAccuracy(-Double(Float80.pi), (-Float80.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(-Double.pi, (-CGFloat.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(-Double(Float.pi), (-Float.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(-Double(Double.pi), (-Double.pi).toDouble(), accuracy: dEpsilon)
+        XCTAssertEqual(-Double(Float80.pi), (-Float80.pi).toDouble(), accuracy: dEpsilon)
 
         XCTAssertEqual(Double.infinity, CGFloat.infinity.toDouble())
         XCTAssertEqual(Double(Float.infinity), Float.infinity.toDouble())
@@ -123,7 +123,7 @@ class FloatTests: XCTestCase {
     }
 
     func testFloat80Conversion() {
-        // Float80 seems to crash XCTAssertEqualWithAccuracy...
+        // Float80 seems to crash XCTAssertEqual...
         func AssertEqualWithAccuracy(_ a: @autoclosure () throws -> Float80, _ b: @autoclosure () throws -> Float80, accuracy: Float80, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) rethrows {
             let lhs = try a()
             let rhs = try b()
