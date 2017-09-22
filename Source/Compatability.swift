@@ -95,11 +95,12 @@ public extension BinaryFloatingPoint {
         case .quietNaN:
             pattern = (exp: UIntMax(bitPattern: IntMax(Self.exponentMax)), sig: UIntMax(bitPattern: IntMax(1 << (Self.significandBitCount - 1))))
         default:
-            pattern.exp = UIntMax(bitPattern: value.exponent.toIntMax() + IntMax(Self.exponentBias))
 
             #if swift(>=4.0)
+                pattern.exp = UIntMax(bitPattern: Int64(value.exponent) + IntMax(Self.exponentBias))
                 let sig = UIntMax(value.significandBitPattern)
             #else
+                pattern.exp = UIntMax(bitPattern: value.exponent.toIntMax() + IntMax(Self.exponentBias))
                 let sig = value.significandBitPattern.toUIntMax()
             #endif
             if Self.significandBitCount >= T.significandBitCount {
