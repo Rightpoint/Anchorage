@@ -5,7 +5,7 @@ machine:
 dependencies:
   pre:
     - brew update 1> /dev/null 2> /dev/null
-    - brew outdated carthage || brew upgrade carthage
+    - brew outdated carthage || (brew uninstall carthage --force; HOMEBREW_NO_AUTO_UPDATE=1 brew install carthage --force-bottle)
     - gem install bundler
 
 test:
