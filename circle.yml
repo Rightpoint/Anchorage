@@ -21,7 +21,7 @@ test:
     - ./scripts/tvOS_Swift_3.sh
     - ./scripts/tvOS_Swift_4.sh
   post:
-    - carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
+    - carthage build --verbose --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
     # This is to work around the fact that CocoaPods wants to set up the master CocoaPods specs
     # repo on pod lib lint, which takes several minutes on CircleCI. Without dependancies, this
     # isn't a nescessary step. We can point it at any other (smaller) Git repo to speed up this
