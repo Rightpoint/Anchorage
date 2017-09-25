@@ -58,7 +58,6 @@ import XCTest
 let cgEpsilon: CGFloat = 0.00001
 let fEpsilon: Float = 0.00001
 let dEpsilon: Double = 0.00001
-let f80Epsilon: Float80 = 0.00001
 
 class AnchorageTests: XCTestCase {
 

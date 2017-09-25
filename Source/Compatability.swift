@@ -69,8 +69,6 @@ extension CGFloat {
             self.init(value as! Float)
         case is CGFloat:
             self.init(value as! CGFloat)
-        case is Float80:
-            self.init(value as! Float80)
         default:
             fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
         }
@@ -88,8 +86,6 @@ extension Float {
             self.init(value as! Float)
         case is CGFloat:
             self.init(value as! CGFloat)
-        case is Float80:
-            self.init(value as! Float80)
         default:
             fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
         }
