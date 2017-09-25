@@ -51,7 +51,7 @@ public enum Priority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, Eq
     }
 
     public init(floatLiteral value: Float) {
-        self.init(Int(value))
+        self = .custom(LayoutPriority(value))
     }
 
     public init(integerLiteral value: Int) {
