@@ -141,6 +141,19 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testAxisAnchorEqualityWithMultiplier() {
+        let constraint = view1.leadingAnchor == window.trailingAnchor / 2
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, window)
+        XCTAssertEqual(constraint.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqual(constraint.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqual(constraint.priority.rawValue, TestPriorityRequired.rawValue, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .equal)
+        XCTAssertEqual(constraint.firstAttribute, .leading)
+        XCTAssertEqual(constraint.secondAttribute, .trailing)
+    }
+
     func testEqualityWithOffsetAndMultiplier() {
         let constraint = view1.widthAnchor == (view2.widthAnchor + 10) / 2
         assertIdentical(constraint.firstItem, view1)
@@ -152,6 +165,19 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .equal)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testAxisAnchorEqualityWithOffsetAndMultiplier() {
+        let constraint = view1.trailingAnchor == (window.centerXAnchor + 10) / 2
+        assertIdentical(constraint.firstItem, view1)
+        assertIdentical(constraint.secondItem, window)
+        XCTAssertEqual(constraint.constant, 10, accuracy: cgEpsilon)
+        XCTAssertEqual(constraint.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqual(constraint.priority.rawValue, TestPriorityRequired.rawValue, accuracy: fEpsilon)
+        XCTAssertTrue(constraint.isActive)
+        XCTAssertEqual(constraint.relation, .equal)
+        XCTAssertEqual(constraint.firstAttribute, .trailing)
+        XCTAssertEqual(constraint.secondAttribute, .centerX)
     }
 
     func testEqualityWithPriorityConstant() {
