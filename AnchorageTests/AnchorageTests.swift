@@ -142,9 +142,9 @@ class AnchorageTests: XCTestCase {
     }
 
     func testAxisAnchorEqualityWithMultiplier() {
-        let constraint = view1.leadingAnchor == window.trailingAnchor / 2
+        let constraint = view1.leadingAnchor == view2.trailingAnchor / 2
         assertIdentical(constraint.firstItem, view1)
-        assertIdentical(constraint.secondItem, window)
+        assertIdentical(constraint.secondItem, view2)
         XCTAssertEqual(constraint.constant, 0, accuracy: cgEpsilon)
         XCTAssertEqual(constraint.multiplier, 0.5, accuracy: cgEpsilon)
         XCTAssertEqual(constraint.priority.rawValue, TestPriorityRequired.rawValue, accuracy: fEpsilon)
@@ -168,9 +168,9 @@ class AnchorageTests: XCTestCase {
     }
 
     func testAxisAnchorEqualityWithOffsetAndMultiplier() {
-        let constraint = view1.trailingAnchor == (window.centerXAnchor + 10) / 2
+        let constraint = view1.trailingAnchor == (view2.centerXAnchor + 10) / 2
         assertIdentical(constraint.firstItem, view1)
-        assertIdentical(constraint.secondItem, window)
+        assertIdentical(constraint.secondItem, view2)
         XCTAssertEqual(constraint.constant, 10, accuracy: cgEpsilon)
         XCTAssertEqual(constraint.multiplier, 0.5, accuracy: cgEpsilon)
         XCTAssertEqual(constraint.priority.rawValue, TestPriorityRequired.rawValue, accuracy: fEpsilon)
