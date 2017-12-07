@@ -588,6 +588,51 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(height.firstAttribute, .height)
         XCTAssertEqual(height.secondAttribute, .height)
     }
+    
+    func testNestedBatchConstraints() {
+        var nestedConstraints: [NSLayoutConstraint] = []
+        let constraints = Anchorage.batch {
+            view1.widthAnchor == view2.widthAnchor
+            nestedConstraints = Anchorage.batch(active: false) {
+                view1.heightAnchor == view2.heightAnchor / 2 ~ .low
+            }
+            view1.leadingAnchor == view2.leadingAnchor
+        }
+        
+        let width = constraints[0]
+        let leading = constraints[1]
+        let height = nestedConstraints[0]
+        
+        assertIdentical(width.firstItem, view1)
+        assertIdentical(width.secondItem, view2)
+        XCTAssertEqual(width.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqual(width.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqual(width.priority.rawValue, TestPriorityRequired.rawValue, accuracy: fEpsilon)
+        XCTAssertTrue(width.isActive)
+        XCTAssertEqual(width.relation, .equal)
+        XCTAssertEqual(width.firstAttribute, .width)
+        XCTAssertEqual(width.secondAttribute, .width)
+        
+        assertIdentical(height.firstItem, view1)
+        assertIdentical(height.secondItem, view2)
+        XCTAssertEqual(height.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqual(height.multiplier, 0.5, accuracy: cgEpsilon)
+        XCTAssertEqual(height.priority.rawValue, TestPriorityLow.rawValue, accuracy: fEpsilon)
+        XCTAssertFalse(height.isActive)
+        XCTAssertEqual(height.relation, .equal)
+        XCTAssertEqual(height.firstAttribute, .height)
+        XCTAssertEqual(height.secondAttribute, .height)
+        
+        assertIdentical(leading.firstItem, view1)
+        assertIdentical(leading.secondItem, view2)
+        XCTAssertEqual(leading.constant, 0, accuracy: cgEpsilon)
+        XCTAssertEqual(leading.multiplier, 1, accuracy: cgEpsilon)
+        XCTAssertEqual(leading.priority.rawValue, TestPriorityRequired.rawValue, accuracy: fEpsilon)
+        XCTAssertTrue(leading.isActive)
+        XCTAssertEqual(leading.relation, .equal)
+        XCTAssertEqual(leading.firstAttribute, .leading)
+        XCTAssertEqual(leading.secondAttribute, .leading)
+    }
 
 }
 
