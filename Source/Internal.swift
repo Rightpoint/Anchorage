@@ -312,7 +312,7 @@ internal struct ConstraintBuilder {
 
 // MARK: - Batching
 
-internal var currentBatch: ConstraintBatch?
+internal var batches: [ConstraintBatch] = []
 
 internal class ConstraintBatch {
 
@@ -333,7 +333,7 @@ internal class ConstraintBatch {
 ///
 /// - Parameter closure: The work to perform inside of a batch
 internal func performInBatch(closure: () -> Void) {
-    if currentBatch == nil {
+    if batches.isEmpty {
         batch(closure)
     }
     else {
@@ -351,8 +351,8 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 
     constraint.priority = priority.value
 
-    if let currentBatch = currentBatch {
-        currentBatch.add(constraint: constraint)
+    if let lastBatch = batches.last {
+        lastBatch.add(constraint: constraint)
     }
     else {
         constraint.isActive = true

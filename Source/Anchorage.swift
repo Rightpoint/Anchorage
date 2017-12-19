@@ -397,7 +397,6 @@ infix operator ~: PriorityPrecedence
 
 /// Any Anchorage constraints created inside the passed closure are returned in the array.
 ///
-/// - Precondition: Can't be called inside or simultaneously with another batch. Batches cannot be nested.
 /// - Parameter closure: A closure that runs some Anchorage expressions.
 /// - Returns: An array of new, active `NSLayoutConstraint`s.
 @discardableResult public func batch(_ closure: () -> Void) -> [NSLayoutConstraint] {
@@ -406,18 +405,15 @@ infix operator ~: PriorityPrecedence
 
 /// Any Anchorage constraints created inside the passed closure are returned in the array.
 ///
-/// - Precondition: Can't be called inside or simultaneously with another batch. Batches cannot be nested.
 /// - Parameter active: Whether the created constraints should be active when they are returned.
 /// - Parameter closure: A closure that runs some Anchorage expressions.
 /// - Returns: An array of new `NSLayoutConstraint`s.
 public func batch(active: Bool, closure: () -> Void) -> [NSLayoutConstraint] {
-    precondition(currentBatch == nil)
-    defer {
-        currentBatch = nil
-    }
-
     let batch = ConstraintBatch()
-    currentBatch = batch
+    batches.append(batch)
+    defer {
+        batches.removeLast()
+    }
 
     closure()
 
