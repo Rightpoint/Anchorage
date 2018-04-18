@@ -1,0 +1,76 @@
+version: 2
+
+jobs:
+  test-swift-3:
+    macos:
+      xcode: "9.3.0"
+    steps:
+      - checkout
+      - run: ./scripts/macOS_Swift_3.sh
+      - run: ./scripts/iOS_Swift_3_32_bit.sh
+      - run: ./scripts/iOS_Swift_3_64_bit.sh
+      - run: ./scripts/iOS_demo_Swift_3.sh
+      - run: ./scripts/tvOS_Swift_3.sh
+
+  test-swift-4:
+    macos:
+      xcode: "9.3.0"
+    steps:
+      - checkout
+      - run: ./scripts/macOS_Swift_4.sh
+      - run: ./scripts/iOS_Swift_4_32_bit.sh
+      - run: ./scripts/iOS_Swift_4_64_bit.sh
+      - run: ./scripts/iOS_demo_Swift_4.sh
+      - run: ./scripts/tvOS_Swift_4.sh
+
+  carthage-build:
+    macos:
+      xcode: "9.3.0"
+    steps:
+      - checkout
+      - run:
+          name: Update homebrew dependencies
+          command: brew update 1> /dev/null 2> /dev/null
+      - run:
+          name: Update Carthage
+          command: brew outdated carthage || (brew uninstall carthage --force; HOMEBREW_NO_AUTO_UPDATE=1 brew install carthage --force-bottle)
+      - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
+
+  deploy-to-cocoapods:
+    macos:
+      xcode: "9.3.0"
+    steps:
+      - checkout
+      - run:
+          name: Install CocoaPods Specs Repo
+          command: |
+            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+      - run: bundle install
+      - run: bundle exec pod trunk push
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - test-swift-3:
+          filters:
+            tags:
+              only: /.*/
+      - test-swift-4:
+          filters:
+            tags:
+              only: /.*/
+      - carthage-build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy-to-cocoapods:
+          requires:
+            - test-swift-3
+            - test-swift-4
+            - carthage-build
+          filters:
+            tags:
+              only: /\d+(\.\d+)*(-.*)*/
+            branches:
+              ignore: /.*/
