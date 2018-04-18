@@ -150,8 +150,8 @@ pod 'Anchorage'
 To integrate Anchorage into your Xcode project using Carthage, specify it in
 your Cartfile:
 
-```
-github "Raizlabs/Anchorage" ~> 3.0
+```ogdl
+github "Raizlabs/Anchorage"
 ```
 
 Run `carthage update` to build the framework and drag the built
