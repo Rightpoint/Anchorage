@@ -43,9 +43,9 @@
 #endif
 
 #if swift(>=4.2) || (os(macOS) && swift(>=4.0))
-public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
+    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 #else
-public typealias ConstraintAttribute = NSLayoutAttribute
+    public typealias ConstraintAttribute = NSLayoutAttribute
 #endif
 
 #if swift(>=4.0)
