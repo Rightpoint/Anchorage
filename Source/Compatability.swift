@@ -32,16 +32,19 @@
     #if swift(>=4.0)
         public typealias LayoutPriority = NSLayoutConstraint.Priority
         public typealias EdgeInsets = NSEdgeInsets
-        public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
     #else
         public typealias LayoutPriority = NSLayoutPriority
-        public typealias ConstraintAttribute = NSLayoutAttribute
     #endif
 #else
     import UIKit
 
     public typealias LayoutPriority = UILayoutPriority
     public typealias EdgeInsets = UIEdgeInsets
+#endif
+
+#if swift(>=4.2) || (os(macOS) && swift(>=4.0))
+    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
+#else
     public typealias ConstraintAttribute = NSLayoutAttribute
 #endif
 
