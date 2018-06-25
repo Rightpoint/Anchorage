@@ -89,7 +89,7 @@ public struct AnchorPair<T: LayoutAnchorType, U: LayoutAnchorType>: LayoutAnchor
     public var first: T
     public var second: U
 
-    internal init(first: T, second: U) {
+    public init(first: T, second: U) {
         self.first = first
         self.second = second
     }
