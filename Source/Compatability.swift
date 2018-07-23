@@ -62,6 +62,21 @@
     }
 #endif
 
+#if swift(>=4.2)
+#elseif !os(macOS)
+    extension UITableView {
+        public static let automaticDimension = UITableViewAutomaticDimension
+    }
+
+    extension UITableViewCell {
+        public typealias CellStyle = UITableViewCellStyle
+    }
+
+    extension UIApplication {
+        public typealias LaunchOptionsKey = UIApplicationLaunchOptionsKey
+    }
+#endif
+
 extension CGFloat {
 
     init<T: BinaryFloatingPoint>(_ value: T) {

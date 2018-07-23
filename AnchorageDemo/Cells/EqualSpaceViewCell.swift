@@ -34,7 +34,7 @@ class EqualSpaceViewCell: BaseCell {
     // Here we have an array of constraints that we'll alter later.
     var spacingConstraints: [NSLayoutConstraint] = []
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
         configureLayout()

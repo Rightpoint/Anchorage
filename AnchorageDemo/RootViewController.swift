@@ -22,7 +22,7 @@ class RootViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 120
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         for cellType in cellTypes {
             tableView.register(cellType, forCellReuseIdentifier: cellType.reuseId())
         }
