@@ -107,7 +107,11 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - carthage-build:
+      - carthage-build-xcode-10:
+          filters:
+            tags:
+              only: /.*/
+      - carthage-build-xcode-9:
           filters:
             tags:
               only: /.*/
