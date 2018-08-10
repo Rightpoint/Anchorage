@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'cocoapods', '~>1.3'
+gem 'cocoapods', :git => 'https://github.com/cocoapods/cocoapods.git', :branch => 'master'
