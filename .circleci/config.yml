@@ -6,6 +6,10 @@ jobs:
       xcode: "10.0.0"
     steps:
       - checkout
+      - run:
+          name: Restore Ruby Gems
+          command: |
+            bundle check || bundle install
       - run: # work around Xcode 10b5 Circle instance having duplicate simulators with the same name/OS combination: https://discuss.circleci.com/t/xcode-10-beta-vm/23238/9?u=fassko
           name: Reset simulators
           command: bundle exec fastlane snapshot reset_simulators --force
@@ -21,6 +25,10 @@ jobs:
       xcode: "10.0.0"
     steps:
       - checkout
+      - run:
+          name: Restore Ruby Gems
+          command: |
+            bundle check || bundle install
       - run: # work around Xcode 10b5 Circle instance having duplicate simulators with the same name/OS combination: https://discuss.circleci.com/t/xcode-10-beta-vm/23238/9?u=fassko
           name: Reset simulators
           command: bundle exec fastlane snapshot reset_simulators --force
@@ -36,6 +44,10 @@ jobs:
       xcode: "9.3.0"
     steps:
       - checkout
+      - run:
+          name: Restore Ruby Gems
+          command: |
+            bundle check || bundle install
       - run: ./scripts/macOS_Swift_3_Xcode_9.3.sh
       - run: ./scripts/iOS_Swift_3_32_bit_Xcode_9.3.sh
       - run: ./scripts/iOS_Swift_3_64_bit_Xcode_9.3.sh
@@ -48,6 +60,10 @@ jobs:
       xcode: "9.3.0"
     steps:
       - checkout
+      - run:
+          name: Restore Ruby Gems
+          command: |
+            bundle check || bundle install
       - run: ./scripts/macOS_Swift_4_Xcode_9.3.sh
       - run: ./scripts/iOS_Swift_4_32_bit_Xcode_9.3.sh
       - run: ./scripts/iOS_Swift_4_64_bit_Xcode_9.3.sh
