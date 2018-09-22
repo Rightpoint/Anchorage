@@ -10,11 +10,8 @@ jobs:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install
-      - run: # work around Xcode 10b5 Circle instance having duplicate simulators with the same name/OS combination: https://discuss.circleci.com/t/xcode-10-beta-vm/23238/9?u=fassko
-          name: Reset simulators
-          command: bundle exec fastlane snapshot reset_simulators --force
       - run: ./scripts/macOS_Swift_3_Xcode_10.0.sh
-      # - run: ./scripts/iOS_Swift_3_32_bit_Xcode_10.0.sh # Reinstate this when CircleCI adds back iPhone 5 simulators
+      - run: ./scripts/iOS_Swift_3_32_bit_Xcode_10.0.sh
       - run: ./scripts/iOS_Swift_3_64_bit_Xcode_10.0.sh
       - run: ./scripts/iOS_demo_Swift_3_Xcode_10.0.sh
       - run: ./scripts/tvOS_Swift_3_Xcode_10.0.sh
@@ -29,11 +26,8 @@ jobs:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install
-      - run: # work around Xcode 10b5 Circle instance having duplicate simulators with the same name/OS combination: https://discuss.circleci.com/t/xcode-10-beta-vm/23238/9?u=fassko
-          name: Reset simulators
-          command: bundle exec fastlane snapshot reset_simulators --force
       - run: ./scripts/macOS_Swift_4_Xcode_10.0.sh
-      # - run: ./scripts/iOS_Swift_4_32_bit_Xcode_10.0.sh # Reinstate this when CircleCI adds back iPhone 5 simulators
+      - run: ./scripts/iOS_Swift_4_32_bit_Xcode_10.0.sh
       - run: ./scripts/iOS_Swift_4_64_bit_Xcode_10.0.sh
       - run: ./scripts/iOS_demo_Swift_4_Xcode_10.0.sh
       - run: ./scripts/tvOS_Swift_4_Xcode_10.0.sh
