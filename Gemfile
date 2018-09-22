@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'cocoapods', :git => 'https://github.com/cocoapods/cocoapods.git', :branch => 'master'
+gem 'cocoapods', '1.6.0.beta.1'
 gem 'fastlane'
