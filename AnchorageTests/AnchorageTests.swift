@@ -52,7 +52,7 @@ import XCTest
         let TestPriorityLow = UILayoutPriorityDefaultLow
     #endif
 
-    public typealias ConstraintAttribute = NSLayoutAttribute
+    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 #endif
 
 let cgEpsilon: CGFloat = 0.00001
