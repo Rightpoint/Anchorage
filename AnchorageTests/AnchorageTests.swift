@@ -46,13 +46,13 @@ import XCTest
         let TestPriorityRequired = UILayoutPriority.required
         let TestPriorityHigh = UILayoutPriority.defaultHigh
         let TestPriorityLow = UILayoutPriority.defaultLow
+        public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
     #else
         let TestPriorityRequired = UILayoutPriorityRequired
         let TestPriorityHigh = UILayoutPriorityDefaultHigh
         let TestPriorityLow = UILayoutPriorityDefaultLow
+        public typealias ConstraintAttribute = NSLayoutAttribute
     #endif
-
-    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 #endif
 
 let cgEpsilon: CGFloat = 0.00001
