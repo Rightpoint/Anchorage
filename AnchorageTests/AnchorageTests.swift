@@ -16,7 +16,9 @@
 import XCTest
 
 #if swift(>=4.0)
+    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 #else
+    public typealias ConstraintAttribute = NSLayoutAttribute
     func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) where T : FloatingPoint {
         XCTAssertEqualWithAccuracy(expression1, expression2, accuracy: accuracy, message, file: file, line: line)
     }
@@ -30,12 +32,10 @@ import XCTest
         let TestPriorityRequired = NSLayoutConstraint.Priority.required
         let TestPriorityHigh = NSLayoutConstraint.Priority.defaultHigh
         let TestPriorityLow = NSLayoutConstraint.Priority.defaultLow
-        public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
     #else
         let TestPriorityRequired = NSLayoutPriorityRequired
         let TestPriorityHigh = NSLayoutPriorityDefaultHigh
         let TestPriorityLow = NSLayoutPriorityDefaultLow
-        public typealias ConstraintAttribute = NSLayoutAttribute
     #endif
 
 #else
@@ -46,12 +46,10 @@ import XCTest
         let TestPriorityRequired = UILayoutPriority.required
         let TestPriorityHigh = UILayoutPriority.defaultHigh
         let TestPriorityLow = UILayoutPriority.defaultLow
-        public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
     #else
         let TestPriorityRequired = UILayoutPriorityRequired
         let TestPriorityHigh = UILayoutPriorityDefaultHigh
         let TestPriorityLow = UILayoutPriorityDefaultLow
-        public typealias ConstraintAttribute = NSLayoutAttribute
     #endif
 #endif
 
