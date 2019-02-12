@@ -59,22 +59,22 @@ let dEpsilon: Double = 0.00001
 
 class AnchorageTests: XCTestCase {
 
-    let view1 = TestView()
-    let view2 = TestView()
-
-    let window = TestWindow()
-
-    override func setUp() {
-#if os(macOS)
+    static var canvas: (TestWindow, TestView, TestView) {
+        let view1 = TestView()
+        let view2 = TestView()
+        let window = TestWindow()
+        #if os(macOS)
         window.contentView!.addSubview(view1)
         window.contentView!.addSubview(view2)
-#else
+        #else
         window.addSubview(view1)
         window.addSubview(view2)
-#endif
+        #endif
+        return (window, view1, view2)
     }
 
     func testBasicEquality() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -88,6 +88,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testBasicLessThan() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor <= view2.widthAnchor
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -101,6 +102,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testBasicGreaterThan() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor >= view2.widthAnchor
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -114,6 +116,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithOffset() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor + 10
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -127,6 +130,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithMultiplier() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor / 2
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -140,6 +144,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testAxisAnchorEqualityWithMultiplier() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.leadingAnchor == view2.trailingAnchor / 2
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -153,6 +158,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithOffsetAndMultiplier() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == (view2.widthAnchor + 10) / 2
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -166,6 +172,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testAxisAnchorEqualityWithOffsetAndMultiplier() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.trailingAnchor == (view2.centerXAnchor + 10) / 2
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -179,6 +186,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityConstant() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor ~ .high
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -192,6 +200,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityLiteral() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor ~ 750
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -205,6 +214,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityConstantMath() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor ~ .high - 1
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -218,6 +228,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityLiteralMath() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor ~ Priority(750 - 1)
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -231,6 +242,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithOffsetAndPriorityMath() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == view2.widthAnchor + 10 ~ .high - 1
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -244,6 +256,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithOffsetAndMultiplierAndPriorityMath() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraint = view1.widthAnchor == (view2.widthAnchor + 10) / 2 ~ .high - 1
         assertIdentical(constraint.firstItem, view1)
         assertIdentical(constraint.secondItem, view2)
@@ -257,6 +270,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testCenterAnchors() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = view1.centerAnchors == view2.centerAnchors
 
         let horizontal = constraints.first
@@ -283,6 +297,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testCenterAnchorsWithOffsetAndPriority() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = view1.centerAnchors == view2.centerAnchors + 10 ~ .high - 1
 
         let horizontal = constraints.first
@@ -309,6 +324,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testHorizontalAnchors() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = view1.horizontalAnchors == view2.horizontalAnchors + 10 ~ .high - 1
 
         let leading = constraints.first
@@ -335,6 +351,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testVerticalAnchors() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = view1.verticalAnchors == view2.verticalAnchors + 10 ~ .high - 1
 
         let top = constraints.first
@@ -361,6 +378,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testSizeAnchors() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = view1.sizeAnchors == view2.sizeAnchors + 10 ~ .high - 1
 
         let width = constraints.first
@@ -387,6 +405,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testSizeAnchorsWithConstants() {
+        let (_, view1, _) = AnchorageTests.canvas
         let constraints = view1.sizeAnchors == CGSize(width: 50, height: 100) ~ .high - 1
 
         let width = constraints.first
@@ -413,6 +432,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEdgeAnchors() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = view1.edgeAnchors == view2.edgeAnchors + 10 ~ .high - 1
 
         let all = constraints.all
@@ -478,6 +498,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEdgeAnchorsWithInsets() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let insets = EdgeInsets(top: 10, left: 5, bottom: 15, right: 20)
 
         let constraints = view1.edgeAnchors == view2.edgeAnchors + insets ~ .high - 1
@@ -528,6 +549,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testInactiveBatchConstraints() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = Anchorage.batch(active: false) {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
@@ -558,6 +580,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testActiveBatchConstraints() {
+        let (_, view1, view2) = AnchorageTests.canvas
         let constraints = Anchorage.batch {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
@@ -588,6 +611,7 @@ class AnchorageTests: XCTestCase {
     }
     
     func testNestedBatchConstraints() {
+        let (_, view1, view2) = AnchorageTests.canvas
         var nestedConstraints: [NSLayoutConstraint] = []
         let constraints = Anchorage.batch {
             view1.widthAnchor == view2.widthAnchor
