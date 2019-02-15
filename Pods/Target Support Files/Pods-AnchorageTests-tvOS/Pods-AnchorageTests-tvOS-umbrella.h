@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Anchorage_tvOSVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Anchorage_tvOSVersionString[];
+FOUNDATION_EXPORT double Pods_AnchorageTests_tvOSVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_AnchorageTests_tvOSVersionString[];
 

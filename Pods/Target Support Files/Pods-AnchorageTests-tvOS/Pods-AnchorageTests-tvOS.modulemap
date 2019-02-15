@@ -1,0 +1,6 @@
+framework module Pods_AnchorageTests_tvOS {
+  umbrella header "Pods-AnchorageTests-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

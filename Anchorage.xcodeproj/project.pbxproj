@@ -35,11 +35,11 @@
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
 		2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */; };
 		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
+		4ECBAE41831224D033E1F647 /* Pods_AnchorageTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4471E81EED984DA2A5AB656F /* Pods_AnchorageTests_tvOS.framework */; };
 		7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */; };
 		7A39D6331EB53E1100BDE9C0 /* Anchorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */; };
 		7AA89727233059A6A2DE18DB /* Pods_AnchorageDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F0389C6D00AEDCE0477A2E /* Pods_AnchorageDemo.framework */; };
 		A16B0A3423D4C8BD1BBB5C64 /* Pods_AnchorageTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC798BFFD09EBA92C1F6CB5 /* Pods_AnchorageTests_iOS.framework */; };
-		A4EE0CC9D8D444A853E40CCE /* Pods_Anchorage_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C576489BB5930483BB9C4EE7 /* Pods_Anchorage_tvOS.framework */; };
 		BBE7C0D71FAB676F00DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */; };
 		BBE7C0D81FAB677500DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */; };
 		BBE7C0D91FAB677600DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */; };
@@ -96,8 +96,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0CD5EE58281654FA6A928090 /* Pods-Anchorage-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anchorage-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Anchorage-tvOS/Pods-Anchorage-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		0D754D72F6462CE4D58FDCB1 /* Pods_AnchorageTests_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnchorageTests_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EBDE61D960490AFF3426E26 /* Pods-AnchorageTests-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-tvOS.release.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-tvOS/Pods-AnchorageTests-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		2DBB2D441D99596100A1E94B /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		2DBB2D461D99597500A1E94B /* ToggleActiveHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToggleActiveHeightCell.swift; path = Cells/ToggleActiveHeightCell.swift; sourceTree = "<group>"; };
 		2DBB2D471D99597500A1E94B /* MinimumWidthViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MinimumWidthViewCell.swift; path = Cells/MinimumWidthViewCell.swift; sourceTree = "<group>"; };
@@ -113,6 +113,7 @@
 		3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
+		4471E81EED984DA2A5AB656F /* Pods_AnchorageTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnchorageTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A621F436D7AC1F311660FAA /* Pods-AnchorageDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageDemo.debug.xcconfig"; path = "Target Support Files/Pods-AnchorageDemo/Pods-AnchorageDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		54C143946A2174E4D55E7431 /* Pods-AnchorageTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-iOS.debug.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-iOS/Pods-AnchorageTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		6571D2D39B6C49930B877172 /* Pods-AnchorageDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageDemo.release.xcconfig"; path = "Target Support Files/Pods-AnchorageDemo/Pods-AnchorageDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,13 +123,13 @@
 		970CF4C3A04070F004E5B81F /* Pods-AnchorageTests-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-macOS.release.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-macOS/Pods-AnchorageTests-macOS.release.xcconfig"; sourceTree = "<group>"; };
 		9AC798BFFD09EBA92C1F6CB5 /* Pods_AnchorageTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnchorageTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23C27A30C0A91E20C837E17 /* Pods-AnchorageTests-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-macOS.debug.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-macOS/Pods-AnchorageTests-macOS.debug.xcconfig"; sourceTree = "<group>"; };
-		ABA15247037482DE25BF1C14 /* Pods-Anchorage-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anchorage-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Anchorage-tvOS/Pods-Anchorage-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		B92CA6FD50E603DA2E0E9EC3 /* Pods-AnchorageTests-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-tvOS/Pods-AnchorageTests-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutAnchor+MultiplierConstraints.swift"; sourceTree = "<group>"; };
 		C576489BB5930483BB9C4EE7 /* Pods_Anchorage_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Anchorage_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9544E58395B197F69A49D22 /* Pods-AnchorageTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-iOS.release.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-iOS/Pods-AnchorageTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		CD6A0E671EB7CDEF00FFF5DB /* AnchorageTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnchorageTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD6A0E7F1EB7CE3A00FFF5DB /* Anchorage-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Anchorage-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6A0E7F1EB7CE3A00FFF5DB /* AnchorageTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnchorageTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D401673C1EB7A4A30025DCA5 /* Internal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internal.swift; sourceTree = "<group>"; };
 		D401673E1EB7A58D0025DCA5 /* Compatability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compatability.swift; sourceTree = "<group>"; };
 		D469DCB41EB7A904000F3DDD /* Priority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
@@ -175,7 +176,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4EE0CC9D8D444A853E40CCE /* Pods_Anchorage_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD6A0E801EB7CE3A00FFF5DB /* Anchorage.framework in Frameworks */,
+				4ECBAE41831224D033E1F647 /* Pods_AnchorageTests_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,7 +245,7 @@
 				7A39D62E1EB53E1100BDE9C0 /* AnchorageTests-iOS.xctest */,
 				CD6A0E671EB7CDEF00FFF5DB /* AnchorageTests-macOS.xctest */,
 				CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */,
-				CD6A0E7F1EB7CE3A00FFF5DB /* Anchorage-tvOSTests.xctest */,
+				CD6A0E7F1EB7CE3A00FFF5DB /* AnchorageTests-tvOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +281,7 @@
 				D8F0389C6D00AEDCE0477A2E /* Pods_AnchorageDemo.framework */,
 				9AC798BFFD09EBA92C1F6CB5 /* Pods_AnchorageTests_iOS.framework */,
 				0D754D72F6462CE4D58FDCB1 /* Pods_AnchorageTests_macOS.framework */,
+				4471E81EED984DA2A5AB656F /* Pods_AnchorageTests_tvOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -287,14 +289,14 @@
 		F2374A7C4BE588ED4BBA0B2F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0CD5EE58281654FA6A928090 /* Pods-Anchorage-tvOS.debug.xcconfig */,
-				ABA15247037482DE25BF1C14 /* Pods-Anchorage-tvOS.release.xcconfig */,
 				4A621F436D7AC1F311660FAA /* Pods-AnchorageDemo.debug.xcconfig */,
 				6571D2D39B6C49930B877172 /* Pods-AnchorageDemo.release.xcconfig */,
 				54C143946A2174E4D55E7431 /* Pods-AnchorageTests-iOS.debug.xcconfig */,
 				C9544E58395B197F69A49D22 /* Pods-AnchorageTests-iOS.release.xcconfig */,
 				A23C27A30C0A91E20C837E17 /* Pods-AnchorageTests-macOS.debug.xcconfig */,
 				970CF4C3A04070F004E5B81F /* Pods-AnchorageTests-macOS.release.xcconfig */,
+				B92CA6FD50E603DA2E0E9EC3 /* Pods-AnchorageTests-tvOS.debug.xcconfig */,
+				0EBDE61D960490AFF3426E26 /* Pods-AnchorageTests-tvOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -407,7 +409,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD6A0E881EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOS" */;
 			buildPhases = (
-				F8BD1FD2891DCAF1F6F63FD4 /* [CP] Check Pods Manifest.lock */,
 				CD6A0E721EB7CE3A00FFF5DB /* Sources */,
 				CD6A0E731EB7CE3A00FFF5DB /* Frameworks */,
 				CD6A0E741EB7CE3A00FFF5DB /* Headers */,
@@ -422,22 +423,24 @@
 			productReference = CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CD6A0E7E1EB7CE3A00FFF5DB /* Anchorage-tvOSTests */ = {
+		CD6A0E7E1EB7CE3A00FFF5DB /* AnchorageTests-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOSTests" */;
+			buildConfigurationList = CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "AnchorageTests-tvOS" */;
 			buildPhases = (
+				D04C6B22FFFC86492AE7D6EB /* [CP] Check Pods Manifest.lock */,
 				CD6A0E7B1EB7CE3A00FFF5DB /* Sources */,
 				CD6A0E7C1EB7CE3A00FFF5DB /* Frameworks */,
 				CD6A0E7D1EB7CE3A00FFF5DB /* Resources */,
+				5E760A64FAB86952B4EF4995 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				CD6A0E821EB7CE3A00FFF5DB /* PBXTargetDependency */,
 			);
-			name = "Anchorage-tvOSTests";
+			name = "AnchorageTests-tvOS";
 			productName = "Anchorage-tvOSTests";
-			productReference = CD6A0E7F1EB7CE3A00FFF5DB /* Anchorage-tvOSTests.xctest */;
+			productReference = CD6A0E7F1EB7CE3A00FFF5DB /* AnchorageTests-tvOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F15462911E56842400C3948D /* Anchorage-macOS */ = {
@@ -531,7 +534,7 @@
 				F15462911E56842400C3948D /* Anchorage-macOS */,
 				CD6A0E661EB7CDEF00FFF5DB /* AnchorageTests-macOS */,
 				CD6A0E761EB7CE3A00FFF5DB /* Anchorage-tvOS */,
-				CD6A0E7E1EB7CE3A00FFF5DB /* Anchorage-tvOSTests */,
+				CD6A0E7E1EB7CE3A00FFF5DB /* AnchorageTests-tvOS */,
 				CD6A0E9B1EB7D36400FFF5DB /* RunAllTests */,
 			);
 		};
@@ -592,6 +595,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5E760A64FAB86952B4EF4995 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AnchorageTests-tvOS/Pods-AnchorageTests-tvOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapshotTesting-tvOS/SnapshotTesting.framework",
+				"${BUILT_PRODUCTS_DIR}/Then-tvOS/Then.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapshotTesting.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Then.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AnchorageTests-tvOS/Pods-AnchorageTests-tvOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		865C9976AA3925530AF989DF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -740,7 +767,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AnchorageTests-iOS/Pods-AnchorageTests-iOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F8BD1FD2891DCAF1F6F63FD4 /* [CP] Check Pods Manifest.lock */ = {
+		D04C6B22FFFC86492AE7D6EB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -755,7 +782,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Anchorage-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AnchorageTests-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1152,7 +1179,6 @@
 		};
 		CD6A0E891EB7CE3A00FFF5DB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CD5EE58281654FA6A928090 /* Pods-Anchorage-tvOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
@@ -1175,7 +1201,6 @@
 		};
 		CD6A0E8A1EB7CE3A00FFF5DB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABA15247037482DE25BF1C14 /* Pods-Anchorage-tvOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
@@ -1198,8 +1223,8 @@
 		};
 		CD6A0E8C1EB7CE3A00FFF5DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B92CA6FD50E603DA2E0E9EC3 /* Pods-AnchorageTests-tvOS.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1216,8 +1241,8 @@
 		};
 		CD6A0E8D1EB7CE3A00FFF5DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EBDE61D960490AFF3426E26 /* Pods-AnchorageTests-tvOS.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1355,7 +1380,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOSTests" */ = {
+		CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "AnchorageTests-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD6A0E8C1EB7CE3A00FFF5DB /* Debug */,

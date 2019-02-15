@@ -12,7 +12,7 @@ target 'AnchorageTests-macOS' do
   pod 'Then'
 end
 
-target 'Anchorage-tvOS' do
+target 'AnchorageTests-tvOS' do
   use_frameworks!
   platform :tvos, '10.0'
   pod 'SnapshotTesting', '~> 1.1'
