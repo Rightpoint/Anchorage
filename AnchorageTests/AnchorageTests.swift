@@ -35,7 +35,8 @@ import XCTest
 
 #if os(macOS)
     typealias TestView = NSView
-    typealias TestWindow = NSWindow
+    typealias TestWindow = HomogenizedWindow
+    typealias TestColor = NSColor
 
     #if swift(>=4.0)
         let TestPriorityRequired = NSLayoutConstraint.Priority.required
@@ -49,7 +50,8 @@ import XCTest
 
 #else
     typealias TestView = UIView
-    typealias TestWindow = UIWindow
+    typealias TestWindow = HomogenizedWindow
+    typealias TestColor = UIColor
 
     #if swift(>=4.0)
         let TestPriorityRequired = UILayoutPriority.required
@@ -65,6 +67,51 @@ import XCTest
 let cgEpsilon: CGFloat = 0.00001
 let fEpsilon: Float = 0.00001
 let dEpsilon: Double = 0.00001
+
+protocol Colorable {
+    var backgroundColor: TestColor? { get set }
+}
+
+#if os(macOS)
+extension NSView: Colorable {
+    var backgroundColor: TestColor? {
+        get {
+            return layer?.backgroundColor.flatMap(NSColor.init)
+        }
+        set {
+            wantsLayer = true
+            layer?.backgroundColor = newValue?.cgColor
+        }
+    }
+}
+final class HomogenizedWindow: NSWindow {
+    override var frame: NSRect {
+        get { return super.frame }
+        set { setFrame(newValue, display: true) }
+    }
+    var isHidden = false
+}
+extension Snapshotting where Value == NSWindow, Format == NSImage {
+    public static let image: Snapshotting =
+        Snapshotting<NSView, NSImage>.image.pullback { window in
+            window.contentView!
+    }
+}
+#elseif os(iOS) || os(tvOS)
+extension UIView: Colorable {}
+final class HomogenizedWindow: UIWindow {
+    let contentView: UIView! = UIView()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(contentView)
+        contentView.frame = bounds
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+#endif
 
 class AnchorageTests: XCTestCase {
 
@@ -98,7 +145,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testBasicEqualitySnapshot() {
-        view1.edgeAnchors == window.edgeAnchors
+        view1.edgeAnchors == window.contentView!.edgeAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -120,10 +167,10 @@ class AnchorageTests: XCTestCase {
     }
 
     func testBasicLessThanSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.trailingAnchor == window.trailingAnchor
-        view1.bottomAnchor <= window.bottomAnchor
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.trailingAnchor == window.contentView!.trailingAnchor
+        view1.bottomAnchor <= window.contentView!.bottomAnchor
         assertSnapshot(
             matching: window,
             as: .image,
@@ -147,7 +194,7 @@ class AnchorageTests: XCTestCase {
     func testBasicGreaterThanSnapshot() {
         view1.widthAnchor == 50
         view1.heightAnchor == 50
-        view1.edgeAnchors >= window.edgeAnchors
+        view1.edgeAnchors >= window.contentView!.edgeAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -171,10 +218,10 @@ class AnchorageTests: XCTestCase {
     func testEqualityWithOffsetSnapshot() {
         view2.widthAnchor == 50
         view2.heightAnchor == 50
-        view2.centerAnchors == window.centerAnchors
+        view2.centerAnchors == window.contentView!.centerAnchors
         view1.widthAnchor == view2.widthAnchor + 50
         view1.heightAnchor == view2.heightAnchor + 50
-        view1.centerAnchors == window.centerAnchors
+        view1.centerAnchors == window.contentView!.centerAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -198,10 +245,10 @@ class AnchorageTests: XCTestCase {
     func testEqualityWithMultiplierSnapshot() {
         view2.widthAnchor == 50
         view2.heightAnchor == 50
-        view2.centerAnchors == window.centerAnchors
+        view2.centerAnchors == window.contentView!.centerAnchors
         view1.widthAnchor == view2.widthAnchor * 2
         view1.heightAnchor == view2.heightAnchor * 2
-        view1.centerAnchors == window.centerAnchors
+        view1.centerAnchors == window.contentView!.centerAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -223,10 +270,10 @@ class AnchorageTests: XCTestCase {
     }
 
     func testAxisAnchorEqualityWithMultiplierSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.trailingAnchor == window.trailingAnchor * 0.5
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.trailingAnchor == window.contentView!.trailingAnchor * 0.5
         assertSnapshot(
             matching: window,
             as: .image,
@@ -261,10 +308,10 @@ class AnchorageTests: XCTestCase {
     }
 
     func testAxisAnchorEqualityWithOffsetAndMultiplierSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.trailingAnchor == (window.trailingAnchor + 50) * 0.25
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.trailingAnchor == (window.contentView!.trailingAnchor + 50) * 0.25
         assertSnapshot(
             matching: window,
             as: .image,
@@ -286,14 +333,14 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityConstantSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.widthAnchor == window.widthAnchor ~ .high
-        view2.topAnchor == window.topAnchor
-        view2.trailingAnchor == window.trailingAnchor
-        view2.bottomAnchor == window.bottomAnchor
-        view2.widthAnchor == window.widthAnchor ~ .low
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .low
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
@@ -316,14 +363,14 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityLiteralSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.widthAnchor == window.widthAnchor ~ 750
-        view2.topAnchor == window.topAnchor
-        view2.trailingAnchor == window.trailingAnchor
-        view2.bottomAnchor == window.bottomAnchor
-        view2.widthAnchor == window.widthAnchor ~ 250
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ 750
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ 250
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
@@ -346,14 +393,14 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityConstantMathSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.widthAnchor == window.widthAnchor ~ .high
-        view2.topAnchor == window.topAnchor
-        view2.trailingAnchor == window.trailingAnchor
-        view2.bottomAnchor == window.bottomAnchor
-        view2.widthAnchor == window.widthAnchor ~ .high - 1
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .high - 1
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
@@ -376,14 +423,14 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithPriorityLiteralMathSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.widthAnchor == window.widthAnchor ~ .high
-        view2.topAnchor == window.topAnchor
-        view2.trailingAnchor == window.trailingAnchor
-        view2.bottomAnchor == window.bottomAnchor
-        view2.widthAnchor == window.widthAnchor ~ Priority(750 - 1)
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ Priority(750 - 1)
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
@@ -406,14 +453,14 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithOffsetAndPriorityMathSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.widthAnchor == window.widthAnchor - 100 ~ .high + 1
-        view2.topAnchor == window.topAnchor
-        view2.trailingAnchor == window.trailingAnchor
-        view2.bottomAnchor == window.bottomAnchor
-        view2.widthAnchor == window.widthAnchor ~ .high
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor - 100 ~ .high + 1
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .high
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
@@ -436,14 +483,14 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEqualityWithOffsetAndMultiplierAndPriorityMathSnapshot() {
-        view1.topAnchor == window.topAnchor
-        view1.leadingAnchor == window.leadingAnchor
-        view1.bottomAnchor == window.bottomAnchor
-        view1.widthAnchor == (window.widthAnchor + 50) / 4 ~ .high + 1
-        view2.topAnchor == window.topAnchor
-        view2.trailingAnchor == window.trailingAnchor
-        view2.bottomAnchor == window.bottomAnchor
-        view2.widthAnchor == window.widthAnchor ~ .high
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == (window.contentView!.widthAnchor + 50) / 4 ~ .high + 1
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .high
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
@@ -468,7 +515,7 @@ class AnchorageTests: XCTestCase {
     func testCenterAnchorsSnapshot() {
         view2.widthAnchor == 50
         view2.heightAnchor == 50
-        view2.centerAnchors == window.centerAnchors
+        view2.centerAnchors == window.contentView!.centerAnchors
         view1.widthAnchor == view2.widthAnchor * 2
         view1.heightAnchor == view2.heightAnchor * 2
         view1.centerAnchors == view2.centerAnchors
@@ -508,7 +555,7 @@ class AnchorageTests: XCTestCase {
     func testCenterAnchorsWithOffsetSnapshot() {
         view2.widthAnchor == 50
         view2.heightAnchor == 50
-        view2.centerAnchors == window.centerAnchors
+        view2.centerAnchors == window.contentView!.centerAnchors
         view1.widthAnchor == view2.widthAnchor * 2
         view1.heightAnchor == view2.heightAnchor * 2
         view1.centerAnchors == view2.centerAnchors + 25
@@ -522,10 +569,10 @@ class AnchorageTests: XCTestCase {
     func testCenterAnchorsWithOffsetAndPrioritySnapshot() {
         view2.widthAnchor == 50
         view2.heightAnchor == 50
-        view2.centerAnchors == window.centerAnchors
+        view2.centerAnchors == window.contentView!.centerAnchors
         view1.widthAnchor == view2.widthAnchor * 2
         view1.heightAnchor == view2.heightAnchor * 2
-        view1.bottomAnchor == window.bottomAnchor ~ .low
+        view1.bottomAnchor == window.contentView!.bottomAnchor ~ .low
         view1.centerAnchors == view2.centerAnchors + 25 ~ .low + 1
         assertSnapshot(
             matching: window,
@@ -562,7 +609,7 @@ class AnchorageTests: XCTestCase {
 
     func testHorizontalAnchorsSnapshot() {
         view1.heightAnchor == 50
-        view1.horizontalAnchors == window.horizontalAnchors
+        view1.horizontalAnchors == window.contentView!.horizontalAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -598,7 +645,7 @@ class AnchorageTests: XCTestCase {
 
     func testVerticalAnchorsSnapshot() {
         view1.widthAnchor == 50
-        view1.verticalAnchors == window.verticalAnchors
+        view1.verticalAnchors == window.contentView!.verticalAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -633,7 +680,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testSizeAnchorsSnapshot() {
-        view1.sizeAnchors == window.sizeAnchors
+        view1.sizeAnchors == window.contentView!.sizeAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -703,7 +750,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEdgeAnchorsSnapshot() {
-        view1.edgeAnchors == window.edgeAnchors
+        view1.edgeAnchors == window.contentView!.edgeAnchors
         assertSnapshot(
             matching: window,
             as: .image,
@@ -777,7 +824,7 @@ class AnchorageTests: XCTestCase {
     }
 
     func testEdgeAnchorsWithInsetsSnapshot() {
-        view1.edgeAnchors == window.edgeAnchors + 50
+        view1.edgeAnchors == window.contentView!.edgeAnchors + 50
         assertSnapshot(
             matching: window,
             as: .image,
@@ -836,9 +883,9 @@ class AnchorageTests: XCTestCase {
     }
 
     func testInactiveBatchConstraintsSnapshot() {
-        view1.sizeAnchors == window.sizeAnchors - 100
+        view1.sizeAnchors == window.contentView!.sizeAnchors - 100
         _ = Anchorage.batch(active: false) {
-            view2.sizeAnchors == window.sizeAnchors
+            view2.sizeAnchors == window.contentView!.sizeAnchors
         }
         assertSnapshot(
             matching: window,
@@ -879,7 +926,7 @@ class AnchorageTests: XCTestCase {
 
     func testActiveBatchConstraintsSnapshot() {
         _ = Anchorage.batch(active: true) {
-            view1.sizeAnchors == window.sizeAnchors - 100
+            view1.sizeAnchors == window.contentView!.sizeAnchors - 100
         }
         assertSnapshot(
             matching: window,
@@ -920,11 +967,11 @@ class AnchorageTests: XCTestCase {
 
     func testNestedBatchConstraintsSnapshots() {
         _ = Anchorage.batch(active: true) {
-            view1.sizeAnchors == window.sizeAnchors - 100
-            view1.centerAnchors == window.centerAnchors
+            view1.sizeAnchors == window.contentView!.sizeAnchors - 100
+            view1.centerAnchors == window.contentView!.centerAnchors
             _ = Anchorage.batch(active: true) {
-                view2.sizeAnchors == window.sizeAnchors - 150
-                view2.centerAnchors == window.centerAnchors
+                view2.sizeAnchors == window.contentView!.sizeAnchors - 150
+                view2.centerAnchors == window.contentView!.centerAnchors
             }
         }
         assertSnapshot(

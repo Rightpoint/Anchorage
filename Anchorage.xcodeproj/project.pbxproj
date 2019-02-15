@@ -116,6 +116,7 @@
 		4471E81EED984DA2A5AB656F /* Pods_AnchorageTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnchorageTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A621F436D7AC1F311660FAA /* Pods-AnchorageDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageDemo.debug.xcconfig"; path = "Target Support Files/Pods-AnchorageDemo/Pods-AnchorageDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		54C143946A2174E4D55E7431 /* Pods-AnchorageTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageTests-iOS.debug.xcconfig"; path = "Target Support Files/Pods-AnchorageTests-iOS/Pods-AnchorageTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5BD0245C22173CA9009E5C14 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
 		6571D2D39B6C49930B877172 /* Pods-AnchorageDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnchorageDemo.release.xcconfig"; path = "Target Support Files/Pods-AnchorageDemo/Pods-AnchorageDemo.release.xcconfig"; sourceTree = "<group>"; };
 		7A39D62E1EB53E1100BDE9C0 /* AnchorageTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnchorageTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorageTests.swift; sourceTree = "<group>"; };
@@ -268,6 +269,7 @@
 		7A39D62F1EB53E1100BDE9C0 /* AnchorageTests */ = {
 			isa = PBXGroup;
 			children = (
+				5BD0245C22173CA9009E5C14 /* __Snapshots__ */,
 				7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */,
 				7A39D6321EB53E1100BDE9C0 /* Info.plist */,
 			);
