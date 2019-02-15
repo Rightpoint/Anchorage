@@ -1,0 +1,6 @@
+framework module Pods_AnchorageTests_iOS {
+  umbrella header "Pods-AnchorageTests-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

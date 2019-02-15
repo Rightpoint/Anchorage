@@ -1,27 +1,25 @@
-# Uncomment the next line to define a global platform for your project
-
 target 'AnchorageTests-iOS' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  platform :ios, '10.0'
   pod 'SnapshotTesting', '~> 1.1'
   pod 'Then'
 end
 
 target 'AnchorageTests-macOS' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  platform :osx, '10.10'
   pod 'SnapshotTesting', '~> 1.1'
   pod 'Then'
 end
 
 target 'Anchorage-tvOS' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  platform :tvos, '10.0'
   pod 'SnapshotTesting', '~> 1.1'
   pod 'Then'
 end
 
 target 'AnchorageDemo' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+  platform :ios, '9.0'
 end

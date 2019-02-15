@@ -1,0 +1,6 @@
+framework module SnapshotTesting {
+  umbrella header "SnapshotTesting-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

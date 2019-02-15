@@ -1,0 +1,6 @@
+framework module Pods_Anchorage_tvOS {
+  umbrella header "Pods-Anchorage-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
