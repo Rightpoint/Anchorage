@@ -135,13 +135,8 @@ class AnchorageTests: XCTestCase {
     }
 
     override func setUp() {
-#if os(macOS)
         window.contentView!.addSubview(view1)
         window.contentView!.addSubview(view2)
-#else
-        window.addSubview(view1)
-        window.addSubview(view2)
-#endif
     }
 
     func testBasicEqualitySnapshot() {
