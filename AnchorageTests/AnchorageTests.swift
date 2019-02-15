@@ -143,8 +143,7 @@ class AnchorageTests: XCTestCase {
         view1.edgeAnchors == window.contentView!.edgeAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -168,8 +167,7 @@ class AnchorageTests: XCTestCase {
         view1.bottomAnchor <= window.contentView!.bottomAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -192,8 +190,7 @@ class AnchorageTests: XCTestCase {
         view1.edgeAnchors >= window.contentView!.edgeAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -219,8 +216,7 @@ class AnchorageTests: XCTestCase {
         view1.centerAnchors == window.contentView!.centerAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -246,8 +242,7 @@ class AnchorageTests: XCTestCase {
         view1.centerAnchors == window.contentView!.centerAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -271,8 +266,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == window.contentView!.trailingAnchor * 0.5
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -309,8 +303,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == (window.contentView!.trailingAnchor + 50) * 0.25
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -339,8 +332,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -369,8 +361,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -399,8 +390,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -429,8 +419,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -459,8 +448,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -489,8 +477,7 @@ class AnchorageTests: XCTestCase {
         view1.trailingAnchor == view2.leadingAnchor
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -516,8 +503,7 @@ class AnchorageTests: XCTestCase {
         view1.centerAnchors == view2.centerAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -556,8 +542,7 @@ class AnchorageTests: XCTestCase {
         view1.centerAnchors == view2.centerAnchors + 25
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -571,8 +556,7 @@ class AnchorageTests: XCTestCase {
         view1.centerAnchors == view2.centerAnchors + 25 ~ .low + 1
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -607,8 +591,7 @@ class AnchorageTests: XCTestCase {
         view1.horizontalAnchors == window.contentView!.horizontalAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -643,8 +626,7 @@ class AnchorageTests: XCTestCase {
         view1.verticalAnchors == window.contentView!.verticalAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -678,8 +660,7 @@ class AnchorageTests: XCTestCase {
         view1.sizeAnchors == window.contentView!.sizeAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -713,8 +694,7 @@ class AnchorageTests: XCTestCase {
         view1.sizeAnchors == CGSize(width: 100, height: 100)
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -748,8 +728,7 @@ class AnchorageTests: XCTestCase {
         view1.edgeAnchors == window.contentView!.edgeAnchors
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -822,8 +801,7 @@ class AnchorageTests: XCTestCase {
         view1.edgeAnchors == window.contentView!.edgeAnchors + 50
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -884,8 +862,7 @@ class AnchorageTests: XCTestCase {
         }
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -925,8 +902,7 @@ class AnchorageTests: XCTestCase {
         }
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
@@ -971,8 +947,7 @@ class AnchorageTests: XCTestCase {
         }
         assertSnapshot(
             matching: window,
-            as: .image,
-            record: false
+            as: .image
         )
     }
 
