@@ -434,7 +434,7 @@
 					};
 					CD6A0E661EB7CDEF00FFF5DB = {
 						CreatedOnToolsVersion = 8.3.2;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					CD6A0E761EB7CE3A00FFF5DB = {
@@ -454,7 +454,7 @@
 					};
 					F15462911E56842400C3948D = {
 						CreatedOnToolsVersion = 8.2.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
