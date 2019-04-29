@@ -13,20 +13,30 @@
 #endif
 
 @testable import Anchorage
+import SnapshotTesting
+import Then
 import XCTest
 
 #if swift(>=4.0)
     public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 #else
     public typealias ConstraintAttribute = NSLayoutAttribute
-    func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) where T : FloatingPoint {
+    func XCTAssertEqual<T>(
+        _ expression1: @autoclosure () throws -> T,
+        _ expression2: @autoclosure () throws -> T,
+        accuracy: T,
+        _ message: @autoclosure () -> String = "",
+        file: StaticString = #file,
+        line: UInt = #line
+    ) where T : FloatingPoint {
         XCTAssertEqualWithAccuracy(expression1, expression2, accuracy: accuracy, message, file: file, line: line)
     }
 #endif
 
 #if os(macOS)
     typealias TestView = NSView
-    typealias TestWindow = NSWindow
+    typealias TestWindow = HomogenizedWindow
+    typealias TestColor = NSColor
 
     #if swift(>=4.0)
         let TestPriorityRequired = NSLayoutConstraint.Priority.required
@@ -40,7 +50,8 @@ import XCTest
 
 #else
     typealias TestView = UIView
-    typealias TestWindow = UIWindow
+    typealias TestWindow = HomogenizedWindow
+    typealias TestColor = UIColor
 
     #if swift(>=4.0)
         let TestPriorityRequired = UILayoutPriority.required
@@ -57,21 +68,83 @@ let cgEpsilon: CGFloat = 0.00001
 let fEpsilon: Float = 0.00001
 let dEpsilon: Double = 0.00001
 
+protocol Colorable {
+    var backgroundColor: TestColor? { get set }
+}
+
+#if os(macOS)
+extension NSView: Colorable {
+    var backgroundColor: TestColor? {
+        get {
+            return layer?.backgroundColor.flatMap(NSColor.init)
+        }
+        set {
+            wantsLayer = true
+            layer?.backgroundColor = newValue?.cgColor
+        }
+    }
+}
+final class HomogenizedWindow: NSWindow {
+    override var frame: NSRect {
+        get { return super.frame }
+        set { setFrame(newValue, display: true) }
+    }
+    var isHidden = false
+}
+extension Snapshotting where Value == NSWindow, Format == NSImage {
+    public static let image: Snapshotting =
+        Snapshotting<NSView, NSImage>.image.pullback { window in
+            window.contentView!
+    }
+}
+#elseif os(iOS) || os(tvOS)
+extension UIView: Colorable {}
+final class HomogenizedWindow: UIWindow {
+    let contentView: UIView! = UIView()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(contentView)
+        contentView.frame = bounds
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+#endif
+
 class AnchorageTests: XCTestCase {
 
-    let view1 = TestView()
-    let view2 = TestView()
+    let view1 = TestView().then {
+        $0.backgroundColor = .red
+    }
+    let view2 = TestView().then {
+        $0.backgroundColor = .blue
+    }
 
-    let window = TestWindow()
+    let window = TestWindow().then {
+        $0.backgroundColor = .yellow
+        $0.frame = .init(
+            origin: .zero,
+            size: .init(
+                width: 200,
+                height: 200
+            )
+        )
+        $0.isHidden = false
+    }
 
     override func setUp() {
-#if os(macOS)
         window.contentView!.addSubview(view1)
         window.contentView!.addSubview(view2)
-#else
-        window.addSubview(view1)
-        window.addSubview(view2)
-#endif
+    }
+
+    func testBasicEqualitySnapshot() {
+        view1.edgeAnchors == window.contentView!.edgeAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testBasicEquality() {
@@ -87,6 +160,17 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testBasicLessThanSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.trailingAnchor == window.contentView!.trailingAnchor
+        view1.bottomAnchor <= window.contentView!.bottomAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testBasicLessThan() {
         let constraint = view1.widthAnchor <= view2.widthAnchor
         assertIdentical(constraint.firstItem, view1)
@@ -98,6 +182,16 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .lessThanOrEqual)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testBasicGreaterThanSnapshot() {
+        view1.widthAnchor == 50
+        view1.heightAnchor == 50
+        view1.edgeAnchors >= window.contentView!.edgeAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testBasicGreaterThan() {
@@ -113,6 +207,19 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testEqualityWithOffsetSnapshot() {
+        view2.widthAnchor == 50
+        view2.heightAnchor == 50
+        view2.centerAnchors == window.contentView!.centerAnchors
+        view1.widthAnchor == view2.widthAnchor + 50
+        view1.heightAnchor == view2.heightAnchor + 50
+        view1.centerAnchors == window.contentView!.centerAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testEqualityWithOffset() {
         let constraint = view1.widthAnchor == view2.widthAnchor + 10
         assertIdentical(constraint.firstItem, view1)
@@ -126,6 +233,19 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testEqualityWithMultiplierSnapshot() {
+        view2.widthAnchor == 50
+        view2.heightAnchor == 50
+        view2.centerAnchors == window.contentView!.centerAnchors
+        view1.widthAnchor == view2.widthAnchor * 2
+        view1.heightAnchor == view2.heightAnchor * 2
+        view1.centerAnchors == window.contentView!.centerAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testEqualityWithMultiplier() {
         let constraint = view1.widthAnchor == view2.widthAnchor / 2
         assertIdentical(constraint.firstItem, view1)
@@ -137,6 +257,17 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .equal)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testAxisAnchorEqualityWithMultiplierSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.trailingAnchor == window.contentView!.trailingAnchor * 0.5
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testAxisAnchorEqualityWithMultiplier() {
@@ -165,6 +296,17 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testAxisAnchorEqualityWithOffsetAndMultiplierSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.trailingAnchor == (window.contentView!.trailingAnchor + 50) * 0.25
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testAxisAnchorEqualityWithOffsetAndMultiplier() {
         let constraint = view1.trailingAnchor == (view2.centerXAnchor + 10) / 2
         assertIdentical(constraint.firstItem, view1)
@@ -176,6 +318,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .equal)
         XCTAssertEqual(constraint.firstAttribute, .trailing)
         XCTAssertEqual(constraint.secondAttribute, .centerX)
+    }
+
+    func testEqualityWithPriorityConstantSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .low
+        view1.trailingAnchor == view2.leadingAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testEqualityWithPriorityConstant() {
@@ -191,6 +349,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testEqualityWithPriorityLiteralSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ 750
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ 250
+        view1.trailingAnchor == view2.leadingAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testEqualityWithPriorityLiteral() {
         let constraint = view1.widthAnchor == view2.widthAnchor ~ 750
         assertIdentical(constraint.firstItem, view1)
@@ -202,6 +376,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .equal)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testEqualityWithPriorityConstantMathSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .high - 1
+        view1.trailingAnchor == view2.leadingAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testEqualityWithPriorityConstantMath() {
@@ -217,6 +407,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testEqualityWithPriorityLiteralMathSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ Priority(750 - 1)
+        view1.trailingAnchor == view2.leadingAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testEqualityWithPriorityLiteralMath() {
         let constraint = view1.widthAnchor == view2.widthAnchor ~ Priority(750 - 1)
         assertIdentical(constraint.firstItem, view1)
@@ -228,6 +434,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .equal)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testEqualityWithOffsetAndPriorityMathSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == window.contentView!.widthAnchor - 100 ~ .high + 1
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view1.trailingAnchor == view2.leadingAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testEqualityWithOffsetAndPriorityMath() {
@@ -243,6 +465,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.secondAttribute, .width)
     }
 
+    func testEqualityWithOffsetAndMultiplierAndPriorityMathSnapshot() {
+        view1.topAnchor == window.contentView!.topAnchor
+        view1.leadingAnchor == window.contentView!.leadingAnchor
+        view1.bottomAnchor == window.contentView!.bottomAnchor
+        view1.widthAnchor == (window.contentView!.widthAnchor + 50) / 4 ~ .high + 1
+        view2.topAnchor == window.contentView!.topAnchor
+        view2.trailingAnchor == window.contentView!.trailingAnchor
+        view2.bottomAnchor == window.contentView!.bottomAnchor
+        view2.widthAnchor == window.contentView!.widthAnchor ~ .high
+        view1.trailingAnchor == view2.leadingAnchor
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testEqualityWithOffsetAndMultiplierAndPriorityMath() {
         let constraint = view1.widthAnchor == (view2.widthAnchor + 10) / 2 ~ .high - 1
         assertIdentical(constraint.firstItem, view1)
@@ -254,6 +492,19 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(constraint.relation, .equal)
         XCTAssertEqual(constraint.firstAttribute, .width)
         XCTAssertEqual(constraint.secondAttribute, .width)
+    }
+
+    func testCenterAnchorsSnapshot() {
+        view2.widthAnchor == 50
+        view2.heightAnchor == 50
+        view2.centerAnchors == window.contentView!.centerAnchors
+        view1.widthAnchor == view2.widthAnchor * 2
+        view1.heightAnchor == view2.heightAnchor * 2
+        view1.centerAnchors == view2.centerAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testCenterAnchors() {
@@ -282,6 +533,33 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(vertical.secondAttribute, .centerY)
     }
 
+    func testCenterAnchorsWithOffsetSnapshot() {
+        view2.widthAnchor == 50
+        view2.heightAnchor == 50
+        view2.centerAnchors == window.contentView!.centerAnchors
+        view1.widthAnchor == view2.widthAnchor * 2
+        view1.heightAnchor == view2.heightAnchor * 2
+        view1.centerAnchors == view2.centerAnchors + 25
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
+    func testCenterAnchorsWithOffsetAndPrioritySnapshot() {
+        view2.widthAnchor == 50
+        view2.heightAnchor == 50
+        view2.centerAnchors == window.contentView!.centerAnchors
+        view1.widthAnchor == view2.widthAnchor * 2
+        view1.heightAnchor == view2.heightAnchor * 2
+        view1.bottomAnchor == window.contentView!.bottomAnchor ~ .low
+        view1.centerAnchors == view2.centerAnchors + 25 ~ .low + 1
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testCenterAnchorsWithOffsetAndPriority() {
         let constraints = view1.centerAnchors == view2.centerAnchors + 10 ~ .high - 1
 
@@ -306,6 +584,15 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(vertical.relation, .equal)
         XCTAssertEqual(vertical.firstAttribute, .centerY)
         XCTAssertEqual(vertical.secondAttribute, .centerY)
+    }
+
+    func testHorizontalAnchorsSnapshot() {
+        view1.heightAnchor == 50
+        view1.horizontalAnchors == window.contentView!.horizontalAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testHorizontalAnchors() {
@@ -334,6 +621,15 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(trailing.secondAttribute, .trailing)
     }
 
+    func testVerticalAnchorsSnapshot() {
+        view1.widthAnchor == 50
+        view1.verticalAnchors == window.contentView!.verticalAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testVerticalAnchors() {
         let constraints = view1.verticalAnchors == view2.verticalAnchors + 10 ~ .high - 1
 
@@ -358,6 +654,14 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.relation, .equal)
         XCTAssertEqual(bottom.firstAttribute, .bottom)
         XCTAssertEqual(bottom.secondAttribute, .bottom)
+    }
+
+    func testSizeAnchorsSnapshot() {
+        view1.sizeAnchors == window.contentView!.sizeAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testSizeAnchors() {
@@ -386,6 +690,14 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(height.secondAttribute, .height)
     }
 
+    func testSizeAnchorsWithConstantsSnapshot() {
+        view1.sizeAnchors == CGSize(width: 100, height: 100)
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testSizeAnchorsWithConstants() {
         let constraints = view1.sizeAnchors == CGSize(width: 50, height: 100) ~ .high - 1
 
@@ -410,6 +722,14 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(height.relation, .equal)
         XCTAssertEqual(height.firstAttribute, .height)
         XCTAssertEqual(height.secondAttribute, .notAnAttribute)
+    }
+
+    func testEdgeAnchorsSnapshot() {
+        view1.edgeAnchors == window.contentView!.edgeAnchors
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testEdgeAnchors() {
@@ -477,6 +797,14 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.secondAttribute, .bottom)
     }
 
+    func testEdgeAnchorsWithInsetsSnapshot() {
+        view1.edgeAnchors == window.contentView!.edgeAnchors + 50
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testEdgeAnchorsWithInsets() {
         let insets = EdgeInsets(top: 10, left: 5, bottom: 15, right: 20)
 
@@ -527,6 +855,17 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(bottom.secondAttribute, .bottom)
     }
 
+    func testInactiveBatchConstraintsSnapshot() {
+        view1.sizeAnchors == window.contentView!.sizeAnchors - 100
+        _ = Anchorage.batch(active: false) {
+            view2.sizeAnchors == window.contentView!.sizeAnchors
+        }
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testInactiveBatchConstraints() {
         let constraints = Anchorage.batch(active: false) {
             view1.widthAnchor == view2.widthAnchor
@@ -555,6 +894,16 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(height.relation, .equal)
         XCTAssertEqual(height.firstAttribute, .height)
         XCTAssertEqual(height.secondAttribute, .height)
+    }
+
+    func testActiveBatchConstraintsSnapshot() {
+        _ = Anchorage.batch(active: true) {
+            view1.sizeAnchors == window.contentView!.sizeAnchors - 100
+        }
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
     }
 
     func testActiveBatchConstraints() {
@@ -586,7 +935,22 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(height.firstAttribute, .height)
         XCTAssertEqual(height.secondAttribute, .height)
     }
-    
+
+    func testNestedBatchConstraintsSnapshots() {
+        _ = Anchorage.batch(active: true) {
+            view1.sizeAnchors == window.contentView!.sizeAnchors - 100
+            view1.centerAnchors == window.contentView!.centerAnchors
+            _ = Anchorage.batch(active: true) {
+                view2.sizeAnchors == window.contentView!.sizeAnchors - 150
+                view2.centerAnchors == window.contentView!.centerAnchors
+            }
+        }
+        assertSnapshot(
+            matching: window,
+            as: .image
+        )
+    }
+
     func testNestedBatchConstraints() {
         var nestedConstraints: [NSLayoutConstraint] = []
         let constraints = Anchorage.batch {
@@ -596,11 +960,11 @@ class AnchorageTests: XCTestCase {
             }
             view1.leadingAnchor == view2.leadingAnchor
         }
-        
+
         let width = constraints[0]
         let leading = constraints[1]
         let height = nestedConstraints[0]
-        
+
         assertIdentical(width.firstItem, view1)
         assertIdentical(width.secondItem, view2)
         XCTAssertEqual(width.constant, 0, accuracy: cgEpsilon)
@@ -610,7 +974,7 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(width.relation, .equal)
         XCTAssertEqual(width.firstAttribute, .width)
         XCTAssertEqual(width.secondAttribute, .width)
-        
+
         assertIdentical(height.firstItem, view1)
         assertIdentical(height.secondItem, view2)
         XCTAssertEqual(height.constant, 0, accuracy: cgEpsilon)
@@ -620,7 +984,7 @@ class AnchorageTests: XCTestCase {
         XCTAssertEqual(height.relation, .equal)
         XCTAssertEqual(height.firstAttribute, .height)
         XCTAssertEqual(height.secondAttribute, .height)
-        
+
         assertIdentical(leading.firstItem, view1)
         assertIdentical(leading.secondItem, view2)
         XCTAssertEqual(leading.constant, 0, accuracy: cgEpsilon)

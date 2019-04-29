@@ -1,0 +1,6 @@
+framework module SnapshotTesting {
+  umbrella header "SnapshotTesting-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

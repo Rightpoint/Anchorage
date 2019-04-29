@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CD6A0E7E1EB7CE3A00FFF5DB"
-               BuildableName = "Anchorage-tvOSTests.xctest"
-               BlueprintName = "Anchorage-tvOSTests"
+               BuildableName = "AnchorageTests-tvOS.xctest"
+               BlueprintName = "AnchorageTests-tvOS"
                ReferencedContainer = "container:Anchorage.xcodeproj">
             </BuildableReference>
          </TestableReference>
