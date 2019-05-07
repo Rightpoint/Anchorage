@@ -57,22 +57,40 @@ private extension MinimumWidthViewCell {
     }
 
     func configureLayout() {
-        bodyLabel.topAnchor == contentView.topAnchor + 10
-        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+        bodyLabel.topAnchor.match(contentView.topAnchor + 10)
+        bodyLabel.horizontalAnchors.match(contentView.horizontalAnchors + 10)
 
-        blueWidthConstraint = (blueView.widthAnchor == 100)
-        blueView.centerXAnchor == centerXAnchor
-        blueView.topAnchor == bodyLabel.bottomAnchor + 5
-        blueView.heightAnchor == 10
+        blueWidthConstraint = (blueView.widthAnchor.match(100))
+        blueView.centerXAnchor.match(centerXAnchor)
+        blueView.topAnchor.match(bodyLabel.bottomAnchor + 5)
+        blueView.heightAnchor.match(10)
 
-        // We have 2 constraints that dictate the height of the red view. Auto layout tries to 
+        // We have 2 constraints that dictate the height of the red view. Auto layout tries to
         // satisfy both if possible, but if not, it'll satisfy the higher priority one.
-        redView.widthAnchor == blueView.widthAnchor * 0.5 ~ .low + 1
-        redView.widthAnchor <= 100 ~ .high
+        redView.widthAnchor.match(blueView.widthAnchor * 0.5 ~ .low + 1)
+        redView.widthAnchor.matchOrLess(100 ~ .high)
 
-        redView.heightAnchor == 10
-        redView.centerXAnchor == centerXAnchor
-        redView.topAnchor == blueView.bottomAnchor + 5
-        redView.bottomAnchor == contentView.bottomAnchor
+        redView.heightAnchor.match(10)
+        redView.centerXAnchor.match(centerXAnchor)
+        redView.topAnchor.match(blueView.bottomAnchor + 5)
+        redView.bottomAnchor.match(contentView.bottomAnchor)
+
+//        bodyLabel.topAnchor == contentView.topAnchor + 10
+//        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+//
+//        blueWidthConstraint = (blueView.widthAnchor == 100)
+//        blueView.centerXAnchor == centerXAnchor
+//        blueView.topAnchor == bodyLabel.bottomAnchor + 5
+//        blueView.heightAnchor == 10
+//
+//        // We have 2 constraints that dictate the height of the red view. Auto layout tries to
+//        // satisfy both if possible, but if not, it'll satisfy the higher priority one.
+//        redView.widthAnchor == blueView.widthAnchor * 0.5 ~ .low + 1
+//        redView.widthAnchor <= 100 ~ .high
+//
+//        redView.heightAnchor == 10
+//        redView.centerXAnchor == centerXAnchor
+//        redView.topAnchor == blueView.bottomAnchor + 5
+//        redView.bottomAnchor == contentView.bottomAnchor
     }
 }

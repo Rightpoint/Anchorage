@@ -59,19 +59,34 @@ private extension ToggleActiveHeightCell {
     }
 
     func configureLayout() {
-        bodyLabel.topAnchor == contentView.topAnchor
-        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+        bodyLabel.topAnchor.match(contentView.topAnchor)
+        bodyLabel.horizontalAnchors.match(contentView.horizontalAnchors + 10)
 
-        leftView.leftAnchor == contentView.leftAnchor
-        leftView.rightAnchor == contentView.centerXAnchor
-        leftView.topAnchor == bodyLabel.bottomAnchor + 5
-        leftView.heightAnchor == 30
-        leftView.bottomAnchor == contentView.bottomAnchor
+        leftView.leftAnchor.match(contentView.leftAnchor)
+        leftView.rightAnchor.match(contentView.centerXAnchor)
+        leftView.topAnchor.match(bodyLabel.bottomAnchor + 5)
+        leftView.heightAnchor.match(30)
+        leftView.bottomAnchor.match(contentView.bottomAnchor)
 
-        rightView.leftAnchor == contentView.centerXAnchor
-        rightView.rightAnchor == contentView.rightAnchor
-        rightView.topAnchor == leftView.topAnchor
+        rightView.leftAnchor.match(contentView.centerXAnchor)
+        rightView.rightAnchor.match(contentView.rightAnchor)
+        rightView.topAnchor.match(leftView.topAnchor)
         // When we set this to inactive, there is no specification for this view's height, so it is zero.
-        rightHeightConstraint = (rightView.heightAnchor == leftView.heightAnchor)
+        rightHeightConstraint = (rightView.heightAnchor.match(leftView.heightAnchor))
+
+//        bodyLabel.topAnchor == contentView.topAnchor
+//        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+//
+//        leftView.leftAnchor == contentView.leftAnchor
+//        leftView.rightAnchor == contentView.centerXAnchor
+//        leftView.topAnchor == bodyLabel.bottomAnchor + 5
+//        leftView.heightAnchor == 30
+//        leftView.bottomAnchor == contentView.bottomAnchor
+//
+//        rightView.leftAnchor == contentView.centerXAnchor
+//        rightView.rightAnchor == contentView.rightAnchor
+//        rightView.topAnchor == leftView.topAnchor
+//        // When we set this to inactive, there is no specification for this view's height, so it is zero.
+//        rightHeightConstraint = (rightView.heightAnchor == leftView.heightAnchor)
     }
 }

@@ -57,27 +57,50 @@ private extension EqualSpaceViewCell {
     }
 
     func configureLayout() {
-        bodyLabel.topAnchor == contentView.topAnchor
-        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+        bodyLabel.topAnchor.match(contentView.topAnchor)
+        bodyLabel.horizontalAnchors.match(contentView.horizontalAnchors + 10)
 
         guard let first = views.first, let last = views.last else {
             preconditionFailure("Empty views array in EqualSpaceViewCell")
         }
 
-        first.leadingAnchor == contentView.leadingAnchor
-        first.topAnchor == bodyLabel.bottomAnchor + 5
-        first.heightAnchor == 30
-        first.bottomAnchor == contentView.bottomAnchor
+        first.leadingAnchor.match(contentView.leadingAnchor)
+        first.topAnchor.match(bodyLabel.bottomAnchor + 5)
+        first.heightAnchor.match(30)
+        first.bottomAnchor.match(contentView.bottomAnchor)
 
         for i in 1..<views.count {
-            views[i].widthAnchor == first.widthAnchor
-            views[i].topAnchor == first.topAnchor
-            views[i].bottomAnchor == first.bottomAnchor
+            views[i].widthAnchor.match(first.widthAnchor)
+            views[i].topAnchor.match(first.topAnchor)
+            views[i].bottomAnchor.match(first.bottomAnchor)
             // Each view's leading anchor is at the previous view's trailing anchor.
             // As long as you're targeting iOS 9+, situations like this can often be handled with UIStackView.
-            spacingConstraints.append(views[i].leadingAnchor == views[i - 1].trailingAnchor)
+            spacingConstraints.append(views[i].leadingAnchor.match(views[i - 1].trailingAnchor))
         }
 
-        last.trailingAnchor == contentView.trailingAnchor
+        last.trailingAnchor.match(contentView.trailingAnchor)
+
+//        bodyLabel.topAnchor == contentView.topAnchor
+//        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+//
+//        guard let first = views.first, let last = views.last else {
+//            preconditionFailure("Empty views array in EqualSpaceViewCell")
+//        }
+//
+//        first.leadingAnchor == contentView.leadingAnchor
+//        first.topAnchor == bodyLabel.bottomAnchor + 5
+//        first.heightAnchor == 30
+//        first.bottomAnchor == contentView.bottomAnchor
+//
+//        for i in 1..<views.count {
+//            views[i].widthAnchor == first.widthAnchor
+//            views[i].topAnchor == first.topAnchor
+//            views[i].bottomAnchor == first.bottomAnchor
+//            // Each view's leading anchor is at the previous view's trailing anchor.
+//            // As long as you're targeting iOS 9+, situations like this can often be handled with UIStackView.
+//            spacingConstraints.append(views[i].leadingAnchor == views[i - 1].trailingAnchor)
+//        }
+//
+//        last.trailingAnchor == contentView.trailingAnchor
     }
 }

@@ -41,6 +41,8 @@ private extension EdgeContainedLabelCell {
     }
 
     func configureLayout() {
-        bodyLabel.edgeAnchors == contentView.edgeAnchors + 40
+//        bodyLabel.edgeAnchors == contentView.edgeAnchors + 40
+
+        bodyLabel.edgeAnchors.match(contentView.edgeAnchors + 40)
     }
 }

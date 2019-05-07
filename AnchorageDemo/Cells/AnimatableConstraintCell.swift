@@ -64,13 +64,22 @@ private extension AnimatableConstraintCell {
     }
 
     func configureLayout() {
-        bodyLabel.topAnchor == contentView.topAnchor
-        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+        bodyLabel.topAnchor.match(contentView.topAnchor)
+        bodyLabel.horizontalAnchors.match(contentView.horizontalAnchors + 10)
 
-        animatableView.topAnchor == bodyLabel.bottomAnchor + 10
-        animatableConstraint = animatableView.leadingAnchor == contentView.leadingAnchor
-        animatableView.widthAnchor == 20.0
-        animatableView.heightAnchor == 20.0
-        animatableView.bottomAnchor == contentView.bottomAnchor
+        animatableView.topAnchor.match(bodyLabel.bottomAnchor + 10)
+        animatableConstraint = animatableView.leadingAnchor.match(contentView.leadingAnchor)
+        animatableView.widthAnchor.match(20.0)
+        animatableView.heightAnchor.match(20.0)
+        animatableView.bottomAnchor.match(contentView.bottomAnchor)
+
+//        bodyLabel.topAnchor == contentView.topAnchor
+//        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 10
+//
+//        animatableView.topAnchor == bodyLabel.bottomAnchor + 10
+//        animatableConstraint = animatableView.leadingAnchor == contentView.leadingAnchor
+//        animatableView.widthAnchor == 20.0
+//        animatableView.heightAnchor == 20.0
+//        animatableView.bottomAnchor == contentView.bottomAnchor
     }
 }

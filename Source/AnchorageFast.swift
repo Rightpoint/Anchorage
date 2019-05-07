@@ -23,40 +23,40 @@ import UIKit
 // MARK: - Equality Constraints
 extension NSLayoutDimension {
     @discardableResult public func match<T: BinaryFloatingPoint>(_ rhs: T) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(equalToConstant: CGFloat(rhs)))
+        return Anchorage.finalize(constraint: self.constraint(equalToConstant: CGFloat(rhs)))
     }
 
     @discardableResult public func match(_ rhs: NSLayoutDimension) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(equalTo: rhs))
+        return Anchorage.finalize(constraint: self.constraint(equalTo: rhs))
     }
 
     @discardableResult public func match(_ rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
         if let anchor = rhs.anchor {
-            return finalize(constraint: self.constraint(equalTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+            return Anchorage.finalize(constraint: self.constraint(equalTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
         }
         else {
-            return finalize(constraint: self.constraint(equalToConstant: rhs.constant), withPriority: rhs.priority)
+            return Anchorage.finalize(constraint: self.constraint(equalToConstant: rhs.constant), withPriority: rhs.priority)
         }
     }
 }
 
 extension NSLayoutXAxisAnchor {
     @discardableResult public func match(_ rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(equalTo: rhs))
+        return Anchorage.finalize(constraint: self.constraint(equalTo: rhs))
     }
 
     @discardableResult public func match(_ rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(equalTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+        return Anchorage.finalize(constraint: self.constraint(equalTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
 }
 
 extension NSLayoutYAxisAnchor {
     @discardableResult public func match(_ rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(equalTo: rhs))
+        return Anchorage.finalize(constraint: self.constraint(equalTo: rhs))
     }
 
     @discardableResult public func match(_ rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(equalTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+        return Anchorage.finalize(constraint: self.constraint(equalTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
 }
 
@@ -83,164 +83,167 @@ extension AnchorPair {
     @discardableResult public func match(_ rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
         return self.finalize(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
+}
 
-    @discardableResult public func match(_ rhs: CGSize) -> ConstraintPair
-        where T: NSLayoutDimension, U: NSLayoutDimension {
+extension AnchorPair where T: NSLayoutDimension, U: NSLayoutDimension {
+    @discardableResult public func match(_ rhs: CGSize) -> ConstraintPair {
         return self.finalize(constraintsEqualToConstant: rhs)
     }
 
-    @discardableResult public func match(_ rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair
-        where T: NSLayoutDimension, U: NSLayoutDimension {
+    @discardableResult public func match(_ rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
         return self.finalize(constraintsEqualToConstant: rhs.constant, priority: rhs.priority)
     }
 }
 
-
-
 // MARK: - Inequality Constraints
 // less than
 extension NSLayoutDimension {
-    @discardableResult public func matchLess<T: BinaryFloatingPoint>(_ rhs: T) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(lessThanOrEqualToConstant: CGFloat(rhs)))
+    @discardableResult public func matchOrLess<T: BinaryFloatingPoint>(_ rhs: T) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualToConstant: CGFloat(rhs)))
     }
 
-    @discardableResult public func matchLess(_ rhs: NSLayoutDimension) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(lessThanOrEqualTo: rhs))
+    @discardableResult public func matchOrLess(_ rhs: NSLayoutDimension) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualTo: rhs))
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
         if let anchor = rhs.anchor {
-            return finalize(constraint: self.constraint(lessThanOrEqualTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+            return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
         }
         else {
-            return finalize(constraint: self.constraint(lessThanOrEqualToConstant: rhs.constant), withPriority: rhs.priority)
+            return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualToConstant: rhs.constant), withPriority: rhs.priority)
         }
     }
 }
 
 extension NSLayoutXAxisAnchor {
-    @discardableResult public func matchLess(_ rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(lessThanOrEqualTo: rhs))
+    @discardableResult public func matchOrLess(_ rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualTo: rhs))
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(lessThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
 }
 
 extension NSLayoutYAxisAnchor {
-    @discardableResult public func matchLess(_ rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(lessThanOrEqualTo: rhs))
+    @discardableResult public func matchOrLess(_ rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualTo: rhs))
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(lessThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(lessThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
 }
 
 extension EdgeAnchors {
-    @discardableResult public func matchLess(_ rhs: EdgeAnchors) -> ConstraintGroup {
+    @discardableResult public func matchOrLess(_ rhs: EdgeAnchors) -> ConstraintGroup {
         return self.finalize(constraintsLessThanOrEqualToEdges: rhs)
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
         return self.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
         return self.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
     }
 }
 
 extension AnchorPair {
-    @discardableResult public func matchLess(_ rhs: AnchorPair<T, U>) -> ConstraintPair {
+    @discardableResult public func matchOrLess(_ rhs: AnchorPair<T, U>) -> ConstraintPair {
         return self.finalize(constraintsLessThanOrEqualToEdges: rhs)
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
         return self.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
     }
+}
 
-    @discardableResult public func matchLess(_ rhs: CGSize) -> ConstraintPair
-        where T: NSLayoutDimension, U: NSLayoutDimension {
+extension AnchorPair where T: NSLayoutDimension, U: NSLayoutDimension {
+    @discardableResult public func matchOrLess(_ rhs: CGSize) -> ConstraintPair {
         return self.finalize(constraintsLessThanOrEqualToConstant: rhs)
     }
 
-    @discardableResult public func matchLess(_ rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair
-        where T: NSLayoutDimension, U: NSLayoutDimension {
+    @discardableResult public func matchOrLess(_ rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
         return self.finalize(constraintsLessThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
     }
 }
+
 // Greater than
 extension NSLayoutDimension {
-    @discardableResult public func matchGreater<T: BinaryFloatingPoint>(_ rhs: T) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(greaterThanOrEqualToConstant: CGFloat(rhs)))
+    @discardableResult public func matchOrMore<T: BinaryFloatingPoint>(_ rhs: T) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualToConstant: CGFloat(rhs)))
     }
 
-    @discardableResult public func matchGreater(_ rhs: NSLayoutDimension) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs))
+    @discardableResult public func matchOrMore(_ rhs: NSLayoutDimension) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs))
     }
 
-    @discardableResult public func matchGreater(_ rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
         if let anchor = rhs.anchor {
-            return finalize(constraint: self.constraint(greaterThanOrEqualTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+            return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
         }
         else {
-            return finalize(constraint: self.constraint(greaterThanOrEqualToConstant: rhs.constant), withPriority: rhs.priority)
+            return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualToConstant: rhs.constant), withPriority: rhs.priority)
         }
     }
 }
 
 extension NSLayoutXAxisAnchor {
-    @discardableResult public func matchGreater(_ rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs))
+    @discardableResult public func matchOrMore(_ rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs))
     }
 
-    @discardableResult public func matchGreater(_ rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
 }
 
 extension NSLayoutYAxisAnchor {
-    @discardableResult public func matchGreater(_ rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs))
+    @discardableResult public func matchOrMore(_ rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs))
     }
 
-    @discardableResult public func >= (_ rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-        return finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+        return Anchorage.finalize(constraint: self.constraint(greaterThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
 }
 
+extension EdgeAnchors {
+    @discardableResult public func matchOrMore(_ rhs: EdgeAnchors) -> ConstraintGroup {
+        return self.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
+    }
 
-//
-//@discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
-//}
-//
-//@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
-//}
-//
-//@discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
-//}
-//
-//@discardableResult public func >= <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
-//}
-//
-//@discardableResult public func >= <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
-//}
-//
-//@discardableResult public func >= (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToConstant: rhs)
-//}
-//
-//@discardableResult public func >= (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
-//    return lhs.finalize(constraintsGreaterThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
-//}
-//
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
+        return self.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+    }
+
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+        return self.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
+    }
+}
+
+extension AnchorPair {
+    @discardableResult public func matchOrMore(_ rhs: AnchorPair<T, U>) -> ConstraintPair {
+        return self.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
+    }
+
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
+        return self.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
+    }
+}
+
+extension AnchorPair where T: NSLayoutDimension, U: NSLayoutDimension {
+    @discardableResult public func matchOrMore(_ rhs: CGSize) -> ConstraintPair {
+        return self.finalize(constraintsGreaterThanOrEqualToConstant: rhs)
+    }
+
+    @discardableResult public func matchOrMore(_ rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
+        return self.finalize(constraintsGreaterThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
+    }
+}
+
 //// MARK: - Priority
 //
 //precedencegroup PriorityPrecedence {
