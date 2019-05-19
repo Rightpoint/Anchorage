@@ -33,7 +33,7 @@ jobs:
       - run: ./scripts/iOS_Swift_4_32_bit.sh
       - run: ./scripts/iOS_Swift_4_64_bit.sh 12.2
       - run: ./scripts/macOS_Swift_4.sh
-      - run: ./scripts/tvOS_Swift_4.sh
+      - run: ./scripts/tvOS_Swift_4.sh 12.1
       - run: bundle exec pod lib lint --swift-version=4.2
 
   test-swift-4-xcode-10.1:
@@ -50,7 +50,7 @@ jobs:
       - run: ./scripts/iOS_Swift_4_32_bit.sh
       - run: ./scripts/iOS_Swift_4_64_bit.sh 12.1
       - run: ./scripts/macOS_Swift_4.sh
-      - run: ./scripts/tvOS_Swift_4.sh
+      - run: ./scripts/tvOS_Swift_4.sh 12.1
       - run: bundle exec pod lib lint --swift-version=4.2
 
   carthage-build-xcode-10.2:
