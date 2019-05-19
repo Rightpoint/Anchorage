@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Rob Visentin" => "rob.visentin@raizlabs.com" }
   s.source           = { :git => "https://github.com/Raizlabs/Anchorage.git", :tag => s.version.to_s }
+  s.swift_version    = '4.2'
 
   s.ios.deployment_target = '9.0'
   s.tvos.deployment_target = '9.0'
