@@ -10,7 +10,7 @@ jobs:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install 
-      - run: ./scripts/iOS_demo_Swift_5.sh
+      - run: ./scripts/iOS_demo_Swift_5.sh 12.2
       - run: ./scripts/iOS_Swift_5_32_bit.sh
       - run: ./scripts/iOS_Swift_5_64_bit.sh
       - run: ./scripts/macOS_Swift_5.sh
@@ -26,7 +26,7 @@ jobs:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install
-      - run: ./scripts/iOS_demo_Swift_4.sh
+      - run: ./scripts/iOS_demo_Swift_4.sh 12.2
       - run: ./scripts/iOS_Swift_4_32_bit.sh
       - run: ./scripts/iOS_Swift_4_64_bit.sh
       - run: ./scripts/macOS_Swift_4.sh
@@ -42,7 +42,7 @@ jobs:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install
-      - run: ./scripts/iOS_demo_Swift_4.sh
+      - run: ./scripts/iOS_demo_Swift_4.sh 12.1
       - run: ./scripts/iOS_Swift_4_32_bit.sh
       - run: ./scripts/iOS_Swift_4_64_bit.sh
       - run: ./scripts/macOS_Swift_4.sh
