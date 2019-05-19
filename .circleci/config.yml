@@ -1,4 +1,5 @@
 version: 2
+# Using sudo to install bundler because of permissions issue: https://discuss.circleci.com/t/error-with-installing-bundler/18085/10
 
 jobs:
   test-swift-5-xcode-10.2:
@@ -9,7 +10,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
-            gem install bundler
+            sudo gem install bundler
             bundle check || bundle install 
       - run: ./scripts/iOS_demo_Swift_5.sh 12.2
       - run: ./scripts/iOS_Swift_5_32_bit.sh
@@ -26,7 +27,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
-            gem install bundler
+            sudo gem install bundler
             bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_4.sh 12.2
       - run: ./scripts/iOS_Swift_4_32_bit.sh
@@ -43,7 +44,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
-            gem install bundler
+            sudo gem install bundler
             bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_4.sh 12.1
       - run: ./scripts/iOS_Swift_4_32_bit.sh
@@ -90,7 +91,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
-            gem install bundler
+            sudo gem install bundler
             bundle check || bundle install
       - run: bundle exec pod trunk push
 
