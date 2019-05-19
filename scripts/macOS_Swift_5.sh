@@ -6,7 +6,7 @@ set -o pipefail && \
   -scheme Anchorage-macOS \
   -sdk macosx \
   -destination "arch=x86_64" \
-  SWIFT_VERSION=4.0 \
+  SWIFT_VERSION=5.0 \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGN_IDENTITY= \
-  | xcpretty
+  | bundle exec xcpretty

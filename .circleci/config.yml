@@ -1,73 +1,57 @@
 version: 2
 
 jobs:
-  test-swift-3-xcode-10:
+  test-swift-5-xcode-10.2:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.2.1"
     steps:
       - checkout
       - run:
           name: Restore Ruby Gems
           command: |
-            bundle check || bundle install
-      - run: ./scripts/macOS_Swift_3_Xcode_10.0.sh
-      - run: ./scripts/iOS_Swift_3_32_bit_Xcode_10.0.sh
-      - run: ./scripts/iOS_Swift_3_64_bit_Xcode_10.0.sh
-      - run: ./scripts/iOS_demo_Swift_3_Xcode_10.0.sh
-      - run: ./scripts/tvOS_Swift_3_Xcode_10.0.sh
-      - run: bundle exec pod lib lint --swift-version=3.0
+            bundle check || bundle install 
+      - run: ./scripts/iOS_demo_Swift_5.sh
+      - run: ./scripts/iOS_Swift_5_32_bit.sh
+      - run: ./scripts/iOS_Swift_5_64_bit.sh
+      - run: ./scripts/macOS_Swift_5.sh
+      - run: ./scripts/tvOS_Swift_5.sh
+      - run: bundle exec pod lib lint --swift-version=5.0
 
-  test-swift-4-xcode-10:
+  test-swift-4-xcode-10.2:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.2.1"
     steps:
       - checkout
       - run:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install
-      - run: ./scripts/macOS_Swift_4_Xcode_10.0.sh
-      - run: ./scripts/iOS_Swift_4_32_bit_Xcode_10.0.sh
-      - run: ./scripts/iOS_Swift_4_64_bit_Xcode_10.0.sh
-      - run: ./scripts/iOS_demo_Swift_4_Xcode_10.0.sh
-      - run: ./scripts/tvOS_Swift_4_Xcode_10.0.sh
-      - run: bundle exec pod lib lint --swift-version=4.0
-      
-  test-swift-3-xcode-9:
-    macos:
-      xcode: "9.3.0"
-    steps:
-      - checkout
-      - run:
-          name: Restore Ruby Gems
-          command: |
-            bundle check || bundle install
-      - run: ./scripts/macOS_Swift_3_Xcode_9.3.sh
-      - run: ./scripts/iOS_Swift_3_32_bit_Xcode_9.3.sh
-      - run: ./scripts/iOS_Swift_3_64_bit_Xcode_9.3.sh
-      - run: ./scripts/iOS_demo_Swift_3_Xcode_9.3.sh
-      - run: ./scripts/tvOS_Swift_3_Xcode_9.3.sh
-      - run: bundle exec pod lib lint --swift-version=3.0
+      - run: ./scripts/iOS_demo_Swift_4.sh
+      - run: ./scripts/iOS_Swift_4_32_bit.sh
+      - run: ./scripts/iOS_Swift_4_64_bit.sh
+      - run: ./scripts/macOS_Swift_4.sh
+      - run: ./scripts/tvOS_Swift_4.sh
+      - run: bundle exec pod lib lint --swift-version=4.2
 
-  test-swift-4-xcode-9:
+  test-swift-4-xcode-10.1:
     macos:
-      xcode: "9.3.0"
+      xcode: "10.1.0"
     steps:
       - checkout
       - run:
           name: Restore Ruby Gems
           command: |
             bundle check || bundle install
-      - run: ./scripts/macOS_Swift_4_Xcode_9.3.sh
-      - run: ./scripts/iOS_Swift_4_32_bit_Xcode_9.3.sh
-      - run: ./scripts/iOS_Swift_4_64_bit_Xcode_9.3.sh
-      - run: ./scripts/iOS_demo_Swift_4_Xcode_9.3.sh
-      - run: ./scripts/tvOS_Swift_4_Xcode_9.3.sh
-      - run: bundle exec pod lib lint --swift-version=4.0
+      - run: ./scripts/iOS_demo_Swift_4.sh
+      - run: ./scripts/iOS_Swift_4_32_bit.sh
+      - run: ./scripts/iOS_Swift_4_64_bit.sh
+      - run: ./scripts/macOS_Swift_4.sh
+      - run: ./scripts/tvOS_Swift_4.sh
+      - run: bundle exec pod lib lint --swift-version=4.2
 
-  carthage-build-xcode-9:
+  carthage-build-xcode-10.2:
     macos:
-      xcode: "9.3.0"
+      xcode: "10.2.1"
     steps:
       - checkout
       - run:
@@ -78,9 +62,9 @@ jobs:
           command: brew outdated carthage || (brew uninstall carthage --force; HOMEBREW_NO_AUTO_UPDATE=1 brew install carthage --force-bottle)
       - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
 
-  carthage-build-xcode-10:
+  carthage-build-xcode-10.1:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.1.0"
     steps:
       - checkout
       - run:
@@ -93,7 +77,7 @@ jobs:
 
   deploy-to-cocoapods:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.2.1"
     steps:
       - checkout
       - run:
@@ -107,38 +91,33 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - test-swift-3-xcode-10:
+      - test-swift-5-xcode-10.2:
           filters:
             tags:
               only: /.*/
-      - test-swift-4-xcode-10:
+      - test-swift-4-xcode-10.2:
           filters:
             tags:
               only: /.*/
-      - test-swift-3-xcode-9:
+      - test-swift-4-xcode-10.1:
           filters:
             tags:
               only: /.*/
-      - test-swift-4-xcode-9:
+      - carthage-build-xcode-10.2:
           filters:
             tags:
               only: /.*/
-      - carthage-build-xcode-10:
-          filters:
-            tags:
-              only: /.*/
-      - carthage-build-xcode-9:
+      - carthage-build-xcode-10.1:
           filters:
             tags:
               only: /.*/
       - deploy-to-cocoapods:
           requires:
-            - test-swift-3-xcode-10
-            - test-swift-4-xcode-10
-            - test-swift-3-xcode-9
-            - test-swift-4-xcode-9
-            - carthage-build-xcode-10
-            - carthage-build-xcode-9
+            - test-swift-5-xcode-10.2
+            - test-swift-4-xcode-10.2
+            - test-swift-4-xcode-10.1
+            - carthage-build-xcode-10.2
+            - carthage-build-xcode-10.1
           filters:
             tags:
               only: /\d+(\.\d+)*(-.*)*/
