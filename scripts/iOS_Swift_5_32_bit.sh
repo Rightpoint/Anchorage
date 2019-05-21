@@ -6,7 +6,7 @@ set -o pipefail && \
   -scheme Anchorage-iOS \
   -sdk iphonesimulator \
   -destination "platform=iOS Simulator,name=iPhone 5,OS=10.3.1" \
-  SWIFT_VERSION=4.0 \
+  SWIFT_VERSION=5.0 \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGN_IDENTITY= \
-  | xcpretty
+  | bundle exec xcpretty

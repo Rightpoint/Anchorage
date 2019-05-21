@@ -637,7 +637,7 @@ class AnchorageTests: XCTestCase {
 extension AnchorageTests {
 
     func assertIdentical(_ expression1: @autoclosure () -> AnyObject?, _ expression2: @autoclosure () -> AnyObject?, _ message: @autoclosure () -> String = "Objects were not identical", file: StaticString = #file, line: UInt = #line) {
-        XCTAssertTrue(expression1() === expression2(), message, file: file, line: line)
+        XCTAssertTrue(expression1() === expression2(), message(), file: file, line: line)
     }
 
 }
@@ -660,6 +660,9 @@ extension ConstraintAttribute: CustomDebugStringConvertible {
         case .lastBaseline: return "lastBaseline"
         case .firstBaseline: return "firstBaseline"
         case .notAnAttribute: return "notAnAttribute"
+        #if swift(>=5.0)
+        @unknown default: return "unknown case \(self): \(self.rawValue)"
+        #endif
         }
 #else
         switch self {
@@ -684,6 +687,9 @@ extension ConstraintAttribute: CustomDebugStringConvertible {
         case .centerXWithinMargins: return "centerXWithinMargins"
         case .centerYWithinMargins: return "centerYWithinMargins"
         case .notAnAttribute: return "notAnAttribute"
+        #if swift(>=5.0)
+        @unknown default: return "unknown case \(self): \(self.rawValue)"
+        #endif
         }
 #endif
     }
