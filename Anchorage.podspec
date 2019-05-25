@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
                        DESC
   s.homepage         = "https://github.com/Raizlabs/Anchorage"
   s.license          = 'MIT'
-  s.author           = { "Rob Visentin" => "rob.visentin@raizlabs.com" }
+  s.author           = { "Rob Visentin" => "jvisenti@gmail.com" }
   s.source           = { :git => "https://github.com/Raizlabs/Anchorage.git", :tag => s.version.to_s }
   s.swift_versions    = ['4.0', '4.2', '5.0']
 
