@@ -3,7 +3,7 @@
 //  AnchorageDemo
 //
 //  Created by Connor Neville on 9/23/16.
-//  Copyright © 2016 Raizlabs. All rights reserved.
+//  Copyright © 2016 Rightpoint. All rights reserved.
 //
 
 import UIKit

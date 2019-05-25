@@ -3,7 +3,7 @@
 //  AnchorageTests
 //
 //  Created by Zev Eisenberg on 4/29/17.
-//  Copyright © 2017 Raizlabs. All rights reserved.
+//  Copyright © 2017 Rightpoint. All rights reserved.
 //
 
 #if os(macOS)
