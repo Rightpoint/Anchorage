@@ -4,8 +4,8 @@
 //
 //  Created by Rob Visentin on 5/1/17.
 //
-//  Copyright 2016 Raizlabs and other contributors
-//  http://raizlabs.com/
+//  Copyright 2016 Rightpoint and other contributors
+//  http://rightpoint.com/
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
