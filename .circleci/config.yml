@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
+            gem update --system
             gem install bundler
             bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_5.sh 12.2
@@ -26,6 +27,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
+            gem update --system
             gem install bundler
             bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_4.sh 12.2
@@ -43,6 +45,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
+            gem update --system
             gem install bundler
             bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_4.sh 12.1
@@ -90,6 +93,7 @@ jobs:
       - run:
           name: Restore Ruby Gems
           command: |
+            gem update --system
             gem install bundler
             bundle check || bundle install
       - run: bundle exec pod trunk push
