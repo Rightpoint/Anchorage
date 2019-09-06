@@ -82,10 +82,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install CocoaPods Specs Repo
-          command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      - run:
           name: Restore Ruby Gems
           command: bundle check || bundle install
       - run: bundle exec pod trunk push
