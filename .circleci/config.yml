@@ -1,5 +1,4 @@
-version: 2
-# Using sudo to install bundler because of permissions issue: https://discuss.circleci.com/t/error-with-installing-bundler/18085/10
+version: 2.1
 
 jobs:
   test-swift-5-xcode-10.2:
@@ -9,9 +8,7 @@ jobs:
       - checkout
       - run:
           name: Restore Ruby Gems
-          command: |
-            sudo gem install bundler
-            bundle check || bundle install 
+          command: bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_5.sh 12.2
       - run: ./scripts/iOS_Swift_5_32_bit.sh
       - run: ./scripts/iOS_Swift_5_64_bit.sh
@@ -26,9 +23,7 @@ jobs:
       - checkout
       - run:
           name: Restore Ruby Gems
-          command: |
-            sudo gem install bundler
-            bundle check || bundle install
+          command: bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_4.sh 12.2
       - run: ./scripts/iOS_Swift_4_32_bit.sh
       - run: ./scripts/iOS_Swift_4_64_bit.sh 12.2
@@ -43,9 +38,7 @@ jobs:
       - checkout
       - run:
           name: Restore Ruby Gems
-          command: |
-            sudo gem install bundler
-            bundle check || bundle install
+          command: bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_4.sh 12.1
       - run: ./scripts/iOS_Swift_4_32_bit.sh
       - run: ./scripts/iOS_Swift_4_64_bit.sh 12.1
@@ -94,9 +87,7 @@ jobs:
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
       - run:
           name: Restore Ruby Gems
-          command: |
-            sudo gem install bundler
-            bundle check || bundle install
+          command: bundle check || bundle install
       - run: bundle exec pod trunk push
 
 workflows:
