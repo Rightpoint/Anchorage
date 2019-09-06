@@ -1,8 +1,8 @@
-version: 2
+version: 2.1
 # Using sudo to install bundler because of permissions issue: https://discuss.circleci.com/t/error-with-installing-bundler/18085/10
 
 jobs:
-  test-swift-5-xcode-10.2:
+  test-swift-5-xcode-10_2:
     macos:
       xcode: "10.2.1"
     steps:
@@ -11,7 +11,7 @@ jobs:
           name: Restore Ruby Gems
           command: |
             sudo gem install bundler
-            bundle check || bundle install 
+            bundle check || bundle install
       - run: ./scripts/iOS_demo_Swift_5.sh 12.2
       - run: ./scripts/iOS_Swift_5_32_bit.sh
       - run: ./scripts/iOS_Swift_5_64_bit.sh
@@ -19,7 +19,7 @@ jobs:
       - run: ./scripts/tvOS_Swift_5.sh
       - run: bundle exec pod lib lint --swift-version=5.0
 
-  test-swift-4-xcode-10.2:
+  test-swift-4-xcode-10_2:
     macos:
       xcode: "10.2.1"
     steps:
@@ -36,7 +36,7 @@ jobs:
       - run: ./scripts/tvOS_Swift_4.sh 12.2
       - run: bundle exec pod lib lint --swift-version=4.2
 
-  test-swift-4-xcode-10.1:
+  test-swift-4-xcode-10_1:
     macos:
       xcode: "10.1.0"
     steps:
@@ -53,7 +53,7 @@ jobs:
       - run: ./scripts/tvOS_Swift_4.sh 12.1
       - run: bundle exec pod lib lint --swift-version=4.2
 
-  carthage-build-xcode-10.2:
+  carthage-build-xcode-10_2:
     macos:
       xcode: "10.2.1"
     environment:
@@ -68,7 +68,7 @@ jobs:
           command: brew outdated carthage || (brew uninstall carthage --force; HOMEBREW_NO_AUTO_UPDATE=1 brew install carthage --force-bottle)
       - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
 
-  carthage-build-xcode-10.1:
+  carthage-build-xcode-10_1:
     macos:
       xcode: "10.1.0"
     environment:
@@ -89,10 +89,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install CocoaPods Specs Repo
-          command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      - run:
           name: Restore Ruby Gems
           command: |
             sudo gem install bundler
@@ -103,33 +99,33 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - test-swift-5-xcode-10.2:
+      - test-swift-5-xcode-10_2:
           filters:
             tags:
               only: /.*/
-      - test-swift-4-xcode-10.2:
+      - test-swift-4-xcode-10_2:
           filters:
             tags:
               only: /.*/
-      - test-swift-4-xcode-10.1:
+      - test-swift-4-xcode-10_1:
           filters:
             tags:
               only: /.*/
-      - carthage-build-xcode-10.2:
+      - carthage-build-xcode-10_2:
           filters:
             tags:
               only: /.*/
-      - carthage-build-xcode-10.1:
+      - carthage-build-xcode-10_1:
           filters:
             tags:
               only: /.*/
       - deploy-to-cocoapods:
           requires:
-            - test-swift-5-xcode-10.2
-            - test-swift-4-xcode-10.2
-            - test-swift-4-xcode-10.1
-            - carthage-build-xcode-10.2
-            - carthage-build-xcode-10.1
+            - test-swift-5-xcode-10_2
+            - test-swift-4-xcode-10_2
+            - test-swift-4-xcode-10_1
+            - carthage-build-xcode-10_2
+            - carthage-build-xcode-10_1
           filters:
             tags:
               only: /\d+(\.\d+)*(-.*)*/
