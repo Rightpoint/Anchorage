@@ -71,10 +71,12 @@ extension View: AnchorGroupProvider {
 
 extension ViewController: AnchorGroupProvider {
 
+    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
     public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return view.horizontalAnchors
     }
 
+    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
     public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
 #if os(macOS)
         return view.verticalAnchors
@@ -83,10 +85,12 @@ extension ViewController: AnchorGroupProvider {
 #endif
     }
 
+    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
     public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
         return view.centerAnchors
     }
 
+    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
     public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
         return view.sizeAnchors
     }
