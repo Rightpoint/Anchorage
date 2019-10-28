@@ -2,9 +2,9 @@ version: 2.1
 # Using sudo to install bundler because of permissions issue: https://discuss.circleci.com/t/error-with-installing-bundler/18085/10
 
 jobs:
-  test-swift-5_1-xcode-11:
+  test-swift-5_1-xcode-11_1:
     macos:
-      xcode: "11.0"
+      xcode: "11.1.0"
     steps:
       - checkout
       - run: swift test
@@ -106,7 +106,7 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - test-swift-5_1-xcode-11:
+      - test-swift-5_1-xcode-11_1:
           filters:
             tags:
               only: /.*/
