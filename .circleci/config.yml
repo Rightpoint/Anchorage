@@ -132,7 +132,7 @@ workflows:
               only: /.*/
       - deploy-to-cocoapods:
           requires:
-            - test-swift-5_1-xcode-11
+            - test-swift-5_1-xcode-11_1
             - test-swift-5-xcode-10_2
             - test-swift-4-xcode-10_2
             - test-swift-4-xcode-10_1
