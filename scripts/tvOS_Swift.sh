@@ -1,5 +1,6 @@
 #!/bin/sh
-# required: pass tvOS version as first and only parameter
+# required: pass iOS version as first parameter
+# required: pass Swift version as second parameter
 
 set -o pipefail && \
   xcodebuild clean build test \
@@ -7,7 +8,7 @@ set -o pipefail && \
   -scheme Anchorage-tvOS \
   -sdk appletvsimulator \
   -destination "platform=tvOS Simulator,name=Apple TV,OS=$1" \
-  SWIFT_VERSION=4.2 \
+  SWIFT_VERSION=$2 \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGN_IDENTITY= \
   | bundle exec xcpretty
