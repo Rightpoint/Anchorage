@@ -107,6 +107,7 @@
 		3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
+		5B535F432322F06C006C85FB /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		7A39D62E1EB53E1100BDE9C0 /* AnchorageTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnchorageTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorageTests.swift; sourceTree = "<group>"; };
 		7A39D6321EB53E1100BDE9C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 		3C2050A11D3B20FD00995DF3 = {
 			isa = PBXGroup;
 			children = (
+				5B535F432322F06C006C85FB /* Package.swift */,
 				3C2050AD1D3B20FD00995DF3 /* Anchorage */,
 				2DD242691D95C2CE001D6725 /* AnchorageDemo */,
 				7A39D62F1EB53E1100BDE9C0 /* AnchorageTests */,
