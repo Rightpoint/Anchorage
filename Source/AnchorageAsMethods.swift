@@ -33,8 +33,8 @@
 #endif
 
 
-// search: (.*)Anchor == (.*)Anchor
-// replace: constraint\($1Anchor, $2Anchor\)
+// search: [a-w].*Anchor == (.*)Anchor.*
+// replace: constraint\($1, $2\)
 
 @discardableResult public func constraint <T: BinaryFloatingPoint>(_ lhs: NSLayoutDimension, _ rhs: T) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalToConstant: CGFloat(rhs)))
