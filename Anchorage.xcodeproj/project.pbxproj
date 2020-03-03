@@ -24,6 +24,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		21D55A152406B1710007682E /* AnchorageAsMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D55A142406B1710007682E /* AnchorageAsMethods.swift */; };
+		21D55A162406B1710007682E /* AnchorageAsMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D55A142406B1710007682E /* AnchorageAsMethods.swift */; };
+		21D55A172406B1710007682E /* AnchorageAsMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D55A142406B1710007682E /* AnchorageAsMethods.swift */; };
 		2DBB2D451D99596100A1E94B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D441D99596100A1E94B /* RootViewController.swift */; };
 		2DBB2D4B1D99597500A1E94B /* ToggleActiveHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D461D99597500A1E94B /* ToggleActiveHeightCell.swift */; };
 		2DBB2D4C1D99597500A1E94B /* MinimumWidthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB2D471D99597500A1E94B /* MinimumWidthViewCell.swift */; };
@@ -92,6 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21D55A142406B1710007682E /* AnchorageAsMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorageAsMethods.swift; sourceTree = "<group>"; };
 		2DBB2D441D99596100A1E94B /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		2DBB2D461D99597500A1E94B /* ToggleActiveHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToggleActiveHeightCell.swift; path = Cells/ToggleActiveHeightCell.swift; sourceTree = "<group>"; };
 		2DBB2D471D99597500A1E94B /* MinimumWidthViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MinimumWidthViewCell.swift; path = Cells/MinimumWidthViewCell.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				3C2050B61D3B213B00995DF3 /* Anchorage.swift */,
+				21D55A142406B1710007682E /* AnchorageAsMethods.swift */,
 				D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */,
 				D469DCB41EB7A904000F3DDD /* Priority.swift */,
 				D401673E1EB7A58D0025DCA5 /* Compatability.swift */,
@@ -601,6 +606,7 @@
 				2DBB2D531D995FA000A1E94B /* AnimatableConstraintCell.swift in Sources */,
 				2DBB2D4F1D99597500A1E94B /* BaseCell.swift in Sources */,
 				2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */,
+				21D55A152406B1710007682E /* AnchorageAsMethods.swift in Sources */,
 				2DBB2D4D1D99597500A1E94B /* EqualSpaceViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,6 +617,7 @@
 			files = (
 				3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */,
 				BBE7C0D71FAB676F00DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */,
+				21D55A162406B1710007682E /* AnchorageAsMethods.swift in Sources */,
 				D401673D1EB7A4A30025DCA5 /* Internal.swift in Sources */,
 				D401673F1EB7A58D0025DCA5 /* Compatability.swift in Sources */,
 				D469DCB71EB7A975000F3DDD /* AnchorGroupProvider.swift in Sources */,
@@ -661,6 +668,7 @@
 			files = (
 				D40167401EB7A6270025DCA5 /* Internal.swift in Sources */,
 				BBE7C0D81FAB677500DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */,
+				21D55A172406B1710007682E /* AnchorageAsMethods.swift in Sources */,
 				F154629B1E56846200C3948D /* Anchorage.swift in Sources */,
 				D40167411EB7A6270025DCA5 /* Compatability.swift in Sources */,
 				D469DCB91EB7AB2F000F3DDD /* Priority.swift in Sources */,
