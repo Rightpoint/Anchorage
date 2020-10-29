@@ -163,6 +163,8 @@ infix operator |==|: ComparisonPrecedence
 
 // MARK: - Inequality Constraints
 
+// MARK: <=
+
 infix operator |<=|: ComparisonPrecedence
 
 @discardableResult public func <= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
@@ -281,6 +283,8 @@ infix operator |<=|: ComparisonPrecedence
 @discardableResult public func |<=| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
 }
+
+// MARK: >=
 
 infix operator |>=|: ComparisonPrecedence
 
