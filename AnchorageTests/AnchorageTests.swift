@@ -74,6 +74,11 @@ class AnchorageTests: XCTestCase {
 #endif
     }
 
+    override func tearDown() {
+        view1.removeFromSuperview()
+        view2.removeFromSuperview()
+    }
+
 }
 
 // MARK: - Overloaded operators
