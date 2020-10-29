@@ -1205,6 +1205,77 @@ extension AnchorageTests {
     }
 }
 
+// MARK: - Performance Tests
+
+extension AnchorageTests {
+
+    private func runRepeatedEdgeConstraintAssignments(numTests: Int = 10000, assignment: () -> ConstraintGroup) {
+        var constraintGroup: ConstraintGroup?
+        for _ in 0 ..< numTests {
+            if let constraintGroup = constraintGroup {
+                NSLayoutConstraint.deactivate(constraintGroup.all)
+            }
+            constraintGroup = assignment()
+        }
+    }
+
+    // MARK: Equal To
+
+    func testOperatorOverloadPerformance_EqualTo() {
+        measure {
+            runRepeatedEdgeConstraintAssignments { () -> ConstraintGroup in
+                return view1.edgeAnchors == view2.edgeAnchors
+            }
+        }
+    }
+
+    func testCustomOperatorPerformance_EqualTo() {
+        measure {
+            runRepeatedEdgeConstraintAssignments { () -> ConstraintGroup in
+                return view1.edgeAnchors /==/ view2.edgeAnchors
+            }
+        }
+    }
+
+    // MARK: Less Than or Equal To
+
+    func testOperatorOverloadPerformance_LessThanOrEqualTo() {
+        measure {
+            runRepeatedEdgeConstraintAssignments { () -> ConstraintGroup in
+                return view1.edgeAnchors <= view2.edgeAnchors
+            }
+        }
+    }
+
+    func testCustomOperatorPerformance_LessThanOrEqualTo() {
+        measure {
+            runRepeatedEdgeConstraintAssignments { () -> ConstraintGroup in
+                return view1.edgeAnchors /<=/ view2.edgeAnchors
+            }
+        }
+    }
+
+    // MARK: Greater Than or Equal To
+
+    func testOperatorOverloadPerformance_GreaterThanOrEqualTo() {
+        measure {
+            runRepeatedEdgeConstraintAssignments { () -> ConstraintGroup in
+                return view1.edgeAnchors >= view2.edgeAnchors
+            }
+        }
+    }
+
+    func testCustomOperatorPerformance_GreaterThanOrEqualTo() {
+        measure {
+            runRepeatedEdgeConstraintAssignments { () -> ConstraintGroup in
+                return view1.edgeAnchors />=/ view2.edgeAnchors
+            }
+        }
+    }
+}
+
+// MARK: - Utility Functions and Extensions
+
 extension AnchorageTests {
 
     func assertIdentical(_ expression1: @autoclosure () -> AnyObject?, _ expression2: @autoclosure () -> AnyObject?, _ message: @autoclosure () -> String = "Objects were not identical", file: StaticString = #file, line: UInt = #line) {
