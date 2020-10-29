@@ -42,61 +42,61 @@ extension NSLayoutAnchor: LayoutAnchorType {}
 
 // MARK: - Equality Constraints
 
-infix operator |==|: ComparisonPrecedence
+infix operator /==/: ComparisonPrecedence
 
 @discardableResult public func == <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+@discardableResult public func /==/ <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func == (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func /==/ (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalTo: rhs))
 }
 
 @discardableResult public func == (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func /==/ (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalTo: rhs))
 }
 
 @discardableResult public func == (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
+@discardableResult public func /==/ (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalTo: rhs))
 }
 
 @discardableResult public func == (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func /==/ (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 @discardableResult public func == (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func /==/ (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(equalTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 @discardableResult public func == (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func /==/ (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
     if let anchor = rhs.anchor {
         return finalize(constraint: lhs.constraint(equalTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
@@ -106,58 +106,58 @@ infix operator |==|: ComparisonPrecedence
 }
 
 @discardableResult public func == (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
+@discardableResult public func /==/ (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
     return lhs.finalize(constraintsEqualToEdges: rhs)
 }
 
 @discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
+@discardableResult public func /==/ (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
     return lhs.finalize(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func == (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+@discardableResult public func /==/ (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
     return lhs.finalize(constraintsEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func == <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
+@discardableResult public func /==/ <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsEqualToEdges: rhs)
 }
 
 @discardableResult public func == <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
+@discardableResult public func /==/ <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
     return lhs.finalize(constraintsEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func == (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
+@discardableResult public func /==/ (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
     return lhs.finalize(constraintsEqualToConstant: rhs)
 }
 
 @discardableResult public func == (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
-    return lhs |==| rhs
+    return lhs /==/ rhs
 }
 
-@discardableResult public func |==| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
+@discardableResult public func /==/ (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
     return lhs.finalize(constraintsEqualToConstant: rhs.constant, priority: rhs.priority)
 }
 
@@ -165,61 +165,61 @@ infix operator |==|: ComparisonPrecedence
 
 // MARK: <=
 
-infix operator |<=|: ComparisonPrecedence
+infix operator /<=/: ComparisonPrecedence
 
 @discardableResult public func <= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+@discardableResult public func /<=/ <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(lessThanOrEqualToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func <= (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func /<=/ (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(lessThanOrEqualTo: rhs))
 }
 
 @discardableResult public func <= (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func /<=/ (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(lessThanOrEqualTo: rhs))
 }
 
 @discardableResult public func <= (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
+@discardableResult public func /<=/ (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(lessThanOrEqualTo: rhs))
 }
 
 @discardableResult public func <= (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func /<=/ (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(lessThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 @discardableResult public func <= (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func /<=/ (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(lessThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 @discardableResult public func <= (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func /<=/ (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
     if let anchor = rhs.anchor {
         return finalize(constraint: lhs.constraint(lessThanOrEqualTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
@@ -229,118 +229,118 @@ infix operator |<=|: ComparisonPrecedence
 }
 
 @discardableResult public func <= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
+@discardableResult public func /<=/ (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs)
 }
 
 @discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
+@discardableResult public func /<=/ (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func <= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+@discardableResult public func /<=/ (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func <= <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
+@discardableResult public func /<=/ <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs)
 }
 
 @discardableResult public func <= <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
+@discardableResult public func /<=/ <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func <= (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
+@discardableResult public func /<=/ (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToConstant: rhs)
 }
 
 @discardableResult public func <= (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
-    return lhs |<=| rhs
+    return lhs /<=/ rhs
 }
 
-@discardableResult public func |<=| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
+@discardableResult public func /<=/ (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
     return lhs.finalize(constraintsLessThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
 }
 
 // MARK: >=
 
-infix operator |>=|: ComparisonPrecedence
+infix operator />=/: ComparisonPrecedence
 
 @discardableResult public func >= <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
+@discardableResult public func />=/ <T: BinaryFloatingPoint>(lhs: NSLayoutDimension, rhs: T) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(greaterThanOrEqualToConstant: CGFloat(rhs)))
 }
 
 @discardableResult public func >= (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func />=/ (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(greaterThanOrEqualTo: rhs))
 }
 
 @discardableResult public func >= (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func />=/ (lhs: NSLayoutYAxisAnchor, rhs: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(greaterThanOrEqualTo: rhs))
 }
 
 @discardableResult public func >= (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
+@discardableResult public func />=/ (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(greaterThanOrEqualTo: rhs))
 }
 
 @discardableResult public func >= (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func />=/ (lhs: NSLayoutXAxisAnchor, rhs: LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(greaterThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 @discardableResult public func >= (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func />=/ (lhs: NSLayoutYAxisAnchor, rhs: LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint {
     return finalize(constraint: lhs.constraint(greaterThanOrEqualTo: rhs.anchor!, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
 }
 
 @discardableResult public func >= (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+@discardableResult public func />=/ (lhs: NSLayoutDimension, rhs: LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
     if let anchor = rhs.anchor {
         return finalize(constraint: lhs.constraint(greaterThanOrEqualTo: anchor, multiplier: rhs.multiplier, constant: rhs.constant), withPriority: rhs.priority)
     }
@@ -350,58 +350,58 @@ infix operator |>=|: ComparisonPrecedence
 }
 
 @discardableResult public func >= (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
+@discardableResult public func />=/ (lhs: EdgeAnchors, rhs: EdgeAnchors) -> ConstraintGroup {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
 }
 
 @discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
+@discardableResult public func />=/ (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, CGFloat>) -> ConstraintGroup {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func >= (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
+@discardableResult public func />=/ (lhs: EdgeAnchors, rhs: LayoutExpression<EdgeAnchors, EdgeInsets>) -> ConstraintGroup {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, insets: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func >= <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
+@discardableResult public func />=/ <T, U>(lhs: AnchorPair<T, U>, rhs: AnchorPair<T, U>) -> ConstraintPair {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs)
 }
 
 @discardableResult public func >= <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
+@discardableResult public func />=/ <T, U>(lhs: AnchorPair<T, U>, rhs: LayoutExpression<AnchorPair<T, U>, CGFloat>) -> ConstraintPair {
     return lhs.finalize(constraintsGreaterThanOrEqualToEdges: rhs.anchor, constant: rhs.constant, priority: rhs.priority)
 }
 
 @discardableResult public func >= (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
+@discardableResult public func />=/ (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: CGSize) -> ConstraintPair {
     return lhs.finalize(constraintsGreaterThanOrEqualToConstant: rhs)
 }
 
 @discardableResult public func >= (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
-    return lhs |>=| rhs
+    return lhs />=/ rhs
 }
 
-@discardableResult public func |>=| (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
+@discardableResult public func />=/ (lhs: AnchorPair<NSLayoutDimension, NSLayoutDimension>, rhs: LayoutExpression<AnchorPair<NSLayoutDimension, NSLayoutDimension>, CGSize>) -> ConstraintPair {
     return lhs.finalize(constraintsGreaterThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
 }
 

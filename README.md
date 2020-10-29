@@ -136,13 +136,15 @@ Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `fals
 
 ## A Note on Compile Times
 
-Anchorage overloads a few Swift operators, which can lead to increased compile times. If you need them, Anchorage provides alternative custom operators that reduce this overhead:
+Anchorage overloads a few Swift operators, which can lead to increased compile times. You can reduce this overhead by surrounding these operators with `/`, like so:
 
 | Operator | Faster Alternative |
 |------|----------|
-| `==` | `\|==\|` |
-| `<=` | `\|<=\|` |
-| `>=` | `\|>=\|` |
+| `==` | `/==/` |
+| `<=` | `/<=/` |
+| `>=` | `/>=/` |
+
+For example, `view1.edgeAnchors == view2.edgeAnchors` would become `view1.edgeAnchors /==/ view2.edgeAnchors`.
 
 # Installation
 
