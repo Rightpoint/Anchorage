@@ -163,7 +163,7 @@ infix operator /==/: ComparisonPrecedence
 
 // MARK: - Inequality Constraints
 
-// MARK: <=
+// MARK: Less Than or Equal To
 
 infix operator /<=/: ComparisonPrecedence
 
@@ -284,7 +284,7 @@ infix operator /<=/: ComparisonPrecedence
     return lhs.finalize(constraintsLessThanOrEqualToConstant: rhs.constant, priority: rhs.priority)
 }
 
-// MARK: >=
+// MARK: Greater Than or Equal To
 
 infix operator />=/: ComparisonPrecedence
 
