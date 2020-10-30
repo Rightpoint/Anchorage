@@ -134,6 +134,18 @@ You can also pass `active: true` if you want the constraints in the array to be 
 
 Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system-supplied view.
 
+## A Note on Compile Times
+
+Anchorage overloads a few Swift operators, which can lead to increased compile times. You can reduce this overhead by surrounding these operators with `/`, like so:
+
+| Operator | Faster Alternative |
+|------|----------|
+| `==` | `/==/` |
+| `<=` | `/<=/` |
+| `>=` | `/>=/` |
+
+For example, `view1.edgeAnchors == view2.edgeAnchors` would become `view1.edgeAnchors /==/ view2.edgeAnchors`.
+
 # Installation
 
 ## CocoaPods
