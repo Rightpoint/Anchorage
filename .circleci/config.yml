@@ -21,7 +21,6 @@ jobs:
       - setup
       - test-scripts:
           swift-version: "4.2"
-          ios-version: "12.4"
       - lint-pod:
           swift-version: "4.2"
 
