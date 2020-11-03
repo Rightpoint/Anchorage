@@ -116,7 +116,7 @@ commands:
         default: "5.0"
       ios-version:
         type: string
-        default: "13.3"
+        default: "13.5"
     steps:
       - run: ./scripts/iOS_demo_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
       - run: ./scripts/iOS_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
