@@ -97,7 +97,8 @@ commands:
       - checkout
       - update-homebrew
       - update-carthage
-      - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
+      # Carthage does not work on Xcode 12 https://github.com/Carthage/Carthage/issues/3019
+      # - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
 
   lint-pod:
     description: "Lints podspec with specified Swift version"
