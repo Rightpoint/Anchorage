@@ -118,11 +118,14 @@ commands:
       ios-version:
         type: string
         default: "13.5"
+      tvos-version:
+        type: string
+        default: "13.4"
     steps:
       - run: ./scripts/iOS_demo_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
       - run: ./scripts/iOS_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
       - run: ./scripts/macOS_Swift.sh << parameters.swift-version >>
-      - run: ./scripts/tvOS_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
+      - run: ./scripts/tvOS_Swift.sh << parameters.tvos-version >> << parameters.swift-version >>
 
 workflows:
   version: 2
