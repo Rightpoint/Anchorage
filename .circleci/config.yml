@@ -2,13 +2,13 @@ version: 2.1
 
 jobs:
   test-swift-package:
-    executor: xcode-11
+    executor: xcode-12
     steps:
       - checkout
       - run: swift test
 
   test-swift-5:
-    executor: xcode-11
+    executor: xcode-12
     steps:
       - setup
       - test-scripts
@@ -16,40 +16,39 @@ jobs:
           swift-version: "5.0"
 
   test-swift-4:
-    executor: xcode-11
+    executor: xcode-12
     steps:
       - setup
       - test-scripts:
           swift-version: "4.2"
-          ios-version: "12.4"
       - lint-pod:
           swift-version: "4.2"
 
   carthage-build-swift-4:
-    executor: xcode-11
+    executor: xcode-12
     environment:
       XCODE_XCCONFIG_FILE: ./.circleci/SWIFT_5.0.xcconfig
     steps:
       - build-carthage
 
   carthage-build-swift-5:
-    executor: xcode-11
+    executor: xcode-12
     environment:
       XCODE_XCCONFIG_FILE: ./.circleci/SWIFT_4.2.xcconfig
     steps:
       - build-carthage
 
   deploy-to-cocoapods:
-    executor: xcode-11
+    executor: xcode-12
     steps:
       - checkout
       - restore-gems
       - run: bundle exec pod trunk push
 
 executors:
-  xcode-11:
+  xcode-12:
     macos:
-      xcode: "11.3.1"
+      xcode: "12.1.0"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -97,7 +96,8 @@ commands:
       - checkout
       - update-homebrew
       - update-carthage
-      - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
+      # Carthage does not work on Xcode 12 https://github.com/Carthage/Carthage/issues/3019
+      # - run: carthage build --no-skip-current && for platform in Mac iOS tvOS; do test -d Carthage/Build/${platform}/Anchorage.framework || exit 1; done
 
   lint-pod:
     description: "Lints podspec with specified Swift version"
@@ -116,12 +116,15 @@ commands:
         default: "5.0"
       ios-version:
         type: string
-        default: "13.3"
+        default: "13.5"
+      tvos-version:
+        type: string
+        default: "13.4"
     steps:
       - run: ./scripts/iOS_demo_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
       - run: ./scripts/iOS_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
       - run: ./scripts/macOS_Swift.sh << parameters.swift-version >>
-      - run: ./scripts/tvOS_Swift.sh << parameters.ios-version >> << parameters.swift-version >>
+      - run: ./scripts/tvOS_Swift.sh << parameters.tvos-version >> << parameters.swift-version >>
 
 workflows:
   version: 2
@@ -148,6 +151,7 @@ workflows:
             tags:
               only: /.*/
       - deploy-to-cocoapods:
+          context: CocoaPods
           requires:
             - test-swift-package
             - test-swift-5
