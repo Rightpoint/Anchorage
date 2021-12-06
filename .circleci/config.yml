@@ -116,7 +116,7 @@ commands:
         default: "5.0"
       ios-version:
         type: string
-        default: "13.5"
+        default: "14.2"
       tvos-version:
         type: string
         default: "13.4"
